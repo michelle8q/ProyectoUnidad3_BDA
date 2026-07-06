@@ -38,6 +38,7 @@ public class FrmRegistrarse extends javax.swing.JFrame {
         LblFoto = new javax.swing.JLabel();
         TxTContra1 = new javax.swing.JTextField();
         BtnRegistro1 = new javax.swing.JButton();
+        BtnInicioSecion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,6 +53,12 @@ public class FrmRegistrarse extends javax.swing.JFrame {
         LblContra.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         LblContra.setText("Contraseña");
 
+        TxTcorreo.setBackground(new java.awt.Color(0, 0, 0));
+        TxTcorreo.setForeground(new java.awt.Color(255, 255, 255));
+
+        TxTContra.setBackground(new java.awt.Color(0, 0, 0));
+        TxTContra.setForeground(new java.awt.Color(255, 255, 255));
+
         BtnRegistro.setBackground(new java.awt.Color(109, 79, 130));
         BtnRegistro.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         BtnRegistro.setText("Registrarse");
@@ -61,11 +68,17 @@ public class FrmRegistrarse extends javax.swing.JFrame {
             }
         });
 
+        TxTUsuario.setBackground(new java.awt.Color(0, 0, 0));
+        TxTUsuario.setForeground(new java.awt.Color(255, 255, 255));
+
         LblUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         LblUsuario.setText("Nombre de Usuario");
 
         LblFoto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         LblFoto.setText("Foto de Perfil (Opcional)");
+
+        TxTContra1.setBackground(new java.awt.Color(0, 0, 0));
+        TxTContra1.setForeground(new java.awt.Color(255, 255, 255));
 
         BtnRegistro1.setBackground(new java.awt.Color(109, 79, 130));
         BtnRegistro1.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
@@ -76,29 +89,41 @@ public class FrmRegistrarse extends javax.swing.JFrame {
             }
         });
 
+        BtnInicioSecion.setBackground(new java.awt.Color(109, 79, 130));
+        BtnInicioSecion.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        BtnInicioSecion.setText("Iniciar Sesion");
+        BtnInicioSecion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnInicioSecionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PnlFondoLayout = new javax.swing.GroupLayout(PnlFondo);
         PnlFondo.setLayout(PnlFondoLayout);
         PnlFondoLayout.setHorizontalGroup(
             PnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlFondoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(BtnRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61))
             .addGroup(PnlFondoLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
                 .addGroup(PnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(LblFoto)
-                    .addComponent(TxTContra, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LblContra)
-                    .addComponent(LblCorreo)
-                    .addComponent(LblTitulo)
-                    .addComponent(TxTcorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LblUsuario)
-                    .addComponent(TxTUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(PnlFondoLayout.createSequentialGroup()
-                        .addComponent(TxTContra1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BtnRegistro1)))
+                        .addGap(35, 35, 35)
+                        .addGroup(PnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LblFoto)
+                            .addComponent(TxTContra, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(LblContra)
+                            .addComponent(TxTcorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(PnlFondoLayout.createSequentialGroup()
+                                .addComponent(TxTContra1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BtnRegistro1))
+                            .addComponent(LblCorreo)
+                            .addComponent(LblTitulo)
+                            .addComponent(LblUsuario)
+                            .addComponent(TxTUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(PnlFondoLayout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addGroup(PnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(BtnInicioSecion, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BtnRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(44, Short.MAX_VALUE))
         );
         PnlFondoLayout.setVerticalGroup(
@@ -108,25 +133,27 @@ public class FrmRegistrarse extends javax.swing.JFrame {
                 .addComponent(LblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LblUsuario)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TxTUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
                 .addComponent(LblCorreo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TxTcorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LblContra)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TxTContra, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LblFoto)
-                .addGap(14, 14, 14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TxTContra1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BtnRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BtnInicioSecion, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -150,6 +177,10 @@ public class FrmRegistrarse extends javax.swing.JFrame {
     private void BtnRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegistro1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnRegistro1ActionPerformed
+
+    private void BtnInicioSecionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInicioSecionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnInicioSecionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -188,6 +219,7 @@ public class FrmRegistrarse extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnInicioSecion;
     private javax.swing.JButton BtnRegistro;
     private javax.swing.JButton BtnRegistro1;
     private javax.swing.JLabel LblContra;

@@ -60,6 +60,12 @@ public class FrmLogin extends javax.swing.JFrame {
         LblContra.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         LblContra.setText("Contraseña");
 
+        TxTcorreo.setBackground(new java.awt.Color(0, 0, 0));
+        TxTcorreo.setForeground(new java.awt.Color(255, 255, 255));
+
+        TxTContra.setBackground(new java.awt.Color(0, 0, 0));
+        TxTContra.setForeground(new java.awt.Color(255, 255, 255));
+
         BtnEntrar.setBackground(new java.awt.Color(109, 79, 130));
         BtnEntrar.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         BtnEntrar.setText("Entrar");
