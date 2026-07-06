@@ -27,20 +27,72 @@ public class FrmMenuLateral extends javax.swing.JFrame {
     private void initComponents() {
 
         PnlFondo = new javax.swing.JPanel();
+        LblInicio = new javax.swing.JLabel();
+        LblAlbumes = new javax.swing.JLabel();
+        LblArtistas = new javax.swing.JLabel();
+        LblCanciones = new javax.swing.JLabel();
+        LblPerfil = new javax.swing.JLabel();
+        BtnInsert = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         PnlFondo.setBackground(new java.awt.Color(51, 51, 51));
 
+        LblInicio.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        LblInicio.setText("Inicio");
+
+        LblAlbumes.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        LblAlbumes.setText("Albumes");
+
+        LblArtistas.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        LblArtistas.setText("Artistas");
+
+        LblCanciones.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        LblCanciones.setText("Canciones");
+
+        LblPerfil.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        LblPerfil.setText("Perfil");
+
+        BtnInsert.setBackground(new java.awt.Color(109, 79, 130));
+        BtnInsert.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        BtnInsert.setText("Insert Masivo");
+        BtnInsert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnInsertActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PnlFondoLayout = new javax.swing.GroupLayout(PnlFondo);
         PnlFondo.setLayout(PnlFondoLayout);
         PnlFondoLayout.setHorizontalGroup(
             PnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 218, Short.MAX_VALUE)
+            .addGroup(PnlFondoLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(PnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BtnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LblPerfil)
+                    .addComponent(LblArtistas)
+                    .addComponent(LblAlbumes)
+                    .addComponent(LblInicio)
+                    .addComponent(LblCanciones))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         PnlFondoLayout.setVerticalGroup(
             PnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 603, Short.MAX_VALUE)
+            .addGroup(PnlFondoLayout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addComponent(LblInicio)
+                .addGap(51, 51, 51)
+                .addComponent(LblArtistas)
+                .addGap(58, 58, 58)
+                .addComponent(LblAlbumes)
+                .addGap(50, 50, 50)
+                .addComponent(LblCanciones)
+                .addGap(51, 51, 51)
+                .addComponent(LblPerfil)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addComponent(BtnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -58,6 +110,10 @@ public class FrmMenuLateral extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BtnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInsertActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnInsertActionPerformed
 
     /**
      * @param args the command line arguments
@@ -95,6 +151,12 @@ public class FrmMenuLateral extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnInsert;
+    private javax.swing.JLabel LblAlbumes;
+    private javax.swing.JLabel LblArtistas;
+    private javax.swing.JLabel LblCanciones;
+    private javax.swing.JLabel LblInicio;
+    private javax.swing.JLabel LblPerfil;
     private javax.swing.JPanel PnlFondo;
     // End of variables declaration//GEN-END:variables
 }
