@@ -8,12 +8,12 @@ package presentacion;
  *
  * @author USUARIO
  */
-public class FrmMenuLateral extends javax.swing.JFrame {
+public class MenuLateral extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmMenuLateral
      */
-    public FrmMenuLateral() {
+    public MenuLateral() {
         initComponents();
     }
 
@@ -37,6 +37,7 @@ public class FrmMenuLateral extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         PnlFondo.setBackground(new java.awt.Color(51, 51, 51));
+        PnlFondo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(144, 104, 225)));
 
         LblInicio.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
         LblInicio.setText("Inicio");
@@ -132,20 +133,21 @@ public class FrmMenuLateral extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmMenuLateral.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuLateral.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmMenuLateral.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuLateral.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmMenuLateral.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuLateral.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmMenuLateral.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuLateral.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmMenuLateral().setVisible(true);
+                new MenuLateral().setVisible(true);
             }
         });
     }
