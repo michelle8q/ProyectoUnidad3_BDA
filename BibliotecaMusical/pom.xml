@@ -10,4 +10,11 @@
         <maven.compiler.release>23</maven.compiler.release>
         <exec.mainClass>itson.org.bibliotecamusical.BibliotecaMusical</exec.mainClass>
     </properties>
+    <dependencies>
+    <dependency>
+        <groupId>org.mongodb</groupId>
+        <artifactId>mongodb-driver-sync</artifactId>
+        <version>5.0.1</version> 
+    </dependency>
+    </dependencies>
 </project>
