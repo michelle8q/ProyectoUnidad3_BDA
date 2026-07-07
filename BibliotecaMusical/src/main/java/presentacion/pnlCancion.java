@@ -39,6 +39,7 @@ public class pnlCancion extends javax.swing.JPanel {
         setBackground(new java.awt.Color(51, 51, 51));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(109, 79, 130), 3));
         setForeground(new java.awt.Color(109, 79, 130));
+        setToolTipText("");
         setPreferredSize(new java.awt.Dimension(821, 184));
 
         javax.swing.GroupLayout pnlImagenLayout = new javax.swing.GroupLayout(pnlImagen);
