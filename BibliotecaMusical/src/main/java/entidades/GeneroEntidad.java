@@ -9,21 +9,15 @@ import org.bson.types.ObjectId;
 /**
  *
  * @author cinca
- * 
- * Entidad de dominio que representa a una cancion dentro del sistema. 
- * Almacena sus datos como su nombre, genero al que pertenece, artista,
- * alnum y muestra la duracion.
- * 
  */
-public class CancionEntidad {
-    
+public class GeneroEntidad {
     private ObjectId id;
     private String nombre;
 
-    public CancionEntidad() {
+    public GeneroEntidad() {
     }
 
-    public CancionEntidad(ObjectId id, String nombre) {
+    public GeneroEntidad(ObjectId id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
@@ -42,11 +36,12 @@ public class CancionEntidad {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }   
+    }
 
     @Override
     public String toString() {
-        return "CancionEntidad{" + "id=" + id + ", nombre=" + nombre + '}';
+        return "GeneroEntidad{" + "id=" + id + ", nombre=" + nombre + '}';
     }
+    
     
 }

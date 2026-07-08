@@ -15,18 +15,20 @@ public class UsuarioEntidad {
     private String contrasena;
     private String imagen;
     private List<FavoritoEntidad> favoritos;
-    // Genero no deseados
+    private List<GeneroEntidad> generosNoDeseados;
 
     public UsuarioEntidad() {
     }
 
-    public UsuarioEntidad(ObjectId id, String usuario, String correo, String contrasena, String imagen, List<FavoritoEntidad> favoritos) {
+    public UsuarioEntidad(ObjectId id, String usuario, String correo, String contrasena, String imagen, List<FavoritoEntidad> favoritos, 
+            List<GeneroEntidad> generosNoDeseados) {
         this.id = id;
         this.usuario = usuario;
         this.correo = correo;
         this.contrasena = contrasena;
         this.imagen = imagen;
         this.favoritos = favoritos;
+        this.generosNoDeseados = generosNoDeseados;
     }
 
     public ObjectId getId() {
@@ -75,6 +77,19 @@ public class UsuarioEntidad {
 
     public void setFavoritos(List<FavoritoEntidad> favoritos) {
         this.favoritos = favoritos;
+    }
+
+    public List<GeneroEntidad> getGenerosNoDeseados() {
+        return generosNoDeseados;
+    }
+
+    public void setGenerosNoDeseados(List<GeneroEntidad> generosNoDeseados) {
+        this.generosNoDeseados = generosNoDeseados;
+    }
+
+    @Override
+    public String toString() {
+        return "UsuarioEntidad{" + "id=" + id + ", usuario=" + usuario + ", correo=" + correo + ", contrasena=" + contrasena + ", imagen=" + imagen + ", favoritos=" + favoritos + ", generosNoDeseados=" + generosNoDeseados + '}';
     }
 
     

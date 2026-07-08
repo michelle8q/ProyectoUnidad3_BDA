@@ -12,17 +12,18 @@ import java.util.Date;
  */
 public class FavoritoEntidad {
     private String nombre;
-    //genero
+    private GeneroEntidad genero;
     private String tipo;
     private Date fechaAgregacion;
 
     public FavoritoEntidad() {
     }
 
-    public FavoritoEntidad(String nombre, String tipo, Date fechaAgregacion) {
+    public FavoritoEntidad(String nombre, GeneroEntidad genero, String tipo, Date fechaAgregacion) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.fechaAgregacion = fechaAgregacion;
+        this.genero = genero;
     }
 
     public String getNombre() {
@@ -47,6 +48,19 @@ public class FavoritoEntidad {
 
     public void setFechaAgregacion(Date fechaAgregacion) {
         this.fechaAgregacion = fechaAgregacion;
+    }
+
+    public GeneroEntidad getGenero() {
+        return genero;
+    }
+
+    public void setGenero(GeneroEntidad genero) {
+        this.genero = genero;
+    }
+
+    @Override
+    public String toString() {
+        return "FavoritoEntidad{" + "nombre=" + nombre + ", genero=" + genero + ", tipo=" + tipo + ", fechaAgregacion=" + fechaAgregacion + '}';
     }
     
     

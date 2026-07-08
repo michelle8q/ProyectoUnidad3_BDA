@@ -14,7 +14,7 @@ import org.bson.types.ObjectId;
 public class AlbumEntidad {
     private ObjectId id;
     private String nombre;
-    //Genero no se si enum o entidad
+    private GeneroEntidad genero;
     private String imagen;
     private List<CancionEntidad> canciones;
 
@@ -22,10 +22,10 @@ public class AlbumEntidad {
     }
     
     // Falta definir el genero
-    public AlbumEntidad(ObjectId id, String nombre, String imagen, List<CancionEntidad> canciones) {
+    public AlbumEntidad(ObjectId id, String nombre, GeneroEntidad genero, String imagen, List<CancionEntidad> canciones) {
         this.id = id;
         this.nombre = nombre;
-
+        this.genero = genero;
         this.imagen = imagen;
         this.canciones = canciones;
     }
@@ -60,6 +60,19 @@ public class AlbumEntidad {
 
     public void setCanciones(List<CancionEntidad> canciones) {
         this.canciones = canciones;
+    }
+
+    public GeneroEntidad getGenero() {
+        return genero;
+    }
+
+    public void setGenero(GeneroEntidad genero) {
+        this.genero = genero;
+    }
+
+    @Override
+    public String toString() {
+        return "AlbumEntidad{" + "id=" + id + ", nombre=" + nombre + ", genero=" + genero + ", imagen=" + imagen + ", canciones=" + canciones + '}';
     }
     
     
