@@ -15,6 +15,7 @@ public class FrmLogin extends javax.swing.JFrame {
      */
     public FrmLogin() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -69,6 +70,11 @@ public class FrmLogin extends javax.swing.JFrame {
         BtnEntrar.setBackground(new java.awt.Color(109, 79, 130));
         BtnEntrar.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         BtnEntrar.setText("Entrar");
+        BtnEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnEntrarActionPerformed(evt);
+            }
+        });
 
         BtnRegistro.setBackground(new java.awt.Color(109, 79, 130));
         BtnRegistro.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
@@ -135,8 +141,14 @@ public class FrmLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegistroActionPerformed
-        // TODO add your handling code here:
+        FrmRegistrarse reguistro = new FrmRegistrarse();
+        reguistro.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BtnRegistroActionPerformed
+
+    private void BtnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEntrarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnEntrarActionPerformed
 
     /**
      * @param args the command line arguments
