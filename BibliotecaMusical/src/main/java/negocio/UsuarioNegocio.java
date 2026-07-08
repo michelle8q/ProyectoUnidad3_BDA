@@ -1,5 +1,5 @@
 
-package persistencia;
+package negocio;
 
 import entidades.UsuarioEntidad;
 
@@ -7,23 +7,16 @@ import entidades.UsuarioEntidad;
  *
  * @author piña
  */
-public class UsuarioDAO implements IUsuarioDAO{
-    
-    private IConexionDAO conexion;
-    
-    public UsuarioDAO(IConexionDAO conexion){
-        this.conexion = conexion;
-    }
+public class UsuarioNegocio implements IUsuarioNegocio{
 
     @Override
-    public UsuarioEntidad reguistar(UsuarioEntidad usuario) throws PersistenciaException {
+    public UsuarioEntidad reguistrar(UsuarioEntidad usuario) throws NegocioException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public UsuarioEntidad buscar(String correo, String contra ) throws PersistenciaException {
+    public UsuarioEntidad buscar(String correo, String contra) throws NegocioException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
     
 }
