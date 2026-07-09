@@ -11,7 +11,7 @@ import dtos.UsuarioDTO;
  * @author cinca
  */
 public class FrmPerfilUsuario extends javax.swing.JFrame {
-    
+
     private UsuarioDTO usuarioActual;
     private Navegador navegador;
 
@@ -21,14 +21,16 @@ public class FrmPerfilUsuario extends javax.swing.JFrame {
     public FrmPerfilUsuario() {
         initComponents();
     }
-    
+
     public FrmPerfilUsuario(UsuarioDTO usuarioActual, Navegador navegador) {
         initComponents();
         this.usuarioActual = usuarioActual;
         this.navegador = navegador;
         cargarPerfil();
+        pnlMenuLateral2.setNavegador(this.navegador);
 
     }
+
     private void cargarPerfil() {
         if (usuarioActual == null) {
             return;
@@ -37,9 +39,7 @@ public class FrmPerfilUsuario extends javax.swing.JFrame {
         lblUsuario.setText(usuarioActual.getUsuario());
         lblCorreo.setText(usuarioActual.getCorreo());
     }
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -233,7 +233,6 @@ public class FrmPerfilUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditarActionPerformed
 
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LblInicio;

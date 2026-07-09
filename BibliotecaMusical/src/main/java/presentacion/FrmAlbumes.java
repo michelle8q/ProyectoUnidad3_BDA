@@ -31,6 +31,8 @@ public class FrmAlbumes extends javax.swing.JFrame {
         this.albumNegocio = new negocio.AlbumNegocio(albumDAO);
         this.setLocationRelativeTo(null);
         initComponents();
+        pnlMenuLateral2.setNavegador(this.navegador);
+
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
     }
 

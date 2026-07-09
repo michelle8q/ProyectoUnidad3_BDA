@@ -9,22 +9,25 @@ import java.awt.Window;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-
 /**
  *
  * @author USUARIO
  */
 public class PnlMenuLateral extends javax.swing.JPanel {
-    
+
     private UsuarioDTO usuarioActual;
     private Navegador navegador;
+
     /**
      * Creates new form PnlMenuLateral
      */
     public PnlMenuLateral() {
         initComponents();
     }
-    
+
+    public void setNavegador(Navegador navegador) {
+        this.navegador = navegador;
+    }
 
     public void configurarSesion(UsuarioDTO usuarioActual, Navegador navegador) {
         this.usuarioActual = usuarioActual;
@@ -188,8 +191,8 @@ public class PnlMenuLateral extends javax.swing.JPanel {
     }//GEN-LAST:event_BtnCerrarSesionActionPerformed
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
-         if (navegador != null) {
-             navegador.abrirInicio(ventanaActual());
+        if (navegador != null) {
+            navegador.abrirInicio(ventanaActual());
         }
     }//GEN-LAST:event_btnInicioActionPerformed
 
@@ -198,23 +201,23 @@ public class PnlMenuLateral extends javax.swing.JPanel {
     }//GEN-LAST:event_btnArtistasActionPerformed
 
     private void btnAlbumesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlbumesActionPerformed
-       if (navegador != null) {
-          navegador.abrirAlbumes(ventanaActual());
+        if (navegador != null) {
+            navegador.abrirAlbumes(ventanaActual());
         }
     }//GEN-LAST:event_btnAlbumesActionPerformed
 
     private void btnCancionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancionesActionPerformed
         if (navegador != null) {
-             navegador.abrirCanciones(ventanaActual());
+            navegador.abrirCanciones(ventanaActual());
         }
     }//GEN-LAST:event_btnCancionesActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
-         if (navegador != null) {
-             navegador.abrirPerfil(ventanaActual());
+        if (navegador != null) {
+            navegador.abrirPerfil(ventanaActual());
         }
     }//GEN-LAST:event_btnPerfilActionPerformed
-    
+
     private JFrame ventanaActual() {
         Window actual = SwingUtilities.getWindowAncestor(this);
         if (actual instanceof JFrame) {
