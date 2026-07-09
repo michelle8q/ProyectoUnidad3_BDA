@@ -4,7 +4,9 @@
  */
 package negocio;
 
+import dtos.CancionDetallesDTO;
 import entidades.CancionEntidad;
+import java.util.ArrayList;
 import java.util.List;
 import org.bson.types.ObjectId;
 import persistencia.ICancionDAO;
@@ -44,15 +46,17 @@ public class CancionNegocio implements ICancionNegocio {
      * @throws NegocioException si los datos no son validos o si ocurre un error en persistencia.
      */
     @Override
-    public CancionEntidad guardar(ObjectId idAlbum, CancionEntidad nuevaCancion) throws NegocioException {
+    public CancionDetallesDTO guardar(ObjectId idAlbum, CancionEntidad nuevaCancion) throws NegocioException {
         try {
             validarIdAlbum(idAlbum);
             validarCancion(nuevaCancion);
-
+            
+            CancionEntidad entidad = new CancionEntidad();
             nuevaCancion.setNombre(nuevaCancion.getNombre().trim());
             nuevaCancion.setDuracion(nuevaCancion.getDuracion().trim());
-
-            return cancionDAO.guardar(idAlbum, nuevaCancion);
+            
+            CancionEntidad guardada = cancionDAO.guardar(idAlbum, entidad);
+            return convertirADTO(guardada);
 
         } catch (PersistenciaException ex) {
             throw new NegocioException("No se pudo guardar la cancion: " + ex.getMessage());
@@ -69,9 +73,10 @@ public class CancionNegocio implements ICancionNegocio {
      * @throws NegocioException si ocurre un error al consultar.
      */
     @Override
-    public List<CancionEntidad> consultarTodas() throws NegocioException {
+    public List<CancionDetallesDTO> consultarTodas() throws NegocioException {
         try {
-            return cancionDAO.consultarTodas();
+            List<CancionEntidad> entidades = cancionDAO.consultarTodas();
+            return convertirListaADTO(entidades);
         } catch (PersistenciaException ex) {
             throw new NegocioException("No se pudieron consultar las canciones: " + ex.getMessage());
         }
@@ -83,39 +88,21 @@ public class CancionNegocio implements ICancionNegocio {
      * Se valida que el texto de busqueda no este vacio antes de mandarlo al DAO.
      * Esto evita hacer consultas sin sentido desde la interfaz.
      *
-     * @param nombre texto que se desea buscar.
+     * @param texto texto que se desea buscar.
      * @return lista de canciones que coinciden con el nombre.
      * @throws NegocioException si el nombre no es valido o si ocurre un error al buscar.
      */
     @Override
-    public List<CancionEntidad> buscarPorNombre(String nombre) throws NegocioException {
+    public List<CancionDetallesDTO> buscarPorTexto(String texto) throws NegocioException {
         try {
-            validarTextoBusqueda(nombre, "nombre de la cancion");
-            return cancionDAO.buscarPorNombre(nombre.trim());
+            validarTextoBusqueda(texto);
+            List<CancionEntidad> entidades = cancionDAO.buscarPorTexto(texto.trim());
+            return convertirListaADTO(entidades);
         } catch (PersistenciaException ex) {
             throw new NegocioException("No se pudieron buscar canciones por nombre: " + ex.getMessage());
         }
     }
 
-    /**
-     * Busca canciones usando el genero del album.
-     *
-     * Como la cancion no tiene genero propio, se busca por el genero del album
-     * donde esta registrada.
-     *
-     * @param nombreGenero genero del album.
-     * @return lista de canciones que pertenecen a albumes de ese genero.
-     * @throws NegocioException si el genero no es valido o si ocurre un error al buscar.
-     */
-    @Override
-    public List<CancionEntidad> buscarPorGeneroAlbum(String nombreGenero) throws NegocioException {
-        try {
-            validarTextoBusqueda(nombreGenero, "genero");
-            return cancionDAO.buscarPorGeneroAlbum(nombreGenero.trim());
-        } catch (PersistenciaException ex) {
-            throw new NegocioException("No se pudieron buscar canciones por genero: " + ex.getMessage());
-        }
-    }
 
     /**
      * Valida que el id del album no venga vacio.
@@ -156,9 +143,43 @@ public class CancionNegocio implements ICancionNegocio {
      * @param campo nombre del campo que se esta validando.
      * @throws NegocioException si el texto esta vacio.
      */
-    private void validarTextoBusqueda(String texto, String campo) throws NegocioException {
+    private void validarTextoBusqueda(String texto) throws NegocioException {
         if (texto == null || texto.trim().isEmpty()) {
-            throw new NegocioException("Debe ingresar un campo para buscar.");
+            throw new NegocioException("Debe ingresar un TExto para buscar.");
         }
     }
+    
+     /**
+     * Convierte una entidad de cancion a su DTO correspondiente.
+     */
+    private CancionDetallesDTO convertirADTO(CancionEntidad entidad) {
+        CancionDetallesDTO dto = new CancionDetallesDTO();
+        
+        if (entidad.getId() != null) {
+            dto.setId(entidad.getId().toString());
+        }
+        dto.setNombre(entidad.getNombre());
+        dto.setDuracion(entidad.getDuracion());
+        dto.setNombreAlbum(entidad.getNombreAlbum());
+        dto.setImagenAlbum(entidad.getImagenAlbum());
+        dto.setNombreArtista(entidad.getNombreArtista());
+        
+        if (entidad.getGenero() != null) {
+            dto.setGenero(entidad.getGenero().getNombre());
+        }
+        
+        return dto;
+    }
+    
+    /**
+     * Convierte una lista de entidades de cancion a una lista de DTOs.
+     */
+    private List<CancionDetallesDTO> convertirListaADTO(List<CancionEntidad> entidades) {
+        List<CancionDetallesDTO> resultado = new ArrayList<>();
+        for (CancionEntidad entidad : entidades) {
+            resultado.add(convertirADTO(entidad));
+        }
+        return resultado;
+    }
+
 }

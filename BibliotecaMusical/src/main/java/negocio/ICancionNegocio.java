@@ -4,6 +4,7 @@
  */
 package negocio;
 
+import dtos.CancionDetallesDTO;
 import entidades.CancionEntidad;
 import java.util.List;
 import org.bson.types.ObjectId;
@@ -29,7 +30,7 @@ public interface ICancionNegocio {
      * @return la cancion guardada.
      * @throws NegocioException si los datos no son validos o si ocurre un error.
      */
-    CancionEntidad guardar(ObjectId idAlbum, CancionEntidad nuevaCancion) throws NegocioException;
+    CancionDetallesDTO guardar(ObjectId idAlbum, CancionEntidad nuevaCancion) throws NegocioException;
     
     
     /**
@@ -41,28 +42,8 @@ public interface ICancionNegocio {
      * @return lista de canciones registradas.
      * @throws NegocioException si ocurre un error al consultar.
      */
-    List<CancionEntidad> consultarTodas() throws NegocioException;
+    List<CancionDetallesDTO> consultarTodas() throws NegocioException;
     
-    /**
-     * Busca canciones por su nombre.
-     *
-     * Se utiliza cuando el usuario escribe texto en el buscador de canciones.
-     *
-     * @param nombre texto que se desea buscar.
-     * @return lista de canciones que coinciden con el texto.
-     * @throws NegocioException si el texto de busqueda no es valido o si ocurre un error.
-     */
-    List<CancionEntidad> buscarPorNombre(String nombre) throws NegocioException;
+    List<CancionDetallesDTO> buscarPorTexto(String texto) throws NegocioException;
     
-    /**
-     * Busca canciones por el genero del album.
-     *
-     * Como la cancion no guarda genero propio se agarra como referencia el genero
-     * del album al que pertenece.
-     *
-     * @param nombreGenero genero del album que se desea buscar.
-     * @return lista de canciones que pertenecen a albumes de ese genero.
-     * @throws NegocioException si el genero no es valido o si ocurre un error.
-     */
-    List<CancionEntidad> buscarPorGeneroAlbum(String nombreGenero) throws NegocioException;
 }

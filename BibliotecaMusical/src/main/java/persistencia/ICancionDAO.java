@@ -34,21 +34,5 @@ public interface ICancionDAO {
      */
     List<CancionEntidad> consultarTodas() throws PersistenciaException;
     
-    /**
-     * Busca canciones por coincidencia en el nombre.
-     *
-     * @param nombre texto a buscar en el nombre de la cancion.
-     * @return lista de canciones que coinciden con el texto.
-     * @throws PersistenciaException si ocurre un error al buscar.
-     */
-    List<CancionEntidad> buscarPorNombre(String nombre) throws PersistenciaException;
-    
-    /**
-     * Busca canciones usando el genero del album al que pertenecen.
-     *
-     * @param nombreGenero genero del album.
-     * @return lista de canciones de albumes que coinciden con ese genero.
-     * @throws PersistenciaException si ocurre un error al buscar.
-     */
-    List<CancionEntidad> buscarPorGeneroAlbum(String nombreGenero) throws PersistenciaException;
+    List<CancionEntidad> buscarPorTexto(String texto) throws PersistenciaException;
 }

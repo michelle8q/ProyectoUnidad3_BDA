@@ -6,13 +6,18 @@ package persistencia;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
 import entidades.AlbumEntidad;
 import entidades.CancionEntidad;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 /**
@@ -78,100 +83,80 @@ public class CancionDAO implements ICancionDAO {
     }
     
     /**
-    * Consulta todas las canciones registradas en todos los albumes.
-    *
-    * Como las canciones estan guardadas dentro de cada album primero se consultan
-    * todos los albumes y despues se recorre la lista de canciones de cada uno.
-    * Esto sirve para llenar la pantalla general de canciones.
-    *
-    * @return lista con todas las canciones encontradas.
-    * @throws PersistenciaException si ocurre un error al consultar la base de datos.
+     * Consulta todas las canciones registradas, ya combinadas con el nombre e
+     * imagen del album, el nombre del artista y el genero. Se usa cuando la
+     * pantalla de Canciones se abre sin ningun filtro activo en el buscador.
+     *
+     * @return lista de canciones con su informacion de contexto.
+     * @throws PersistenciaException si ocurre un error al consultar la base de datos.
     */
     @Override
     public List<CancionEntidad> consultarTodas() throws PersistenciaException {
         try {
             MongoDatabase bd = conexion.conexion();
+            MongoCollection<Document> collection = bd.getCollection("albumes");
 
-            MongoCollection<AlbumEntidad> collection = bd.getCollection("albumes", AlbumEntidad.class);
+            Bson etapaUnwind = Aggregates.unwind("$canciones");
 
-            List<CancionEntidad> canciones = new ArrayList<>();
+            Bson etapaProyeccion = Aggregates.project(Projections.fields(
+                    Projections.computed("_id", "$canciones._id"),
+                    Projections.computed("nombre", "$canciones.nombre"),
+                    Projections.computed("duracion", "$canciones.duracion"),
+                    Projections.computed("nombreAlbum", "$nombre"),
+                    Projections.computed("imagenAlbum", "$imagen"),
+                    Projections.computed("nombreArtista", "$nombreArtista"),
+                    Projections.include("genero")));
 
-            for (AlbumEntidad album : collection.find()) {
-                if (album.getCanciones() != null) {
-                    canciones.addAll(album.getCanciones());
-                }
-            }
-            return canciones;
-
+            return collection.aggregate(
+                    Arrays.asList(etapaUnwind, etapaProyeccion),
+                    CancionEntidad.class
+            ).into(new ArrayList<>());
+            
         } catch (Exception ex) {
             throw new PersistenciaException("Error al consultar canciones: " + ex.getMessage());
         }
     }
     
     /**
-    * Busca canciones por coincidencia en el nombre.
-    *
-    * La busqueda se hace recorriendo las canciones que estan dentro de los albumes.
-    * No se ocupa que el nombre sea exactamente igual, porque se usa contains
-    * para permitir coincidencias parciales asi como el buscador en spotify.
-    *
-    * @param nombre texto que se desea buscar dentro del nombre de la cancion.
-    * @return lista de canciones que coinciden con el texto buscado.
-    * @throws PersistenciaException si ocurre un error durante la consulta.
-    */
+     * Busca canciones por texto libre, para el buscador general de la aplicacion.
+     *
+     * El texto se compara tanto contra el nombre de la cancion como contra el
+     * nombre del genero del album al que pertenece, usando coincidencia parcial
+     * (sin distinguir mayusculas).
+     *
+     * @param texto texto escrito por el usuario en el buscador.
+     * @return lista de canciones que coinciden con el texto, con su informacion de contexto.
+     * @throws PersistenciaException si ocurre un error al consultar la base de datos.
+     */
     @Override
-    public List<CancionEntidad> buscarPorNombre(String nombre) throws PersistenciaException {
+    public List<CancionEntidad> buscarPorTexto(String texto) throws PersistenciaException {
         try {
             MongoDatabase bd = conexion.conexion();
+            MongoCollection<Document> collection = bd.getCollection("albumes");
 
-            MongoCollection<AlbumEntidad> collection = bd.getCollection("albumes", AlbumEntidad.class);
+            Bson etapaUnwind = Aggregates.unwind("$canciones");
 
-            List<CancionEntidad> canciones = new ArrayList<>();
+            Bson etapaFiltro = Aggregates.match(Filters.or(
+                    Filters.regex("canciones.nombre", texto, "i"),
+                    Filters.regex("genero.nombre", texto, "i"),
+                    Filters.regex("nombreArtista", texto, "i")));
 
-            for (AlbumEntidad album : collection.find()) {
-                if (album.getCanciones() != null) {
-                    for (CancionEntidad cancion : album.getCanciones()) {
-                        if (cancion.getNombre() != null
-                                && cancion.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
-                            canciones.add(cancion);
-                        }
-                    }
-                }
-            } return canciones;
-        } catch (Exception ex) {
-            throw new PersistenciaException("Error al buscar canciones por nombre: " + ex.getMessage());
-        }
-    }
-    
-    /**
-    * Busca canciones tomando en cuenta el genero del album.
-    *
-    * La cancion no guarda genero propio porque hereda el genero del album donde
-    * esta registrada. Por eso primero se buscan los albumes que coincidan con el
-    * genero recibido y despues se agregan sus canciones al resultado.
-    *
-    * @param nombreGenero nombre del genero que se desea buscar.
-    * @return lista de canciones que pertenecen a albumes de ese genero.
-    * @throws PersistenciaException si ocurre un error al consultar la base de datos.
-    */
-    @Override
-    public List<CancionEntidad> buscarPorGeneroAlbum(String nombreGenero) throws PersistenciaException {
-        try {
-            MongoDatabase bd = conexion.conexion();
+            Bson etapaProyeccion = Aggregates.project(Projections.fields(
+                    Projections.computed("_id", "$canciones._id"),
+                    Projections.computed("nombre", "$canciones.nombre"),
+                    Projections.computed("duracion", "$canciones.duracion"),
+                    Projections.computed("nombreAlbum", "$nombre"),
+                    Projections.computed("imagenAlbum", "$imagen"),
+                    Projections.computed("nombreArtista", "$nombreArtista"),
+                    Projections.include("genero")));
 
-            MongoCollection<AlbumEntidad> collection =bd.getCollection("albumes", AlbumEntidad.class);
-
-            List<CancionEntidad> canciones = new ArrayList<>();
-
-            for (AlbumEntidad album : collection.find(Filters.regex("genero.nombre", nombreGenero, "i"))) {
-
-                if (album.getCanciones() != null) {
-                    canciones.addAll(album.getCanciones());
-                }
-            } return canciones;
+            return collection.aggregate(
+                    Arrays.asList(etapaUnwind, etapaFiltro, etapaProyeccion),
+                    CancionEntidad.class
+            ).into(new ArrayList<>());
 
         } catch (Exception ex) {
-            throw new PersistenciaException("Error al buscar canciones por genero: " + ex.getMessage());
+            throw new PersistenciaException("Error al buscar canciones: " + ex.getMessage());
         }
     }
 }
