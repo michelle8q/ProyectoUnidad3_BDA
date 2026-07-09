@@ -35,9 +35,13 @@ public class FrmAlbumes extends javax.swing.JFrame {
         BtnInsert = new javax.swing.JButton();
         BtnCerrarSesion = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        LblInicio1 = new javax.swing.JLabel();
+        lblFecha = new javax.swing.JLabel();
         TxTBuscador1 = new javax.swing.JTextField();
         BtnBuscar1 = new javax.swing.JButton();
+        LblInicio2 = new javax.swing.JLabel();
+        jcbGenero = new javax.swing.JComboBox<>();
+        lblGenero1 = new javax.swing.JLabel();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -120,8 +124,8 @@ public class FrmAlbumes extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(51, 51, 51));
         jPanel2.setPreferredSize(new java.awt.Dimension(817, 91));
 
-        LblInicio1.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
-        LblInicio1.setText("Albumes");
+        lblFecha.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        lblFecha.setText("Fecha de lanzamiento:");
 
         TxTBuscador1.setBackground(new java.awt.Color(0, 0, 0));
         TxTBuscador1.setForeground(new java.awt.Color(255, 255, 255));
@@ -135,6 +139,22 @@ public class FrmAlbumes extends javax.swing.JFrame {
             }
         });
 
+        LblInicio2.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        LblInicio2.setText("Albumes");
+
+        jcbGenero.setBackground(new java.awt.Color(109, 79, 130));
+        jcbGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        lblGenero1.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        lblGenero1.setText("Genero:");
+
+        jFormattedTextField1.setText("dd/mm/aaaa");
+        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormattedTextField1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -143,24 +163,52 @@ public class FrmAlbumes extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(LblInicio1)
+                        .addGap(109, 109, 109)
+                        .addComponent(jcbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblFecha)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(TxTBuscador1, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BtnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(17, 17, 17))))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(35, 35, 35)
+                    .addComponent(LblInicio2)
+                    .addContainerGap(684, Short.MAX_VALUE)))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(41, 41, 41)
+                    .addComponent(lblGenero1)
+                    .addContainerGap(690, Short.MAX_VALUE)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(LblInicio1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(44, 44, 44)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TxTBuscador1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblFecha)
+                    .addComponent(jcbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(16, 16, 16)
+                    .addComponent(LblInicio2)
+                    .addContainerGap(69, Short.MAX_VALUE)))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addContainerGap(93, Short.MAX_VALUE)
+                    .addComponent(lblGenero1)
+                    .addContainerGap()))
         );
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
@@ -173,7 +221,7 @@ public class FrmAlbumes extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 508, Short.MAX_VALUE)
+            .addGap(0, 482, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -194,7 +242,7 @@ public class FrmAlbumes extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(PnlFondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -214,6 +262,10 @@ public class FrmAlbumes extends javax.swing.JFrame {
     private void BtnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscar1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnBuscar1ActionPerformed
+
+    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -258,11 +310,15 @@ public class FrmAlbumes extends javax.swing.JFrame {
     private javax.swing.JLabel LblArtistas;
     private javax.swing.JLabel LblCanciones;
     private javax.swing.JLabel LblInicio;
-    private javax.swing.JLabel LblInicio1;
+    private javax.swing.JLabel LblInicio2;
     private javax.swing.JLabel LblPerfil;
     private javax.swing.JPanel PnlFondo;
     private javax.swing.JTextField TxTBuscador1;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JComboBox<String> jcbGenero;
+    private javax.swing.JLabel lblFecha;
+    private javax.swing.JLabel lblGenero1;
     // End of variables declaration//GEN-END:variables
 }
