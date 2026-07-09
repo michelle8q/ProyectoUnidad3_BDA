@@ -15,7 +15,7 @@ import negocio.IUsuarioNegocio;
 public class FrmListaGeneros extends javax.swing.JFrame {
     
     private UsuarioDTO usuarioActual;
-    private IUsuarioNegocio usuarioNegocio;
+    private Navegador navegador;
     
     /**
      * Creates new form FrmListaGeneros
@@ -24,10 +24,10 @@ public class FrmListaGeneros extends javax.swing.JFrame {
         initComponents();
     }
     
-    public FrmListaGeneros(UsuarioDTO usuarioActual, IUsuarioNegocio usuarioNegocio) {
+    public FrmListaGeneros(UsuarioDTO usuarioActual, Navegador navegador) {
         initComponents();
         this.usuarioActual = usuarioActual;
-        this.usuarioNegocio = usuarioNegocio;
+        this.navegador = navegador;
         cargarGeneros();
     }
 

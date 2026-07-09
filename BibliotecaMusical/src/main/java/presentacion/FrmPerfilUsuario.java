@@ -5,7 +5,6 @@
 package presentacion;
 
 import dtos.UsuarioDTO;
-import negocio.IUsuarioNegocio;
 
 /**
  *
@@ -14,7 +13,7 @@ import negocio.IUsuarioNegocio;
 public class FrmPerfilUsuario extends javax.swing.JFrame {
     
     private UsuarioDTO usuarioActual;
-    private  IUsuarioNegocio usuarioNegocio;
+    private Navegador navegador;
 
     /**
      * Creates new form FrmPerfilUsuario
@@ -23,10 +22,10 @@ public class FrmPerfilUsuario extends javax.swing.JFrame {
         initComponents();
     }
     
-    public FrmPerfilUsuario(UsuarioDTO usuarioActual, IUsuarioNegocio usuarioNegocio) {
+    public FrmPerfilUsuario(UsuarioDTO usuarioActual, Navegador navegador) {
         initComponents();
         this.usuarioActual = usuarioActual;
-        this.usuarioNegocio = usuarioNegocio;
+        this.navegador = navegador;
         cargarPerfil();
 
     }
@@ -219,7 +218,7 @@ public class FrmPerfilUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNoDeseadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoDeseadosActionPerformed
-        FrmListaGeneros ventana = new FrmListaGeneros(usuarioActual, usuarioNegocio);
+        FrmListaGeneros ventana = new FrmListaGeneros(usuarioActual, navegador);
         ventana.setVisible(true);
     }//GEN-LAST:event_btnNoDeseadosActionPerformed
 

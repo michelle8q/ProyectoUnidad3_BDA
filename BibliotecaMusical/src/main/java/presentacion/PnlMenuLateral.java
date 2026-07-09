@@ -8,7 +8,7 @@ import dtos.UsuarioDTO;
 import java.awt.Window;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import negocio.IUsuarioNegocio;
+
 
 /**
  *
@@ -17,7 +17,7 @@ import negocio.IUsuarioNegocio;
 public class PnlMenuLateral extends javax.swing.JPanel {
     
     private UsuarioDTO usuarioActual;
-    private IUsuarioNegocio usuarioNegocio;
+    private Navegador navegador;
     /**
      * Creates new form PnlMenuLateral
      */
@@ -26,9 +26,9 @@ public class PnlMenuLateral extends javax.swing.JPanel {
     }
     
 
-    public void configurarSesion(UsuarioDTO usuarioActual, IUsuarioNegocio usuarioNegocio) {
+    public void configurarSesion(UsuarioDTO usuarioActual, Navegador navegador) {
         this.usuarioActual = usuarioActual;
-        this.usuarioNegocio = usuarioNegocio;
+        this.navegador = navegador;
     }
 
     /**
@@ -183,7 +183,9 @@ public class PnlMenuLateral extends javax.swing.JPanel {
     }//GEN-LAST:event_BtnCerrarSesionActionPerformed
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
-        abrirVentana(new FrmInicio(usuarioActual, usuarioNegocio));
+         if (navegador != null) {
+             navegador.abrirInicio(ventanaActual());
+        }
     }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnArtistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArtistasActionPerformed
@@ -191,25 +193,29 @@ public class PnlMenuLateral extends javax.swing.JPanel {
     }//GEN-LAST:event_btnArtistasActionPerformed
 
     private void btnAlbumesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlbumesActionPerformed
-        abrirVentana(new FrmAlbumes());
+       if (navegador != null) {
+          //  navegador.abrirAlbumes(ventanaActual());
+        }
     }//GEN-LAST:event_btnAlbumesActionPerformed
 
     private void btnCancionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancionesActionPerformed
-        abrirVentana(new FrmCanciones(usuarioActual, usuarioNegocio));
+        if (navegador != null) {
+             navegador.abrirCanciones(ventanaActual());
+        }
     }//GEN-LAST:event_btnCancionesActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
-        abrirVentana(new FrmPerfilUsuario(usuarioActual, usuarioNegocio));
+         if (navegador != null) {
+             navegador.abrirPerfil(ventanaActual());
+        }
     }//GEN-LAST:event_btnPerfilActionPerformed
     
-    private void abrirVentana(JFrame ventana) {
-        ventana.setLocationRelativeTo(null);
-        ventana.setVisible(true);
-
+    private JFrame ventanaActual() {
         Window actual = SwingUtilities.getWindowAncestor(this);
-        if (actual != null) {
-            actual.dispose();
+        if (actual instanceof JFrame) {
+            return (JFrame) actual;
         }
+        return null;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

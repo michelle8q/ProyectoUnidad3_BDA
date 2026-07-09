@@ -23,7 +23,7 @@ import negocio.NegocioException;
  */
 public class FrmCanciones extends javax.swing.JFrame {
     private UsuarioDTO usuarioActual;
-    private IUsuarioNegocio usuarioNegocio;
+    private Navegador navegador;
     private ICancionNegocio cancionNegocio;
     
     /**
@@ -37,15 +37,17 @@ public class FrmCanciones extends javax.swing.JFrame {
         
     }
     
-    public FrmCanciones(UsuarioDTO usuarioActual, IUsuarioNegocio usuarioNegocio) {
+    public FrmCanciones(UsuarioDTO usuarioActual, Navegador navegador, ICancionNegocio cancionNegocio) {
         initComponents();
 
         this.usuarioActual = usuarioActual;
-        this.usuarioNegocio = usuarioNegocio;
+        this.navegador = navegador;
+        this.cancionNegocio = cancionNegocio;
+        
         pnlContenedor.removeAll();
         pnlContenedor.setLayout(new BoxLayout(pnlContenedor, BoxLayout.Y_AXIS));
         
-        pnlMenuLateral1.configurarSesion(usuarioActual, usuarioNegocio);
+        pnlMenuLateral1.configurarSesion(usuarioActual, navegador);
 
         cargarCanciones();
         

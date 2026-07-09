@@ -5,7 +5,6 @@
 package presentacion;
 
 import dtos.UsuarioDTO;
-import negocio.IUsuarioNegocio;
 
 /**
  *
@@ -13,23 +12,26 @@ import negocio.IUsuarioNegocio;
  */
 public class FrmInicio extends javax.swing.JFrame {
     
-    private UsuarioDTO usuarioActual;
-    private IUsuarioNegocio usuarioNegocio;
+
+    private UsuarioDTO usuarioDTO;
+    private Navegador navegador;
     
     /**
      * Creates new form FrmInicio
      */
     public FrmInicio() {
-        initComponents();
+        initComponents(); 
+        setMinimumSize(new java.awt.Dimension(1080, 650));
+        setLocationRelativeTo(null);
     }
     
-    public FrmInicio(UsuarioDTO usuarioActual, IUsuarioNegocio usuarioNegocio) {
+    public FrmInicio(UsuarioDTO usuarioDTO, Navegador navegador) {
         initComponents();
 
-        this.usuarioActual = usuarioActual;
-        this.usuarioNegocio = usuarioNegocio;
+        this.usuarioDTO = usuarioDTO;
+        this.navegador = navegador;
 
-        pnlMenuLateral2.configurarSesion(usuarioActual, usuarioNegocio);
+        pnlMenuLateral2.configurarSesion(usuarioDTO, navegador);
     }
     
     /**

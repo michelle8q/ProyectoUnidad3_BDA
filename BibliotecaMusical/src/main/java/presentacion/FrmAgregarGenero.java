@@ -18,6 +18,7 @@ public class FrmAgregarGenero extends javax.swing.JFrame {
     
     private UsuarioDTO usuarioActual;
     private IUsuarioNegocio usuarioNegocio;
+    private Navegador navegador;
     /**
      * Creates new form FrmAgregarGenero
      */
@@ -25,7 +26,7 @@ public class FrmAgregarGenero extends javax.swing.JFrame {
         initComponents();
     }
 
-    public FrmAgregarGenero(UsuarioDTO usuarioActual, IUsuarioNegocio usuarioNegocio) {
+    public FrmAgregarGenero(UsuarioDTO usuarioActual, IUsuarioNegocio usuarioNegocio, Navegador navegador) {
         initComponents();
         this.usuarioActual = usuarioActual;
         this.usuarioNegocio = usuarioNegocio;
@@ -146,10 +147,9 @@ public class FrmAgregarGenero extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Genero agregado correctamente.");
 
-            FrmListaGeneros ventana = new FrmListaGeneros(usuarioActual, usuarioNegocio);
-            ventana.setVisible(true);
-            dispose();
-
+           if (navegador != null) {
+                navegador.abrirListaGeneros(this);
+            }
         } catch (NegocioException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

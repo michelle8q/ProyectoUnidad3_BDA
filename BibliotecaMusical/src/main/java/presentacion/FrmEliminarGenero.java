@@ -16,6 +16,7 @@ import negocio.NegocioException;
 public class FrmEliminarGenero extends javax.swing.JFrame {
     
     private UsuarioDTO usuarioActual;
+    private Navegador navegador;
     private IUsuarioNegocio usuarioNegocio;
     
     /**
@@ -25,9 +26,10 @@ public class FrmEliminarGenero extends javax.swing.JFrame {
         initComponents();
     }
     
-    public FrmEliminarGenero(UsuarioDTO usuarioActual, IUsuarioNegocio usuarioNegocio) {
+    public FrmEliminarGenero(UsuarioDTO usuarioActual,IUsuarioNegocio usuarioNegocio,  Navegador navegador) {
         initComponents();
         this.usuarioActual = usuarioActual;
+        this.navegador = navegador;
         this.usuarioNegocio = usuarioNegocio;
     }
     /**
@@ -141,11 +143,11 @@ public class FrmEliminarGenero extends javax.swing.JFrame {
 
             usuarioActual = usuarioNegocio.eliminarGeneroNoDeseado(usuarioActual.getId(),nombreGenero);
 
-            JOptionPane.showMessageDialog(this, "Genero eliminado correctamente.");
-
-            FrmListaGeneros ventana = new FrmListaGeneros(usuarioActual, usuarioNegocio);
-            ventana.setVisible(true);
-            dispose();
+            JOptionPane.showMessageDialog(this, "Genero eliminado.");
+            
+            if (navegador != null) {
+                navegador.abrirListaGeneros(this);
+            }
 
         } catch (NegocioException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
