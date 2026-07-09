@@ -19,13 +19,15 @@ public class CancionEntidad {
     
     private ObjectId id;
     private String nombre;
+    private String duracion;
 
     public CancionEntidad() {
     }
 
-    public CancionEntidad(ObjectId id, String nombre) {
+    public CancionEntidad(ObjectId id, String nombre, String duracion) {
         this.id = id;
         this.nombre = nombre;
+        this.duracion = duracion;
     }
 
     public ObjectId getId() {
@@ -44,9 +46,17 @@ public class CancionEntidad {
         this.nombre = nombre;
     }   
 
+    public String getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(String duracion) {
+        this.duracion = duracion;
+    }
+    
     @Override
     public String toString() {
-        return "CancionEntidad{" + "id=" + id + ", nombre=" + nombre + '}';
+        return "CancionEntidad{" + "id=" + id + ", nombre=" + nombre + ", duracion= " + duracion +'}';
     }
     
 }

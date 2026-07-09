@@ -5,12 +5,14 @@
 package entidades;
 
 import java.util.Date;
+import org.bson.types.ObjectId;
 
 /**
  *
  * @author cinca
  */
 public class FavoritoEntidad {
+    private ObjectId id;
     private String nombre;
     private GeneroEntidad genero;
     private String tipo;
@@ -19,13 +21,22 @@ public class FavoritoEntidad {
     public FavoritoEntidad() {
     }
 
-    public FavoritoEntidad(String nombre, GeneroEntidad genero, String tipo, Date fechaAgregacion) {
+    public FavoritoEntidad(ObjectId id, String nombre, GeneroEntidad genero, String tipo, Date fechaAgregacion) {
+        this.id = id;
         this.nombre = nombre;
         this.tipo = tipo;
         this.fechaAgregacion = fechaAgregacion;
         this.genero = genero;
     }
 
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+    
     public String getNombre() {
         return nombre;
     }

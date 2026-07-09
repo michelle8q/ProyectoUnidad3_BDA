@@ -4,6 +4,7 @@
  */
 package entidades;
 
+import java.util.Date;
 import java.util.List;
 import org.bson.types.ObjectId;
 
@@ -16,17 +17,19 @@ public class AlbumEntidad {
     private String nombre;
     private GeneroEntidad genero;
     private String imagen;
+    private Date fechaLanzamiento;
     private List<CancionEntidad> canciones;
 
     public AlbumEntidad() {
     }
     
     // Falta definir el genero
-    public AlbumEntidad(ObjectId id, String nombre, GeneroEntidad genero, String imagen, List<CancionEntidad> canciones) {
+    public AlbumEntidad(ObjectId id, String nombre, GeneroEntidad genero, String imagen, Date fechaLanzamiento, List<CancionEntidad> canciones) {
         this.id = id;
         this.nombre = nombre;
         this.genero = genero;
         this.imagen = imagen;
+        this.fechaLanzamiento = fechaLanzamiento;
         this.canciones = canciones;
     }
 
@@ -54,6 +57,15 @@ public class AlbumEntidad {
         this.imagen = imagen;
     }
 
+    public Date getFechaLanzamiento() {
+        return fechaLanzamiento;
+    }
+
+    public void setFechaLanzamiento(Date fechaLanzamiento) {
+        this.fechaLanzamiento = fechaLanzamiento;
+    }
+    
+    
     public List<CancionEntidad> getCanciones() {
         return canciones;
     }
