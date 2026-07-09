@@ -13,17 +13,18 @@ import org.bson.types.ObjectId;
  * @author cinca
  */
 public class AlbumEntidad {
+
     private ObjectId id;
     private String nombre;
     private GeneroEntidad genero;
     private String imagen;
     private Date fechaLanzamiento;
     private List<CancionEntidad> canciones;
+    private String nombreArtista;
 
     public AlbumEntidad() {
     }
-    
-    // Falta definir el genero
+
     public AlbumEntidad(ObjectId id, String nombre, GeneroEntidad genero, String imagen, Date fechaLanzamiento, List<CancionEntidad> canciones) {
         this.id = id;
         this.nombre = nombre;
@@ -64,8 +65,7 @@ public class AlbumEntidad {
     public void setFechaLanzamiento(Date fechaLanzamiento) {
         this.fechaLanzamiento = fechaLanzamiento;
     }
-    
-    
+
     public List<CancionEntidad> getCanciones() {
         return canciones;
     }
@@ -82,10 +82,17 @@ public class AlbumEntidad {
         this.genero = genero;
     }
 
+    public String getNombreArtista() {
+        return nombreArtista;
+    }
+
+    public void setNombreArtista(String nombreArtista) {
+        this.nombreArtista = nombreArtista;
+    }
+
     @Override
     public String toString() {
         return "AlbumEntidad{" + "id=" + id + ", nombre=" + nombre + ", genero=" + genero + ", imagen=" + imagen + ", canciones=" + canciones + '}';
     }
-    
-    
+
 }
