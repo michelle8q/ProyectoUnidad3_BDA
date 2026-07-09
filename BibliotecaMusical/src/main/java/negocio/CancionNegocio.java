@@ -51,11 +51,11 @@ public class CancionNegocio implements ICancionNegocio {
             validarIdAlbum(idAlbum);
             validarCancion(nuevaCancion);
             
-            CancionEntidad entidad = new CancionEntidad();
+            //CancionEntidad entidad = new CancionEntidad();
             nuevaCancion.setNombre(nuevaCancion.getNombre().trim());
             nuevaCancion.setDuracion(nuevaCancion.getDuracion().trim());
             
-            CancionEntidad guardada = cancionDAO.guardar(idAlbum, entidad);
+            CancionEntidad guardada = cancionDAO.guardar(idAlbum, nuevaCancion);
             return convertirADTO(guardada);
 
         } catch (PersistenciaException ex) {

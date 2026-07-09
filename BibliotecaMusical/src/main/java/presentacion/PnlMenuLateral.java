@@ -27,13 +27,13 @@ public class PnlMenuLateral extends javax.swing.JPanel {
     private void initComponents() {
 
         PnlFondo = new javax.swing.JPanel();
-        LblInicio = new javax.swing.JLabel();
-        LblAlbumes = new javax.swing.JLabel();
-        LblArtistas = new javax.swing.JLabel();
-        LblCanciones = new javax.swing.JLabel();
-        LblPerfil = new javax.swing.JLabel();
         BtnInsert = new javax.swing.JButton();
         BtnCerrarSesion = new javax.swing.JButton();
+        btnInicio = new javax.swing.JButton();
+        btnArtistas = new javax.swing.JButton();
+        btnAlbumes = new javax.swing.JButton();
+        btnCanciones = new javax.swing.JButton();
+        btnPerfil = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(235, 603));
         setMinimumSize(new java.awt.Dimension(235, 603));
@@ -41,21 +41,6 @@ public class PnlMenuLateral extends javax.swing.JPanel {
 
         PnlFondo.setBackground(new java.awt.Color(51, 51, 51));
         PnlFondo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(144, 104, 225)));
-
-        LblInicio.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
-        LblInicio.setText("Inicio");
-
-        LblAlbumes.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
-        LblAlbumes.setText("Albumes");
-
-        LblArtistas.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
-        LblArtistas.setText("Artistas");
-
-        LblCanciones.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
-        LblCanciones.setText("Canciones");
-
-        LblPerfil.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
-        LblPerfil.setText("Perfil");
 
         BtnInsert.setBackground(new java.awt.Color(109, 79, 130));
         BtnInsert.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
@@ -75,6 +60,56 @@ public class PnlMenuLateral extends javax.swing.JPanel {
             }
         });
 
+        btnInicio.setBackground(new java.awt.Color(51, 51, 51));
+        btnInicio.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        btnInicio.setText("Inicio");
+        btnInicio.setBorder(null);
+        btnInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInicioActionPerformed(evt);
+            }
+        });
+
+        btnArtistas.setBackground(new java.awt.Color(51, 51, 51));
+        btnArtistas.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        btnArtistas.setText("Artistas");
+        btnArtistas.setBorder(null);
+        btnArtistas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnArtistasActionPerformed(evt);
+            }
+        });
+
+        btnAlbumes.setBackground(new java.awt.Color(51, 51, 51));
+        btnAlbumes.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        btnAlbumes.setText("Albumes");
+        btnAlbumes.setBorder(null);
+        btnAlbumes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlbumesActionPerformed(evt);
+            }
+        });
+
+        btnCanciones.setBackground(new java.awt.Color(51, 51, 51));
+        btnCanciones.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        btnCanciones.setText("Canciones");
+        btnCanciones.setBorder(null);
+        btnCanciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancionesActionPerformed(evt);
+            }
+        });
+
+        btnPerfil.setBackground(new java.awt.Color(51, 51, 51));
+        btnPerfil.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        btnPerfil.setText("Perfil");
+        btnPerfil.setBorder(null);
+        btnPerfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPerfilActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PnlFondoLayout = new javax.swing.GroupLayout(PnlFondo);
         PnlFondo.setLayout(PnlFondoLayout);
         PnlFondoLayout.setHorizontalGroup(
@@ -82,29 +117,29 @@ public class PnlMenuLateral extends javax.swing.JPanel {
             .addGroup(PnlFondoLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(PnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnPerfil)
+                    .addComponent(btnCanciones)
+                    .addComponent(btnAlbumes)
+                    .addComponent(btnArtistas)
+                    .addComponent(btnInicio)
                     .addComponent(BtnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LblPerfil)
-                    .addComponent(LblArtistas)
-                    .addComponent(LblAlbumes)
-                    .addComponent(LblInicio)
-                    .addComponent(LblCanciones))
-                .addContainerGap(48, Short.MAX_VALUE))
+                    .addComponent(BtnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         PnlFondoLayout.setVerticalGroup(
             PnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PnlFondoLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(LblInicio)
-                .addGap(51, 51, 51)
-                .addComponent(LblArtistas)
-                .addGap(58, 58, 58)
-                .addComponent(LblAlbumes)
+                .addGap(49, 49, 49)
+                .addComponent(btnInicio)
                 .addGap(50, 50, 50)
-                .addComponent(LblCanciones)
-                .addGap(51, 51, 51)
-                .addComponent(LblPerfil)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addComponent(btnArtistas)
+                .addGap(59, 59, 59)
+                .addComponent(btnAlbumes)
+                .addGap(50, 50, 50)
+                .addComponent(btnCanciones)
+                .addGap(46, 46, 46)
+                .addComponent(btnPerfil)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addComponent(BtnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(BtnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -133,15 +168,36 @@ public class PnlMenuLateral extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnCerrarSesionActionPerformed
 
+    private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnInicioActionPerformed
+
+    private void btnArtistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArtistasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnArtistasActionPerformed
+
+    private void btnAlbumesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlbumesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAlbumesActionPerformed
+
+    private void btnCancionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancionesActionPerformed
+        FrmCanciones ventana = new FrmCanciones();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_btnCancionesActionPerformed
+
+    private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPerfilActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnCerrarSesion;
     private javax.swing.JButton BtnInsert;
-    private javax.swing.JLabel LblAlbumes;
-    private javax.swing.JLabel LblArtistas;
-    private javax.swing.JLabel LblCanciones;
-    private javax.swing.JLabel LblInicio;
-    private javax.swing.JLabel LblPerfil;
     private javax.swing.JPanel PnlFondo;
+    private javax.swing.JButton btnAlbumes;
+    private javax.swing.JButton btnArtistas;
+    private javax.swing.JButton btnCanciones;
+    private javax.swing.JButton btnInicio;
+    private javax.swing.JButton btnPerfil;
     // End of variables declaration//GEN-END:variables
 }
