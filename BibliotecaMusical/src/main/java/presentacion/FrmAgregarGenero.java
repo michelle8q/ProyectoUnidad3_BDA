@@ -4,12 +4,20 @@
  */
 package presentacion;
 
+import dtos.GeneroDTO;
+import dtos.UsuarioDTO;
+import javax.swing.JOptionPane;
+import negocio.IUsuarioNegocio;
+import negocio.NegocioException;
+
 /**
  *
  * @author cinca
  */
 public class FrmAgregarGenero extends javax.swing.JFrame {
-
+    
+    private UsuarioDTO usuarioActual;
+    private IUsuarioNegocio usuarioNegocio;
     /**
      * Creates new form FrmAgregarGenero
      */
@@ -17,6 +25,11 @@ public class FrmAgregarGenero extends javax.swing.JFrame {
         initComponents();
     }
 
+    public FrmAgregarGenero(UsuarioDTO usuarioActual, IUsuarioNegocio usuarioNegocio) {
+        initComponents();
+        this.usuarioActual = usuarioActual;
+        this.usuarioNegocio = usuarioNegocio;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,6 +43,7 @@ public class FrmAgregarGenero extends javax.swing.JFrame {
         LblInicio = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
+        cmbGenero = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,6 +70,15 @@ public class FrmAgregarGenero extends javax.swing.JFrame {
             }
         });
 
+        cmbGenero.setBackground(new java.awt.Color(109, 79, 130));
+        cmbGenero.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        cmbGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "K-pop", "Rock Alternativo", "Reggaeton" }));
+        cmbGenero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbGeneroActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -64,12 +87,15 @@ public class FrmAgregarGenero extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(LblInicio)
-                        .addGap(83, 83, 83))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnCancelar)
-                        .addGap(47, 47, 47)))
-                .addComponent(btnAceptar)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(LblInicio)
+                                .addGap(83, 83, 83))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnCancelar)
+                                .addGap(47, 47, 47)))
+                        .addComponent(btnAceptar))
+                    .addComponent(cmbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(133, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -77,7 +103,9 @@ public class FrmAgregarGenero extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(LblInicio)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 199, Short.MAX_VALUE)
+                .addGap(35, 35, 35)
+                .addComponent(cmbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -99,12 +127,37 @@ public class FrmAgregarGenero extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        // TODO add your handling code here:
+        try {
+            String nombreGenero = cmbGenero.getSelectedItem().toString();
+
+            if (nombreGenero == null || nombreGenero.equals("Selecciona un genero")) {
+                JOptionPane.showMessageDialog(this, "Selecciona un genero.");
+                return;
+            }
+
+            GeneroDTO genero = new GeneroDTO();
+            genero.setNombre(nombreGenero);
+
+            usuarioActual = usuarioNegocio.agregarGeneroNoDeseado(usuarioActual.getId(),genero);
+
+            JOptionPane.showMessageDialog(this, "Genero agregado correctamente.");
+
+            FrmListaGeneros ventana = new FrmListaGeneros(usuarioActual, usuarioNegocio);
+            ventana.setVisible(true);
+            dispose();
+
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void cmbGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbGeneroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbGeneroActionPerformed
 
    
 
@@ -112,6 +165,7 @@ public class FrmAgregarGenero extends javax.swing.JFrame {
     private javax.swing.JLabel LblInicio;
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JComboBox<String> cmbGenero;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

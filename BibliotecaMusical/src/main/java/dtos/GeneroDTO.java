@@ -6,22 +6,27 @@ package dtos;
 
 /**
  *
- * @author luisf
+ * @author cinca
  */
-public class CancionDTO {
-
+public class GeneroDTO {
+    private String id;
     private String nombre;
-    private String duracion;
 
-    public CancionDTO() {
+    public GeneroDTO() {
     }
 
-    public CancionDTO(String nombre, String duracion) {
+    public GeneroDTO(String id, String nombre) {
+        this.id = id;
         this.nombre = nombre;
-        this.duracion = duracion;
     }
 
-    
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getNombre() {
         return nombre;
@@ -29,14 +34,6 @@ public class CancionDTO {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getDuracion() {
-        return duracion;
-    }
-
-    public void setDuracion(String duracion) {
-        this.duracion = duracion;
     }
     
     

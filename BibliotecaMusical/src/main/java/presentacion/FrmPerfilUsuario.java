@@ -4,11 +4,17 @@
  */
 package presentacion;
 
+import dtos.UsuarioDTO;
+import negocio.IUsuarioNegocio;
+
 /**
  *
  * @author cinca
  */
 public class FrmPerfilUsuario extends javax.swing.JFrame {
+    
+    private UsuarioDTO usuarioActual;
+    private  IUsuarioNegocio usuarioNegocio;
 
     /**
      * Creates new form FrmPerfilUsuario
@@ -16,7 +22,25 @@ public class FrmPerfilUsuario extends javax.swing.JFrame {
     public FrmPerfilUsuario() {
         initComponents();
     }
+    
+    public FrmPerfilUsuario(UsuarioDTO usuarioActual, IUsuarioNegocio usuarioNegocio) {
+        initComponents();
+        this.usuarioActual = usuarioActual;
+        this.usuarioNegocio = usuarioNegocio;
+        cargarPerfil();
 
+    }
+    private void cargarPerfil() {
+        if (usuarioActual == null) {
+            return;
+        }
+
+        lblUsuario.setText(usuarioActual.getUsuario());
+        lblCorreo.setText(usuarioActual.getCorreo());
+    }
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,6 +61,7 @@ public class FrmPerfilUsuario extends javax.swing.JFrame {
         btnEditar = new javax.swing.JButton();
         btnNoDeseados = new javax.swing.JButton();
         btnFavoritos = new javax.swing.JButton();
+        pnlMenuLateral1 = new presentacion.PnlMenuLateral();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1077, 622));
@@ -180,19 +205,22 @@ public class FrmPerfilUsuario extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 244, Short.MAX_VALUE)
+                .addComponent(pnlMenuLateral1, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlContenedor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlMenuLateral1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNoDeseadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoDeseadosActionPerformed
-        // TODO add your handling code here:
+        FrmListaGeneros ventana = new FrmListaGeneros(usuarioActual, usuarioNegocio);
+        ventana.setVisible(true);
     }//GEN-LAST:event_btnNoDeseadosActionPerformed
 
     private void btnFavoritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoritosActionPerformed
@@ -217,5 +245,6 @@ public class FrmPerfilUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JPanel pnlContenedor;
     private javax.swing.JPanel pnlImg;
+    private presentacion.PnlMenuLateral pnlMenuLateral1;
     // End of variables declaration//GEN-END:variables
 }

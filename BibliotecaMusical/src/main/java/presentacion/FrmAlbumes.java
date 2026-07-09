@@ -4,9 +4,11 @@
  */
 package presentacion;
 
-import DTOs.AlbumDTO;
+import dtos.AlbumDTO;
+import dtos.UsuarioDTO;
 import java.util.List;
 import negocio.IAlbumNegocio;
+import negocio.IUsuarioNegocio;
 
 /**
  *
@@ -27,7 +29,7 @@ public class FrmAlbumes extends javax.swing.JFrame {
         initComponents();
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -272,14 +274,6 @@ public class FrmAlbumes extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BtnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInsertActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnInsertActionPerformed
-
-    private void BtnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCerrarSesionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnCerrarSesionActionPerformed
-
     private void BtnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscar1ActionPerformed
         try {
             String texto = TxTBuscador1.getText();
@@ -325,6 +319,14 @@ public class FrmAlbumes extends javax.swing.JFrame {
     private void cbxGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxGeneroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxGeneroActionPerformed
+
+    private void BtnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCerrarSesionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnCerrarSesionActionPerformed
+
+    private void BtnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInsertActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnInsertActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -4,8 +4,8 @@
  */
 package presentacion;
 
-import DTOs.AlbumDTO;
-import DTOs.CancionDTO;
+import dtos.AlbumDTO;
+import dtos.CancionDTO;
 import java.util.List;
 
 /**

@@ -4,17 +4,31 @@
  */
 package presentacion;
 
+import dtos.UsuarioDTO;
+import java.awt.Window;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import negocio.IUsuarioNegocio;
+
 /**
  *
  * @author USUARIO
  */
 public class PnlMenuLateral extends javax.swing.JPanel {
-
+    
+    private UsuarioDTO usuarioActual;
+    private IUsuarioNegocio usuarioNegocio;
     /**
      * Creates new form PnlMenuLateral
      */
     public PnlMenuLateral() {
         initComponents();
+    }
+    
+
+    public void configurarSesion(UsuarioDTO usuarioActual, IUsuarioNegocio usuarioNegocio) {
+        this.usuarioActual = usuarioActual;
+        this.usuarioNegocio = usuarioNegocio;
     }
 
     /**
@@ -169,7 +183,7 @@ public class PnlMenuLateral extends javax.swing.JPanel {
     }//GEN-LAST:event_BtnCerrarSesionActionPerformed
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
-        // TODO add your handling code here:
+        abrirVentana(new FrmInicio(usuarioActual, usuarioNegocio));
     }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnArtistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArtistasActionPerformed
@@ -177,18 +191,26 @@ public class PnlMenuLateral extends javax.swing.JPanel {
     }//GEN-LAST:event_btnArtistasActionPerformed
 
     private void btnAlbumesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlbumesActionPerformed
-        // TODO add your handling code here:
+        abrirVentana(new FrmAlbumes());
     }//GEN-LAST:event_btnAlbumesActionPerformed
 
     private void btnCancionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancionesActionPerformed
-        FrmCanciones ventana = new FrmCanciones();
-        ventana.setVisible(true);
+        abrirVentana(new FrmCanciones(usuarioActual, usuarioNegocio));
     }//GEN-LAST:event_btnCancionesActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
-        // TODO add your handling code here:
+        abrirVentana(new FrmPerfilUsuario(usuarioActual, usuarioNegocio));
     }//GEN-LAST:event_btnPerfilActionPerformed
+    
+    private void abrirVentana(JFrame ventana) {
+        ventana.setLocationRelativeTo(null);
+        ventana.setVisible(true);
 
+        Window actual = SwingUtilities.getWindowAncestor(this);
+        if (actual != null) {
+            actual.dispose();
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnCerrarSesion;

@@ -14,7 +14,7 @@ public class prueba {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        FrmAlbumes ventanaPrincipal = new FrmAlbumes();
+        FrmInicio ventanaPrincipal = new FrmInicio();
 
         ventanaPrincipal.setLocationRelativeTo(null);
 

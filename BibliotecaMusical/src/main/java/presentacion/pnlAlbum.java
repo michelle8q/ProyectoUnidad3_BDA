@@ -4,7 +4,7 @@
  */
 package presentacion;
 
-import DTOs.AlbumDTO;
+import dtos.AlbumDTO;
 import java.awt.Color;
 
 /**

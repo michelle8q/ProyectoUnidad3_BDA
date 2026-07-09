@@ -27,14 +27,16 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="0" pref="244" max="32767" attributes="0"/>
+              <Component id="pnlMenuLateral1" pref="241" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="pnlContenedor" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="pnlContenedor" alignment="1" max="32767" attributes="0"/>
+          <Component id="pnlContenedor" max="32767" attributes="0"/>
+          <Component id="pnlMenuLateral1" alignment="1" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -262,5 +264,7 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="presentacion.PnlMenuLateral" name="pnlMenuLateral1">
+    </Component>
   </SubComponents>
 </Form>

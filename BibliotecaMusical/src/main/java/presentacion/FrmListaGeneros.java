@@ -4,17 +4,31 @@
  */
 package presentacion;
 
+import dtos.GeneroDTO;
+import dtos.UsuarioDTO;
+import negocio.IUsuarioNegocio;
+
 /**
  *
  * @author cinca
  */
 public class FrmListaGeneros extends javax.swing.JFrame {
-
+    
+    private UsuarioDTO usuarioActual;
+    private IUsuarioNegocio usuarioNegocio;
+    
     /**
      * Creates new form FrmListaGeneros
      */
     public FrmListaGeneros() {
         initComponents();
+    }
+    
+    public FrmListaGeneros(UsuarioDTO usuarioActual, IUsuarioNegocio usuarioNegocio) {
+        initComponents();
+        this.usuarioActual = usuarioActual;
+        this.usuarioNegocio = usuarioNegocio;
+        cargarGeneros();
     }
 
     /**
@@ -29,7 +43,7 @@ public class FrmListaGeneros extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        lblGeneros = new javax.swing.JLabel();
         LblInicio = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
 
@@ -55,8 +69,8 @@ public class FrmListaGeneros extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
-        jLabel1.setText("Generos");
+        lblGeneros.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        lblGeneros.setText("Generos");
 
         LblInicio.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
         LblInicio.setText("Lista de generos no deseados");
@@ -83,7 +97,7 @@ public class FrmListaGeneros extends javax.swing.JFrame {
                             .addComponent(btnAgregar)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnEliminar))
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lblGeneros, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(34, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -100,7 +114,7 @@ public class FrmListaGeneros extends javax.swing.JFrame {
                     .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblGeneros, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(18, Short.MAX_VALUE))
@@ -121,7 +135,7 @@ public class FrmListaGeneros extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -132,14 +146,28 @@ public class FrmListaGeneros extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnVolverActionPerformed
 
- 
+    private void cargarGeneros() {
+        if (usuarioActual.getGenerosNoDeseados() == null || usuarioActual.getGenerosNoDeseados().isEmpty()) {
+            lblGeneros.setText("Sin generos no deseados.");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder("<html>");
+
+        for (GeneroDTO genero : usuarioActual.getGenerosNoDeseados()) {
+            sb.append(genero.getNombre()).append("<br>");
+        }
+
+        sb.append("</html>");
+        lblGeneros.setText(sb.toString());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LblInicio;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblGeneros;
     // End of variables declaration//GEN-END:variables
 }

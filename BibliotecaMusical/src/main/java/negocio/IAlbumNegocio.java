@@ -4,7 +4,7 @@
  */
 package negocio;
 
-import DTOs.AlbumDTO;
+import dtos.AlbumDTO;
 import java.util.List;
 
 /**

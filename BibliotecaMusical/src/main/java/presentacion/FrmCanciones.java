@@ -5,6 +5,7 @@
 package presentacion;
 
 import dtos.CancionDetallesDTO;
+import dtos.UsuarioDTO;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import negocio.ICancionNegocio;
+import negocio.IUsuarioNegocio;
 import negocio.NegocioException;
 
 /**
@@ -20,7 +22,8 @@ import negocio.NegocioException;
  * @author cinca
  */
 public class FrmCanciones extends javax.swing.JFrame {
-    
+    private UsuarioDTO usuarioActual;
+    private IUsuarioNegocio usuarioNegocio;
     private ICancionNegocio cancionNegocio;
     
     /**
@@ -31,6 +34,21 @@ public class FrmCanciones extends javax.swing.JFrame {
         
         configurarPantalla();
         cargarCanciones();
+        
+    }
+    
+    public FrmCanciones(UsuarioDTO usuarioActual, IUsuarioNegocio usuarioNegocio) {
+        initComponents();
+
+        this.usuarioActual = usuarioActual;
+        this.usuarioNegocio = usuarioNegocio;
+        pnlContenedor.removeAll();
+        pnlContenedor.setLayout(new BoxLayout(pnlContenedor, BoxLayout.Y_AXIS));
+        
+        pnlMenuLateral1.configurarSesion(usuarioActual, usuarioNegocio);
+
+        cargarCanciones();
+        
     }
     
     public void cargarCanciones() {

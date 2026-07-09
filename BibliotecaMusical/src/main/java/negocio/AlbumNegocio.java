@@ -4,8 +4,8 @@
  */
 package negocio;
 
-import DTOs.AlbumDTO;
-import DTOs.CancionDTO;
+import dtos.AlbumDTO;
+import dtos.CancionDTO;
 import entidades.AlbumEntidad;
 import entidades.CancionEntidad;
 import java.text.ParseException;
