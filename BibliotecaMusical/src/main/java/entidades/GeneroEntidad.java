@@ -11,23 +11,23 @@ import org.bson.types.ObjectId;
  * @author cinca luisf
  */
 public class GeneroEntidad {
-    private ObjectId idGenero;
+    private ObjectId id;
     private String nombre;
 
     public GeneroEntidad() {
     }
 
     public GeneroEntidad(ObjectId idGenero, String nombre) {
-        this.idGenero = idGenero;
+        this.id = idGenero;
         this.nombre = nombre;
     }
 
     public ObjectId getId() {
-        return idGenero;
+        return id;
     }
 
     public void setId(ObjectId id) {
-        this.idGenero = id;
+        this.id = id;
     }
 
     public String getNombre() {
@@ -40,7 +40,7 @@ public class GeneroEntidad {
 
     @Override
     public String toString() {
-        return "GeneroEntidad{" + "idGenero=" + idGenero + ", nombre=" + nombre + '}';
+        return "GeneroEntidad{" + "idGenero=" + id + ", nombre=" + nombre + '}';
     }
     
     

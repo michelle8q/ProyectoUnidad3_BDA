@@ -37,6 +37,7 @@ public class PnlBuscador extends javax.swing.JPanel {
         jPanel2.setPreferredSize(new java.awt.Dimension(817, 91));
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setText("TituloPestaña");
 
         TxTBuscador1.setBackground(new java.awt.Color(0, 0, 0));

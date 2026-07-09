@@ -17,31 +17,28 @@ import negocio.IUsuarioNegocio;
 public class FrmAlbumes extends javax.swing.JFrame {
 
     private IAlbumNegocio albumNegocio;
+    private dtos.UsuarioDTO usuarioActual;
+    private Navegador navegador;
 
     /**
      * Creates new form FrmAlbumes
      */
-    public FrmAlbumes() {
+    public FrmAlbumes(dtos.UsuarioDTO usuarioActual, Navegador navegador) {
+        this.usuarioActual = usuarioActual;
+        this.navegador = navegador;
         persistencia.IConexionDAO conexion = new persistencia.ConexionDAO();
         persistencia.IAlbumDAO albumDAO = new persistencia.AlbumDAO(conexion);
         this.albumNegocio = new negocio.AlbumNegocio(albumDAO);
-
+        this.setLocationRelativeTo(null);
         initComponents();
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        PnlFondo = new javax.swing.JPanel();
-        LblInicio = new javax.swing.JLabel();
-        LblAlbumes = new javax.swing.JLabel();
-        LblArtistas = new javax.swing.JLabel();
-        LblCanciones = new javax.swing.JLabel();
-        LblPerfil = new javax.swing.JLabel();
-        BtnInsert = new javax.swing.JButton();
-        BtnCerrarSesion = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         lblFecha = new javax.swing.JLabel();
         TxTBuscador1 = new javax.swing.JTextField();
@@ -51,6 +48,7 @@ public class FrmAlbumes extends javax.swing.JFrame {
         lblGenero1 = new javax.swing.JLabel();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jPanel1 = new javax.swing.JPanel();
+        pnlMenuLateral2 = new presentacion.PnlMenuLateral();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 51, 51));
@@ -58,82 +56,7 @@ public class FrmAlbumes extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1073, 622));
         setPreferredSize(new java.awt.Dimension(1073, 622));
 
-        PnlFondo.setBackground(new java.awt.Color(51, 51, 51));
-        PnlFondo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(144, 104, 225)));
-
-        LblInicio.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
-        LblInicio.setForeground(new java.awt.Color(255, 255, 255));
-        LblInicio.setText("Inicio");
-
-        LblAlbumes.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
-        LblAlbumes.setForeground(new java.awt.Color(255, 255, 255));
-        LblAlbumes.setText("Albumes");
-
-        LblArtistas.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
-        LblArtistas.setForeground(new java.awt.Color(255, 255, 255));
-        LblArtistas.setText("Artistas");
-
-        LblCanciones.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
-        LblCanciones.setForeground(new java.awt.Color(255, 255, 255));
-        LblCanciones.setText("Canciones");
-
-        LblPerfil.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
-        LblPerfil.setForeground(new java.awt.Color(255, 255, 255));
-        LblPerfil.setText("Perfil");
-
-        BtnInsert.setBackground(new java.awt.Color(109, 79, 130));
-        BtnInsert.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
-        BtnInsert.setText("Insert Masivo");
-        BtnInsert.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnInsertActionPerformed(evt);
-            }
-        });
-
-        BtnCerrarSesion.setBackground(new java.awt.Color(0, 0, 0));
-        BtnCerrarSesion.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
-        BtnCerrarSesion.setText("Cerrar sesion");
-        BtnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnCerrarSesionActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout PnlFondoLayout = new javax.swing.GroupLayout(PnlFondo);
-        PnlFondo.setLayout(PnlFondoLayout);
-        PnlFondoLayout.setHorizontalGroup(
-            PnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PnlFondoLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(PnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BtnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LblPerfil)
-                    .addComponent(LblArtistas)
-                    .addComponent(LblAlbumes)
-                    .addComponent(LblInicio)
-                    .addComponent(LblCanciones))
-                .addContainerGap(37, Short.MAX_VALUE))
-        );
-        PnlFondoLayout.setVerticalGroup(
-            PnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PnlFondoLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(LblInicio)
-                .addGap(51, 51, 51)
-                .addComponent(LblArtistas)
-                .addGap(58, 58, 58)
-                .addComponent(LblAlbumes)
-                .addGap(50, 50, 50)
-                .addComponent(LblCanciones)
-                .addGap(51, 51, 51)
-                .addComponent(LblPerfil)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
-                .addComponent(BtnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(BtnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
-        );
+        jPanel3.setBackground(new java.awt.Color(51, 51, 51));
 
         jPanel2.setBackground(new java.awt.Color(51, 51, 51));
         jPanel2.setPreferredSize(new java.awt.Dimension(817, 91));
@@ -194,7 +117,7 @@ public class FrmAlbumes extends javax.swing.JFrame {
                         .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(TxTBuscador1, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
+                        .addComponent(TxTBuscador1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BtnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(17, 17, 17))))
@@ -240,39 +163,65 @@ public class FrmAlbumes extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 822, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 482, Short.MAX_VALUE)
         );
 
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlMenuLateral2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlMenuLateral2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(PnlFondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(PnlFondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
+
+    private void cbxGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxGeneroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxGeneroActionPerformed
 
     private void BtnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscar1ActionPerformed
         try {
@@ -309,43 +258,20 @@ public class FrmAlbumes extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "Error en la búsqueda: " + ex.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
 
-
     }//GEN-LAST:event_BtnBuscar1ActionPerformed
-
-    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
-
-    private void cbxGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxGeneroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbxGeneroActionPerformed
-
-    private void BtnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCerrarSesionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnCerrarSesionActionPerformed
-
-    private void BtnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInsertActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnInsertActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnBuscar1;
-    private javax.swing.JButton BtnCerrarSesion;
-    private javax.swing.JButton BtnInsert;
-    private javax.swing.JLabel LblAlbumes;
-    private javax.swing.JLabel LblArtistas;
-    private javax.swing.JLabel LblCanciones;
-    private javax.swing.JLabel LblInicio;
     private javax.swing.JLabel LblInicio2;
-    private javax.swing.JLabel LblPerfil;
-    private javax.swing.JPanel PnlFondo;
     private javax.swing.JTextField TxTBuscador1;
     private javax.swing.JComboBox<String> cbxGenero;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblGenero1;
+    private presentacion.PnlMenuLateral pnlMenuLateral2;
     // End of variables declaration//GEN-END:variables
 }

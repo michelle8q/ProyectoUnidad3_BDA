@@ -76,6 +76,7 @@ public class PnlMenuLateral extends javax.swing.JPanel {
 
         btnInicio.setBackground(new java.awt.Color(51, 51, 51));
         btnInicio.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        btnInicio.setForeground(new java.awt.Color(255, 255, 255));
         btnInicio.setText("Inicio");
         btnInicio.setBorder(null);
         btnInicio.addActionListener(new java.awt.event.ActionListener() {
@@ -86,6 +87,7 @@ public class PnlMenuLateral extends javax.swing.JPanel {
 
         btnArtistas.setBackground(new java.awt.Color(51, 51, 51));
         btnArtistas.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        btnArtistas.setForeground(new java.awt.Color(255, 255, 255));
         btnArtistas.setText("Artistas");
         btnArtistas.setBorder(null);
         btnArtistas.addActionListener(new java.awt.event.ActionListener() {
@@ -96,6 +98,7 @@ public class PnlMenuLateral extends javax.swing.JPanel {
 
         btnAlbumes.setBackground(new java.awt.Color(51, 51, 51));
         btnAlbumes.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        btnAlbumes.setForeground(new java.awt.Color(255, 255, 255));
         btnAlbumes.setText("Albumes");
         btnAlbumes.setBorder(null);
         btnAlbumes.addActionListener(new java.awt.event.ActionListener() {
@@ -106,6 +109,7 @@ public class PnlMenuLateral extends javax.swing.JPanel {
 
         btnCanciones.setBackground(new java.awt.Color(51, 51, 51));
         btnCanciones.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        btnCanciones.setForeground(new java.awt.Color(255, 255, 255));
         btnCanciones.setText("Canciones");
         btnCanciones.setBorder(null);
         btnCanciones.addActionListener(new java.awt.event.ActionListener() {
@@ -116,6 +120,7 @@ public class PnlMenuLateral extends javax.swing.JPanel {
 
         btnPerfil.setBackground(new java.awt.Color(51, 51, 51));
         btnPerfil.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        btnPerfil.setForeground(new java.awt.Color(255, 255, 255));
         btnPerfil.setText("Perfil");
         btnPerfil.setBorder(null);
         btnPerfil.addActionListener(new java.awt.event.ActionListener() {
@@ -194,7 +199,7 @@ public class PnlMenuLateral extends javax.swing.JPanel {
 
     private void btnAlbumesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlbumesActionPerformed
        if (navegador != null) {
-          //  navegador.abrirAlbumes(ventanaActual());
+          navegador.abrirAlbumes(ventanaActual());
         }
     }//GEN-LAST:event_btnAlbumesActionPerformed
 

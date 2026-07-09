@@ -32,37 +32,31 @@ public class prueba {
      */
     public static void main(String[] args) {
         IConexionDAO conexionDAO = new ConexionDAO();
-        
+
         ICancionDAO cancionDAO = new CancionDAO(conexionDAO);
         ICancionNegocio cancionNegocio = new CancionNegocio(cancionDAO);
-        
+
         IAlbumDAO albumDAO = new AlbumDAO(conexionDAO);
         IAlbumNegocio albumNegocio = new AlbumNegocio(albumDAO);
-        
+
         IUsuarioDAO usuarioDAO = new UsuarioDAO(conexionDAO);
         IUsuarioNegocio usuarioNegocio = new UsuarioNegocio(usuarioDAO);
-       
+
         try {
-           
             UsuarioDTO usuario = usuarioNegocio.buscar("luis@correo.com", "1234");
-            
+
             if (usuario == null) {
-                System.out.println("No se encontro el usuario en la base de datos.");
-                return;
+                System.out.println("No se encontró el usuario en la base de datos.");
+                return; 
             }
 
             Navegador navegador = new Navegador(usuario, usuarioNegocio, cancionNegocio, albumNegocio);
 
-            FrmCanciones ventanaPrincipal = new FrmCanciones(usuario, navegador, cancionNegocio);
-            ventanaPrincipal.setLocationRelativeTo(null);
-            ventanaPrincipal.setVisible(true);
+            navegador.abrirInicio(null);
 
-        } catch (NegocioException ex) {
-            System.out.println("Error al buscar el usuario: " + ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error al iniciar la aplicación: " + ex.getMessage());
         }
     }
-        
-       
-}
-    
 
+}
