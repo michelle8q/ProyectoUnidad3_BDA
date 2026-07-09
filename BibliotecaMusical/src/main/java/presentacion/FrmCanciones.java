@@ -4,47 +4,96 @@
  */
 package presentacion;
 
+import dtos.CancionDetallesDTO;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.util.List;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import negocio.ICancionNegocio;
+import negocio.NegocioException;
+
 /**
  *
  * @author cinca
  */
 public class FrmCanciones extends javax.swing.JFrame {
-
+    
+    private ICancionNegocio cancionNegocio;
+    
     /**
      * Creates new form FrmCanciones
      */
     public FrmCanciones() {
-        initComponents();
-    }
-    
-    public void cargarCanciones() { //recibira cancionDTO y usuarioDTO despies
+        initComponents(); 
         
+        configurarPantalla();
+        cargarCanciones();
     }
     
-   // public void cargarCanciones(List<CancionDTO> canciones, UsuarioDTO usuarioActual) {
-   // pnlContenedor.removeAll();
+    public void cargarCanciones() {
+        try {
+            cargarCanciones(cancionNegocio.consultarTodas());
+        } catch (NegocioException ex) {
+            mostrarError("No se pudieron cargar las canciones: " + ex.getMessage());
+        }
+    }
+    
+    private void configurarPantalla() {
+    setLocationRelativeTo(null);
 
-    //if (canciones != null) {
-      ///  for (CancionDTO cancion : canciones) {
+    pnlBuscador1.setTitulo("Canciones");
+    pnlBuscador1.addBuscarActionListener(evt -> buscarCanciones());
 
-        //    boolean esFavorito = false;
-         //   for (FavoritoDTO fav : usuarioActual.getFavoritos()) {
-           //     if (fav.getElementoId().equals(cancion.getId())) {
-            //        esFavorito = true;
-             //       break;
-            //    }
-          //  }
+    pnlContenedor.removeAll();
+    pnlContenedor.setLayout(new BoxLayout(pnlContenedor, BoxLayout.Y_AXIS));
+}
 
-          //  pnlCancion pnl = new pnlCancion();
-          //  pnl.cargarInformacion(cancion, usuarioActual.getId(), negocioCancion, esFavorito);
+    private void buscarCanciones() {
+        String texto = pnlBuscador1.getTextoBusqueda();
 
-         //   pnlContenedor.add(pnl);
-       // }
-    //}
+        try {
+            List<CancionDetallesDTO> canciones = texto.isBlank()
+                    ? cancionNegocio.consultarTodas()
+                    : cancionNegocio.buscarPorTexto(texto);
 
-   // pnlContenedor.revalidate();
-   // pnlContenedor.repaint();
-//}
+            cargarCanciones(canciones);
+        } catch (NegocioException ex) {
+            mostrarError("Error en la busqueda: " + ex.getMessage());
+        }
+    }
+
+    private void cargarCanciones(List<CancionDetallesDTO> canciones) {
+        pnlContenedor.removeAll();
+
+        if (canciones == null || canciones.isEmpty()) {
+            JLabel lblSinResultados = new JLabel("No se encontraron canciones.");
+            lblSinResultados.setForeground(Color.WHITE);
+            lblSinResultados.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 16));
+            lblSinResultados.setAlignmentX(LEFT_ALIGNMENT);
+
+            pnlContenedor.add(Box.createRigidArea(new Dimension(16, 20)));
+            pnlContenedor.add(lblSinResultados);
+        } else {
+            for (CancionDetallesDTO cancion : canciones) {
+                pnlCancion panelCancion = new pnlCancion(cancion);
+                panelCancion.setAlignmentX(LEFT_ALIGNMENT);
+
+                pnlContenedor.add(panelCancion);
+                pnlContenedor.add(Box.createRigidArea(new Dimension(0, 10)));
+            }
+        }
+
+        pnlContenedor.revalidate();
+        pnlContenedor.repaint();
+    }
+
+    private void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

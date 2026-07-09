@@ -5,19 +5,30 @@
 package presentacion;
 
 import java.awt.Color;
+import dtos.CancionDetallesDTO;
 
 /**
  *
  * @author cinca
  */
 public class pnlCancion extends javax.swing.JPanel {
-
+    private CancionDetallesDTO cancionDTO;
+    
     /**
      * Creates new form pnlCancion
      */
     public pnlCancion() {
         initComponents();
+        configurarEstiloInicial();
+        cargarInformacion(cancionDTO);
     }
+    
+    public pnlCancion(CancionDetallesDTO cancionDTO) {
+        initComponents();
+        configurarEstiloInicial();
+        cargarInformacion(cancionDTO);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -138,7 +149,39 @@ public class pnlCancion extends javax.swing.JPanel {
         // negocio.eliminarFavorito(elemento);
         }
     }//GEN-LAST:event_btnFavoritoActionPerformed
+    
+    public void cargarInformacion(CancionDetallesDTO cancionDTO) {
+        this.cancionDTO = cancionDTO;
 
+        if (cancionDTO == null) {
+            lblNombreCancion.setText("Cancion sin informacion");
+            lblGenero.setText("Genero no disponible");
+            lblArtista.setText("Artista no disponible");
+            lblDuracion.setText("Sin duracion");
+            return;
+        }
+
+        lblNombreCancion.setText(valorOMensaje(cancionDTO.getNombre(), "Cancion sin nombre"));
+        lblGenero.setText(valorOMensaje(cancionDTO.getGenero(), "Genero no disponible"));
+        lblArtista.setText(valorOMensaje(cancionDTO.getNombreArtista(), "Artista no disponible"));
+        lblDuracion.setText(valorOMensaje(cancionDTO.getDuracion(), "Sin duracion"));
+        setToolTipText(valorOMensaje(cancionDTO.getNombreAlbum(), "Album no disponible"));
+    }
+
+    private void configurarEstiloInicial() {
+        setMaximumSize(new java.awt.Dimension(821, 184));
+        btnFavorito.setForeground(Color.GRAY);
+
+        lblNombreCancion.setForeground(Color.WHITE);
+        lblGenero.setForeground(Color.WHITE);
+        lblArtista.setForeground(Color.WHITE);
+        lblArtista1.setForeground(Color.WHITE);
+        lblDuracion.setForeground(Color.WHITE);
+    }
+
+    private String valorOMensaje(String valor, String mensaje) {
+        return valor == null || valor.trim().isEmpty() ? mensaje : valor.trim();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnFavorito;

@@ -4,6 +4,8 @@
  */
 package presentacion;
 
+import java.awt.event.ActionListener;
+
 /**
  *
  * @author USUARIO
@@ -27,15 +29,15 @@ public class PnlBuscador extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        LblInicio1 = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         TxTBuscador1 = new javax.swing.JTextField();
         BtnBuscar1 = new javax.swing.JButton();
 
         jPanel2.setBackground(new java.awt.Color(51, 51, 51));
         jPanel2.setPreferredSize(new java.awt.Dimension(817, 91));
 
-        LblInicio1.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
-        LblInicio1.setText("TituloPestaña");
+        lblTitulo.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        lblTitulo.setText("TituloPestaña");
 
         TxTBuscador1.setBackground(new java.awt.Color(0, 0, 0));
         TxTBuscador1.setForeground(new java.awt.Color(255, 255, 255));
@@ -57,7 +59,7 @@ public class PnlBuscador extends javax.swing.JPanel {
                 .addGap(25, 25, 25)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(LblInicio1)
+                        .addComponent(lblTitulo)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(TxTBuscador1, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
@@ -69,7 +71,7 @@ public class PnlBuscador extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(LblInicio1)
+                .addComponent(lblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -92,16 +94,26 @@ public class PnlBuscador extends javax.swing.JPanel {
     private void BtnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscar1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnBuscar1ActionPerformed
+    public String getTextoBusqueda() {
+        return TxTBuscador1.getText().trim();
+    }
 
+    public void setTitulo(String titulo) {
+        lblTitulo.setText(titulo);
+    }
+
+    public void addBuscarActionListener(ActionListener listener) {
+        BtnBuscar1.addActionListener(listener);
+    }
+
+    public void limpiarBusqueda() {
+        TxTBuscador1.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnBuscar;
     private javax.swing.JButton BtnBuscar1;
-    private javax.swing.JLabel LblInicio;
-    private javax.swing.JLabel LblInicio1;
-    private javax.swing.JTextField TxTBuscador;
     private javax.swing.JTextField TxTBuscador1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblTitulo;
     // End of variables declaration//GEN-END:variables
 }
