@@ -6,23 +6,24 @@ package entidades;
 
 import java.util.List;
 import org.bson.types.ObjectId;
-
+import enums.TipoArtista;
 /**
  *
- * @author cinca
+ * @author cinca luisf
  */
 public class ArtistaEntidad {
-     private ObjectId id;
+
+    private ObjectId id;
     private String nombre;
     private String imagen;
     private GeneroEntidad genero;
-    private String tipo;
+    private TipoArtista tipo;
     private List<IntegranteEntidad> integrantes;
 
     public ArtistaEntidad() {
     }
 
-    public ArtistaEntidad(ObjectId id, String nombre, String imagen, GeneroEntidad genero, String tipo, List<IntegranteEntidad> integrantes) {
+    public ArtistaEntidad(ObjectId id, String nombre, String imagen, GeneroEntidad genero, TipoArtista tipo, List<IntegranteEntidad> integrantes) {
         this.id = id;
         this.nombre = nombre;
         this.imagen = imagen;
@@ -63,11 +64,11 @@ public class ArtistaEntidad {
         this.genero = genero;
     }
 
-    public String getTipo() {
+    public TipoArtista getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(TipoArtista tipo) {
         this.tipo = tipo;
     }
 
@@ -83,6 +84,5 @@ public class ArtistaEntidad {
     public String toString() {
         return "ArtistaEntidad{" + "id=" + id + ", nombre=" + nombre + ", imagen=" + imagen + ", genero=" + genero + ", tipo=" + tipo + ", integrantes=" + integrantes + '}';
     }
-    
-    
+
 }

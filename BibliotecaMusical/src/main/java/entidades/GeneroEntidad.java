@@ -8,26 +8,26 @@ import org.bson.types.ObjectId;
 
 /**
  *
- * @author cinca
+ * @author cinca luisf
  */
 public class GeneroEntidad {
-    private ObjectId id;
+    private ObjectId idGenero;
     private String nombre;
 
     public GeneroEntidad() {
     }
 
-    public GeneroEntidad(ObjectId id, String nombre) {
-        this.id = id;
+    public GeneroEntidad(ObjectId idGenero, String nombre) {
+        this.idGenero = idGenero;
         this.nombre = nombre;
     }
 
     public ObjectId getId() {
-        return id;
+        return idGenero;
     }
 
     public void setId(ObjectId id) {
-        this.id = id;
+        this.idGenero = id;
     }
 
     public String getNombre() {
@@ -40,7 +40,7 @@ public class GeneroEntidad {
 
     @Override
     public String toString() {
-        return "GeneroEntidad{" + "id=" + id + ", nombre=" + nombre + '}';
+        return "GeneroEntidad{" + "idGenero=" + idGenero + ", nombre=" + nombre + '}';
     }
     
     

@@ -4,24 +4,25 @@
  */
 package entidades;
 
+import enums.RolIntegrante;
 import java.util.Date;
 
 /**
  *
- * @author cinca
+ * @author cinca luisf
  */
 public class IntegranteEntidad {
     private String nombres;
     private String apellidoPaterno;
     private String apellidoMaterno;
-    private String rol;
+    private RolIntegrante rol;
     private Date fechaIngreso;
     private Date fechaSalida;
 
     public IntegranteEntidad() {
     }
 
-    public IntegranteEntidad(String nombres, String apellidoPaterno, String apellidoMaterno, String rol, Date fechaIngreso, Date fechaSalida) {
+    public IntegranteEntidad(String nombres, String apellidoPaterno, String apellidoMaterno, RolIntegrante rol, Date fechaIngreso, Date fechaSalida) {
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -54,11 +55,11 @@ public class IntegranteEntidad {
         this.apellidoMaterno = apellidoMaterno;
     }
 
-    public String getRol() {
+    public RolIntegrante getRol() {
         return rol;
     }
 
-    public void setRol(String rol) {
+    public void setRol(RolIntegrante rol) {
         this.rol = rol;
     }
 

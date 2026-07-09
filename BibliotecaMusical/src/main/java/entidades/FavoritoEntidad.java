@@ -4,24 +4,26 @@
  */
 package entidades;
 
+import enums.TipoEntidad;
 import java.util.Date;
 import org.bson.types.ObjectId;
 
 /**
  *
- * @author cinca
+ * @author cinca luisf
  */
 public class FavoritoEntidad {
+
     private ObjectId id;
     private String nombre;
     private GeneroEntidad genero;
-    private String tipo;
+    private TipoEntidad tipo;
     private Date fechaAgregacion;
 
     public FavoritoEntidad() {
     }
 
-    public FavoritoEntidad(ObjectId id, String nombre, GeneroEntidad genero, String tipo, Date fechaAgregacion) {
+    public FavoritoEntidad(ObjectId id, String nombre, GeneroEntidad genero, TipoEntidad tipo, Date fechaAgregacion) {
         this.id = id;
         this.nombre = nombre;
         this.tipo = tipo;
@@ -36,7 +38,7 @@ public class FavoritoEntidad {
     public void setId(ObjectId id) {
         this.id = id;
     }
-    
+
     public String getNombre() {
         return nombre;
     }
@@ -45,11 +47,11 @@ public class FavoritoEntidad {
         this.nombre = nombre;
     }
 
-    public String getTipo() {
+    public TipoEntidad getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(TipoEntidad tipo) {
         this.tipo = tipo;
     }
 
@@ -73,6 +75,5 @@ public class FavoritoEntidad {
     public String toString() {
         return "FavoritoEntidad{" + "nombre=" + nombre + ", genero=" + genero + ", tipo=" + tipo + ", fechaAgregacion=" + fechaAgregacion + '}';
     }
-    
-    
+
 }
