@@ -40,7 +40,8 @@ public class FrmCanciones extends javax.swing.JFrame {
     
     public FrmCanciones(UsuarioDTO usuarioActual, Navegador navegador, ICancionNegocio cancionNegocio) {
         initComponents();
-
+        
+        jScrollPane1.setPreferredSize(new Dimension(820, 514));
         this.setMinimumSize(new Dimension(1080, 650));
         this.setLocationRelativeTo(null);
 
