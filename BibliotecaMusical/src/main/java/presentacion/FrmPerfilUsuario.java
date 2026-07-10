@@ -29,6 +29,7 @@ public class FrmPerfilUsuario extends javax.swing.JFrame {
         this.usuarioActual = usuarioActual;
         this.navegador = navegador;
         cargarPerfil();
+        aplicarEstilo();
         pnlMenuLateral2.setNavegador(this.navegador);
         
 
@@ -41,6 +42,13 @@ public class FrmPerfilUsuario extends javax.swing.JFrame {
 
         lblUsuario.setText(usuarioActual.getUsuario());
         lblCorreo.setText(usuarioActual.getCorreo());
+    }
+    
+    private void aplicarEstilo() {
+        lblUsuario.setForeground(java.awt.Color.WHITE);
+        lblCorreo.setForeground(java.awt.Color.WHITE);
+        lblNombreCancion.setForeground(java.awt.Color.WHITE);
+        lblNombreCancion1.setForeground(java.awt.Color.WHITE);
     }
 
     /**

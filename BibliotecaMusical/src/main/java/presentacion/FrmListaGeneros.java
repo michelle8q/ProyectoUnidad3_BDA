@@ -27,6 +27,7 @@ public class FrmListaGeneros extends javax.swing.JFrame {
         initComponents();
         this.usuarioActual = usuarioActual;
         this.navegador = navegador;
+        lblGeneros.setForeground(java.awt.Color.WHITE);
         cargarGeneros();
     }
 
