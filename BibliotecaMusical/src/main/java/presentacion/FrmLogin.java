@@ -4,6 +4,17 @@
  */
 package presentacion;
 
+import entidades.UsuarioEntidad;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import negocio.NegocioException;
+import negocio.UsuarioNegocio;
+import persistencia.ConexionDAO;
+import persistencia.IConexionDAO;
+import persistencia.IUsuarioDAO;
+import persistencia.UsuarioDAO;
+import presentacion.FrmRegistrarse;
+
 /**
  *
  * @author piña
@@ -53,12 +64,15 @@ public class FrmLogin extends javax.swing.JFrame {
         PnlFondo.setBackground(new java.awt.Color(51, 51, 51));
 
         LblTitulo.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        LblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         LblTitulo.setText("Iniciar sesion");
 
         LblCorreo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        LblCorreo.setForeground(new java.awt.Color(255, 255, 255));
         LblCorreo.setText("Correo electronico");
 
         LblContra.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        LblContra.setForeground(new java.awt.Color(255, 255, 255));
         LblContra.setText("Contraseña");
 
         TxTcorreo.setBackground(new java.awt.Color(0, 0, 0));
@@ -147,10 +161,32 @@ public class FrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnRegistroActionPerformed
 
     private void BtnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEntrarActionPerformed
-        // TODO add your handling code here:
+
+        IConexionDAO conexion = new ConexionDAO();
+        IUsuarioDAO usuarioDAO = new UsuarioDAO(conexion);
+        UsuarioNegocio negocio = new UsuarioNegocio(usuarioDAO);
+
+        String correoLog = TxTcorreo.getText().trim(); 
+        String contrasenaLog = new String(TxTContra.getText());
+
+        if (correoLog.isEmpty() || contrasenaLog.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, llena todos los campos.", "Campos vacíos", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            UsuarioEntidad usuarioIniciado = negocio.login(correoLog, contrasenaLog);
+
+            FrmInicio inicio = new FrmInicio();
+            inicio.setVisible(true);
+            this.dispose(); 
+
+        } catch (NegocioException ex) {
+
+            javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de Autenticación", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_BtnEntrarActionPerformed
 
-  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnEntrar;

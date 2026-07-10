@@ -1,4 +1,3 @@
-
 package negocio;
 
 import dtos.FavoritoDTO;
@@ -9,35 +8,41 @@ import entidades.GeneroEntidad;
 import entidades.UsuarioEntidad;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import org.bson.types.ObjectId;
 import persistencia.IUsuarioDAO;
 import persistencia.PersistenciaException;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
  * @author piña
  */
-public class UsuarioNegocio implements IUsuarioNegocio{
-    
+public class UsuarioNegocio implements IUsuarioNegocio {
+
     private final IUsuarioDAO usuarioDAO;
 
     public UsuarioNegocio(IUsuarioDAO usuarioDAO) {
         this.usuarioDAO = usuarioDAO;
     }
 
-
     @Override
     public UsuarioEntidad reguistrar(UsuarioEntidad usuario) throws NegocioException {
-        
+
         try {
-            validarUsuarioNuevo(usuario.getUsuario(), usuario.getCorreo(), usuario.getContrasena(), usuario.getImagen());
-            
-            UsuarioEntidad usuarioGuardado= usuarioDAO.registar(usuario);
-            
+            validarUsuarioNuevo(usuario);
+
+            String contrasenaEncriptada = BCrypt.hashpw(usuario.getContrasena(), BCrypt.gensalt());
+
+            usuario.setContrasena(contrasenaEncriptada);
+
+            UsuarioEntidad usuarioGuardado = usuarioDAO.registar(usuario);
+
             return usuarioGuardado;
         } catch (PersistenciaException e) {
-            throw new NegocioException("No se pudo registrar al usuario"+e.getMessage());
+            throw new NegocioException("No se pudo registrar al usuario" + e.getMessage());
         }
     }
 
@@ -78,7 +83,7 @@ public class UsuarioNegocio implements IUsuarioNegocio{
 
     @Override
     public UsuarioDTO actualizarPerfil(UsuarioDTO usuario) throws NegocioException {
-       try {
+        try {
             validarUsuarioActualizar(usuario);
             ObjectId id = validarObjectId(usuario.getId(), "El usuario no es valido.");
 
@@ -129,11 +134,11 @@ public class UsuarioNegocio implements IUsuarioNegocio{
             throw new NegocioException("No se pudo eliminar el genero: " + ex.getMessage());
         }
     }
-    
+
     /**
-    * Metodo para realizar las validaciones del registro de un usuario.
-    * Valida que no sea nulo, su nombre ingresado y el correo.
-    */
+     * Metodo para realizar las validaciones del registro de un usuario. Valida
+     * que no sea nulo, su nombre ingresado y el correo.
+     */
     private void validarUsuarioRegistro(UsuarioDTO usuario) throws NegocioException {
         if (usuario == null) {
             throw new NegocioException("El usuario no puede estar vacio.");
@@ -145,12 +150,12 @@ public class UsuarioNegocio implements IUsuarioNegocio{
             throw new NegocioException("El correo es obligatorio.");
         }
     }
-    
+
     /**
-    * Metodo para realizar las validaciones del actualizacion de un usuario.
-    * Valida que el usuario no este vacio, que sea valido y sus campos que no sean
-    * vacios.
-    */
+     * Metodo para realizar las validaciones del actualizacion de un usuario.
+     * Valida que el usuario no este vacio, que sea valido y sus campos que no
+     * sean vacios.
+     */
     private void validarUsuarioActualizar(UsuarioDTO usuario) throws NegocioException {
         if (usuario == null) {
             throw new NegocioException("El usuario no puede estar vacio.");
@@ -162,18 +167,18 @@ public class UsuarioNegocio implements IUsuarioNegocio{
             throw new NegocioException("El nombre de usuario es obligatorio.");
         }
     }
-    
+
     /**
-    * Metodo para realizar las validaciones del login de usuario.
-    * Valida que los campos no esten vacios.
-    */
+     * Metodo para realizar las validaciones del login de usuario. Valida que
+     * los campos no esten vacios.
+     */
     private void validarLogin(String correo, String contrasena) throws NegocioException {
         if (correo == null || correo.trim().isEmpty()) {
             throw new NegocioException("Debe ingresar el correo.");
         }
-        
+
         String regex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
-        
+
         if (!Pattern.matches(regex, correo)) {
             throw new IllegalArgumentException("El formato del correo no es válido (ejemplo@dominio.com).");
         }
@@ -181,41 +186,55 @@ public class UsuarioNegocio implements IUsuarioNegocio{
             throw new NegocioException("Debe ingresar la contrasena.");
         }
     }
-    
+
     /**
+<<<<<<< Updated upstream
      * metodo para validar los datos de un usuario nuevo
-     * @return String la ruta de la foto de perfil, en caso de no tener ningna se asigna la de dafault
-     * @param usuario nombre de usuario
+     *
+     * @return String la ruta de la foto de perfil, en caso de no tener ningna
+     * se asigna la de dafault
+     * @param entidad nombre de usuario
      * @param correo correo del usuario
      * @param contra contraseña del usuario
      * @param imagen foto de perfil
      * @exception en caso de algun error
      */
-    private String validarUsuarioNuevo(String usuario, String correo, String contra,String imagen) throws NegocioException{
+    private void validarUsuarioNuevo(UsuarioEntidad entidad) throws NegocioException {
+        String correo = entidad.getCorreo();
+        String contra = entidad.getContrasena();
         validarLogin(correo, contra);
+
+        String usuario = entidad.getUsuario();
         if (usuario == null || usuario.trim().isEmpty()) {
             throw new NegocioException("el usuario no puede estar en blanco.");
         }
-        if (imagen == null || imagen.trim().isEmpty()) {
-            return "/imagenes/fotoPerfilDefault.jpg";
+        try {
+            if (usuarioDAO.buscarPorUsuario(correo) != null){
+                throw new NegocioException("Ya existe un usuario con ese correo");
+            }
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("Error al validar correo"+ex.getMessage());
         }
-        return imagen;
+        if (entidad.getImagen() == null || entidad.getImagen().trim().isEmpty()) {
+            entidad.setImagen("/imagenes/fotoPerfilDefault.jpg");
+        }
     }
-    
+
     /**
-    * Metodo para realizar las validaciones del los generos.
-    * Valida que el usuario seleccione un genero al querer agregarlo a una 
-    * lista.
-    */
+=======
+>>>>>>> Stashed changes
+     * Metodo para realizar las validaciones del los generos. Valida que el
+     * usuario seleccione un genero al querer agregarlo a una lista.
+     */
     private void validarGenero(GeneroDTO genero) throws NegocioException {
         if (genero == null) {
             throw new NegocioException("Necesita seleccioar un genero.");
         }
     }
-    
+
     /**
-    * Metodo para validar el ID.
-    */
+     * Metodo para validar el ID.
+     */
     private ObjectId validarObjectId(String id, String mensaje) throws NegocioException {
         if (id == null || id.trim().isEmpty() || !ObjectId.isValid(id)) {
             throw new NegocioException(mensaje);
@@ -239,13 +258,14 @@ public class UsuarioNegocio implements IUsuarioNegocio{
 
         return dto;
     }
-    
+
     /**
-    *
-    * Se mapea a entidad ya que se necesitara actualizar y registrar. Por lo tanto, 
-    * la informacion que vendra desde arriba ((presentacion)) ira hacia abajo.
-    * 
-    */
+     *
+     * Se mapea a entidad ya que se necesitara actualizar y registrar. Por lo
+     * tanto, la informacion que vendra desde arriba ((presentacion)) ira hacia
+     * abajo.
+     *
+     */
     private UsuarioEntidad convertirAEntidad(UsuarioDTO dto) {
         UsuarioEntidad entidad = new UsuarioEntidad();
 
@@ -260,13 +280,14 @@ public class UsuarioNegocio implements IUsuarioNegocio{
 
         return entidad;
     }
-    
+
     /**
-    *
-    * Se mapea a entidad ya que se necesitara actualizar y registrar. Por lo tanto, 
-    * la informacion que vendra desde arriba ((presentacion)) ira hacia abajo.
-    * 
-    */
+     *
+     * Se mapea a entidad ya que se necesitara actualizar y registrar. Por lo
+     * tanto, la informacion que vendra desde arriba ((presentacion)) ira hacia
+     * abajo.
+     *
+     */
     private GeneroEntidad convertirGeneroAEntidad(GeneroDTO dto) {
         GeneroEntidad entidad = new GeneroEntidad();
 
@@ -298,11 +319,12 @@ public class UsuarioNegocio implements IUsuarioNegocio{
     }
 
     /**
-    *
-    * Se mapea a entidad ya que se necesitara actualizar y registrar. Por lo tanto, 
-    * la informacion que vendra desde arriba ((presentacion)) ira hacia abajo.
-    * 
-    */
+     *
+     * Se mapea a entidad ya que se necesitara actualizar y registrar. Por lo
+     * tanto, la informacion que vendra desde arriba ((presentacion)) ira hacia
+     * abajo.
+     *
+     */
     private List<GeneroEntidad> convertirGenerosAEntidad(List<GeneroDTO> generos) {
         List<GeneroEntidad> resultado = new ArrayList<>();
 
@@ -343,5 +365,49 @@ public class UsuarioNegocio implements IUsuarioNegocio{
 
         return resultado;
     }
-    
+
+    @Override
+    public UsuarioEntidad login(String correo, String contrasenaPlana) throws NegocioException {
+        try {
+            UsuarioEntidad usuarioBD = usuarioDAO.buscarPorUsuario(correo);
+
+            if (usuarioBD == null) {
+                throw new NegocioException("El usuario con ese correo no existe.");
+            }
+
+            boolean esCorrecta = BCrypt.checkpw(contrasenaPlana, usuarioBD.getContrasena());
+
+            if (!esCorrecta) {
+                throw new NegocioException("Contraseña incorrecta.");
+            }
+
+            return usuarioBD;
+
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error en el sistema: " + e.getMessage());
+        }
+    }
+
+    public void agregarFavorito(String idUsuario, FavoritoDTO favorito) throws NegocioException {
+        try {
+            if (idUsuario == null || favorito == null || favorito.getId() == null) {
+                throw new NegocioException("Datos incompletos para agregar a favoritos.");
+            }
+            usuarioDAO.agregarFavorito(idUsuario, favorito);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("No se pudo agregar a favoritos" + ex.getMessage());
+        }
+    }
+
+    @Override
+    public void eliminarFavorito(String idUsuario, String idElemento) throws NegocioException {
+        try {
+            if (idUsuario == null || idElemento == null) {
+                throw new NegocioException("Datos incompletos para eliminar de favoritos.");
+            }
+            usuarioDAO.eliminarFavorito(idUsuario, idElemento);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("No se pudo eliminar de favoritos"+ ex.getMessage());
+        }
+    }
 }

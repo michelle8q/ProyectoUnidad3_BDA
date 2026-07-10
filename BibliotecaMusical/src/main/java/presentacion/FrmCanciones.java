@@ -16,6 +16,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import negocio.ICancionNegocio;
+import negocio.IUsuarioNegocio;
 import negocio.NegocioException;
 
 /**
@@ -23,24 +24,26 @@ import negocio.NegocioException;
  * @author cinca
  */
 public class FrmCanciones extends javax.swing.JFrame {
+
     private UsuarioDTO usuarioActual;
     private Navegador navegador;
     private ICancionNegocio cancionNegocio;
-    
+    private IUsuarioNegocio usuarioNegocio;
+
     /**
      * Creates new form FrmCanciones
      */
     public FrmCanciones() {
-        initComponents(); 
-        
+        initComponents();
+
         configurarPantalla();
         cargarCanciones();
 
     }
-    
-    public FrmCanciones(UsuarioDTO usuarioActual, Navegador navegador, ICancionNegocio cancionNegocio) {
+
+    public FrmCanciones(UsuarioDTO usuarioActual, Navegador navegador, ICancionNegocio cancionNegocio, IUsuarioNegocio usuarioNegocio) {
         initComponents();
-        
+
         jScrollPane1.setPreferredSize(new Dimension(820, 514));
         this.setMinimumSize(new Dimension(1080, 650));
         this.setLocationRelativeTo(null);
@@ -48,16 +51,36 @@ public class FrmCanciones extends javax.swing.JFrame {
         this.usuarioActual = usuarioActual;
         this.navegador = navegador;
         this.cancionNegocio = cancionNegocio;
-        
+        this.usuarioNegocio = usuarioNegocio;
+
         pnlContenedor.removeAll();
-       // pnlContenedor.setLayout(new BoxLayout(pnlContenedor, BoxLayout.Y_AXIS));
-        
+
         pnlMenuLateral1.configurarSesion(usuarioActual, navegador);
         configurarPantalla();
         cargarCanciones();
-        
     }
-    
+
+    private void configurarPantalla() {
+        pnlBuscador1.setTitulo("Canciones");
+        pnlBuscador1.addBuscarActionListener(evt -> buscarCanciones());
+
+        pnlContenedor.removeAll();
+        pnlContenedor.setLayout(new BoxLayout(pnlContenedor, BoxLayout.Y_AXIS));
+        pnlContenedor.setBackground(new Color(51, 51, 51));
+    }
+
+    private boolean esFavorito(Object idCancion) {
+        if (usuarioActual.getFavoritos() == null) {
+            return false;
+        }
+        for (dtos.FavoritoDTO fav : usuarioActual.getFavoritos()) {
+            if (fav.getId().equals(idCancion)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void cargarCanciones() {
         try {
             List<CancionDetallesDTO> canciones = filtrarGenerosNoDeseados(cancionNegocio.consultarTodas());
@@ -65,15 +88,6 @@ public class FrmCanciones extends javax.swing.JFrame {
         } catch (NegocioException ex) {
             mostrarError("No se pudieron cargar las canciones: " + ex.getMessage());
         }
-    }
-    
-    private void configurarPantalla() {   
-        pnlBuscador1.setTitulo("Canciones");
-        pnlBuscador1.addBuscarActionListener(evt -> buscarCanciones());
-
-        pnlContenedor.removeAll();
-        pnlContenedor.setLayout(new BoxLayout(pnlContenedor, BoxLayout.Y_AXIS));
-        pnlContenedor.setBackground(new Color(51, 51, 51));
     }
 
     private void buscarCanciones() {
@@ -83,9 +97,9 @@ public class FrmCanciones extends javax.swing.JFrame {
             List<CancionDetallesDTO> canciones = texto.isBlank()
                     ? cancionNegocio.consultarTodas()
                     : cancionNegocio.buscarPorTexto(texto);
-            
+
             canciones = filtrarGenerosNoDeseados(canciones);
-            
+
             cargarCanciones(canciones);
         } catch (NegocioException ex) {
             mostrarError("Error en la busqueda: " + ex.getMessage());
@@ -105,9 +119,36 @@ public class FrmCanciones extends javax.swing.JFrame {
             pnlContenedor.add(lblSinResultados);
         } else {
             for (CancionDetallesDTO cancion : canciones) {
-                boolean esFavorita = false;
+
+                boolean esFavorita = esFavorito(cancion.getId());
                 pnlCancion panelCancion = new pnlCancion(cancion, esFavorita);
                 panelCancion.setAlignmentX(LEFT_ALIGNMENT);
+
+                panelCancion.setAccionFavorito((seleccionado) -> {
+                    try {
+                        if (seleccionado) {
+                            dtos.FavoritoDTO nuevoFav = new dtos.FavoritoDTO();
+                            nuevoFav.setId(cancion.getId());
+                            nuevoFav.setNombre(cancion.getNombre());
+                            nuevoFav.setGenero(cancion.getGenero());
+                            nuevoFav.setTipo("Cancion");
+
+                            usuarioNegocio.agregarFavorito(usuarioActual.getId(), nuevoFav);
+
+                            if (usuarioActual.getFavoritos() != null) {
+                                usuarioActual.getFavoritos().add(nuevoFav);
+                            }
+                        } else {
+                            usuarioNegocio.eliminarFavorito(usuarioActual.getId(), cancion.getId());
+
+                            if (usuarioActual.getFavoritos() != null) {
+                                usuarioActual.getFavoritos().removeIf(f -> f.getId().equals(cancion.getId()));
+                            }
+                        }
+                    } catch (negocio.NegocioException ex) {
+                        JOptionPane.showMessageDialog(this, "Error al modificar favorito: " + ex.getMessage());
+                    }
+                });
 
                 pnlContenedor.add(panelCancion);
                 pnlContenedor.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -117,8 +158,8 @@ public class FrmCanciones extends javax.swing.JFrame {
         pnlContenedor.revalidate();
         pnlContenedor.repaint();
     }
-    
-     private List<CancionDetallesDTO> filtrarGenerosNoDeseados(List<CancionDetallesDTO> canciones) {
+
+    private List<CancionDetallesDTO> filtrarGenerosNoDeseados(List<CancionDetallesDTO> canciones) {
         if (usuarioActual.getGenerosNoDeseados() == null || usuarioActual.getGenerosNoDeseados().isEmpty()) {
             return canciones;
         }
@@ -145,7 +186,6 @@ public class FrmCanciones extends javax.swing.JFrame {
     private void mostrarError(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -233,7 +273,6 @@ public class FrmCanciones extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;

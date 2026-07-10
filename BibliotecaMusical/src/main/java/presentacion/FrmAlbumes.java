@@ -19,23 +19,35 @@ public class FrmAlbumes extends javax.swing.JFrame {
     private IAlbumNegocio albumNegocio;
     private dtos.UsuarioDTO usuarioActual;
     private Navegador navegador;
+    private IUsuarioNegocio usuarioNegocio;
 
     /**
      * Creates new form FrmAlbumes
      */
-    public FrmAlbumes(dtos.UsuarioDTO usuarioActual, Navegador navegador) {
+    public FrmAlbumes(dtos.UsuarioDTO usuarioActual, Navegador navegador, IUsuarioNegocio usuarioNegocio) {
         this.usuarioActual = usuarioActual;
         this.navegador = navegador;
+        this.usuarioNegocio = usuarioNegocio;
+
         persistencia.IConexionDAO conexion = new persistencia.ConexionDAO();
         persistencia.IAlbumDAO albumDAO = new persistencia.AlbumDAO(conexion);
         this.albumNegocio = new negocio.AlbumNegocio(albumDAO);
-        
+
         initComponents();
         this.setLocationRelativeTo(null);
         pnlMenuLateral2.setNavegador(this.navegador);
+    }
 
-        
-
+    private boolean esFavorito(Object idAlbum) {
+        if (usuarioActual.getFavoritos() == null) {
+            return false;
+        }
+        for (dtos.FavoritoDTO fav : usuarioActual.getFavoritos()) {
+            if (fav.getId().equals(idAlbum)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @SuppressWarnings("unchecked")
@@ -241,7 +253,6 @@ public class FrmAlbumes extends javax.swing.JFrame {
     private void BtnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscar1ActionPerformed
         try {
             String texto = TxTBuscador1.getText();
-
             String genero = cbxGenero.getSelectedItem().toString();
             if (genero.equals("Todos")) {
                 genero = null;
@@ -249,7 +260,6 @@ public class FrmAlbumes extends javax.swing.JFrame {
 
             String fechaTexto = jFormattedTextField1.getText().trim();
             String fecha = fechaTexto;
-
             if (fechaTexto.isEmpty() || fechaTexto.equals("dd/mm/aaaa") || fechaTexto.equals("__/__/____")) {
                 fecha = null;
             }
@@ -257,11 +267,36 @@ public class FrmAlbumes extends javax.swing.JFrame {
             List<AlbumDTO> resultados = albumNegocio.buscarAlbumes(texto, genero, fecha);
 
             jPanel4.removeAll();
-            
             jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.Y_AXIS));
 
             for (AlbumDTO album : resultados) {
-                pnlAlbum panelItem = new pnlAlbum(album);
+                // --- CAMBIO APLICADO: Opción 1 - Validar favorito y pasarlo al panel ---
+                boolean esFavorito = esFavorito(album.getId());
+                pnlAlbum panelItem = new pnlAlbum(album, esFavorito);
+
+                panelItem.setAccionFavorito((seleccionado) -> {
+                    try {
+                        if (seleccionado) {
+                            dtos.FavoritoDTO nuevoFav = new dtos.FavoritoDTO();
+                            nuevoFav.setId(album.getId());
+                            nuevoFav.setNombre(album.getNombre());
+                            nuevoFav.setTipo("Album");
+                            usuarioNegocio.agregarFavorito(usuarioActual.getId(), nuevoFav);
+
+                            if (usuarioActual.getFavoritos() != null) {
+                                usuarioActual.getFavoritos().add(nuevoFav);
+                            }
+                        } else {
+                            usuarioNegocio.eliminarFavorito(usuarioActual.getId(), album.getId());
+                            if (usuarioActual.getFavoritos() != null) {
+                                usuarioActual.getFavoritos().removeIf(f -> f.getId().equals(album.getId()));
+                            }
+                        }
+                    } catch (negocio.NegocioException ex) {
+                        javax.swing.JOptionPane.showMessageDialog(this, "Error al modificar favorito: " + ex.getMessage());
+                    }
+                });
+
                 jPanel4.add(panelItem);
                 jPanel4.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 10)));
             }
@@ -272,6 +307,7 @@ public class FrmAlbumes extends javax.swing.JFrame {
         } catch (Exception ex) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error en la búsqueda: " + ex.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
+
 
     }//GEN-LAST:event_BtnBuscar1ActionPerformed
 

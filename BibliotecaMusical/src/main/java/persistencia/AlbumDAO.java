@@ -7,18 +7,19 @@ package persistencia;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import dtos.AlbumDTO;
 import entidades.AlbumEntidad;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 /**
  *
  * @author luisf
  */
-
 public class AlbumDAO implements IAlbumDAO {
 
     private final IConexionDAO conexionDAO;
@@ -60,4 +61,63 @@ public class AlbumDAO implements IAlbumDAO {
             throw new PersistenciaException("Error al consultar los álbumes en la base de datos: " + ex.getMessage());
         }
     }
+
+    @Override
+    public AlbumEntidad obtenerPorId(String id) throws Exception {
+        try {
+            MongoDatabase baseDatos = conexionDAO.conexion();
+            MongoCollection<Document> coleccion = baseDatos.getCollection("albumes");
+
+            Document doc = coleccion.find(Filters.eq("_id", new ObjectId(id))).first();
+
+            if (doc != null) {
+                AlbumEntidad album = new AlbumEntidad();
+
+                album.setId(doc.getObjectId("_id"));
+                album.setNombre(doc.getString("nombre"));
+
+                if (doc.containsKey("imagen")) {
+                    album.setImagen(doc.getString("imagen"));
+                }
+                if (doc.containsKey("nombreArtista")) {
+                    album.setNombreArtista(doc.getString("nombreArtista"));
+                }
+
+                return album;
+            }
+            return null;
+        } catch (Exception ex) {
+            throw new Exception("Error al buscar el álbum por ID en la BD: " + ex.getMessage());
+        }
+    }
+
+    @Override
+    public AlbumEntidad obtenerPorNombre(String nombre) throws Exception {
+        try {
+            MongoDatabase baseDatos = conexionDAO.conexion();
+            MongoCollection<Document> coleccion = baseDatos.getCollection("albumes");
+
+            Document doc = coleccion.find(Filters.eq("nombre", nombre)).first();
+
+            if (doc != null) {
+                AlbumEntidad album = new AlbumEntidad();
+
+                album.setId(doc.getObjectId("_id"));
+                album.setNombre(doc.getString("nombre"));
+
+                if (doc.containsKey("imagen")) {
+                    album.setImagen(doc.getString("imagen"));
+                }
+                if (doc.containsKey("nombreArtista")) {
+                    album.setNombreArtista(doc.getString("nombreArtista"));
+                }
+
+                return album;
+            }
+            return null;
+        } catch (Exception ex) {
+            throw new Exception("Error al buscar el álbum por nombre en la BD: " + ex.getMessage());
+        }
+    }
+
 }
