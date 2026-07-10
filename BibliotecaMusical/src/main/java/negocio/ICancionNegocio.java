@@ -46,4 +46,6 @@ public interface ICancionNegocio {
     
     List<CancionDetallesDTO> buscarPorTexto(String texto) throws NegocioException;
     
+    List<CancionDetallesDTO> buscarCanciones(String texto, String genero) throws NegocioException;
+    
 }

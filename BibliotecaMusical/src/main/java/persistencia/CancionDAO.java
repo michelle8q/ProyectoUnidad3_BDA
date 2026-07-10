@@ -28,7 +28,7 @@ import org.bson.types.ObjectId;
  * sino dentro de la lista de canciones de cada album, por eso esta clase trabaja
  * sobre la coleccion albumes cuando necesita guardar o consultar canciones.
  *
- * @author cinca
+ * @author cinca luisf
  * 
  */
 public class CancionDAO implements ICancionDAO {
@@ -159,4 +159,48 @@ public class CancionDAO implements ICancionDAO {
             throw new PersistenciaException("Error al buscar canciones: " + ex.getMessage());
         }
     }
+    
+    
+     @Override
+    public List<CancionEntidad> buscarCanciones(String texto, String genero) throws PersistenciaException {
+        try {
+            MongoDatabase bd = conexion.conexion();
+            MongoCollection<Document> collection = bd.getCollection("albumes");
+
+            Bson etapaUnwind = Aggregates.unwind("$canciones");
+
+            List<Bson> filtros = new ArrayList<>();
+            
+            if (texto != null && !texto.trim().isEmpty()) {
+                filtros.add(Filters.or(
+                        Filters.regex("canciones.nombre", texto, "i"),
+                        Filters.regex("nombreArtista", texto, "i")
+                ));
+            }
+            
+            if (genero != null && !genero.trim().isEmpty()) {
+                filtros.add(Filters.eq("genero.nombre", genero));
+            }
+
+            Bson etapaFiltro = filtros.isEmpty() ? Aggregates.match(new Document()) : Aggregates.match(Filters.and(filtros));
+
+            Bson etapaProyeccion = Aggregates.project(Projections.fields(
+                    Projections.computed("_id", "$canciones._id"),
+                    Projections.computed("nombre", "$canciones.nombre"),
+                    Projections.computed("duracion", "$canciones.duracion"),
+                    Projections.computed("nombreAlbum", "$nombre"),
+                    Projections.computed("imagenAlbum", "$imagen"),
+                    Projections.computed("nombreArtista", "$nombreArtista"),
+                    Projections.include("genero")));
+
+            return collection.aggregate(
+                    Arrays.asList(etapaUnwind, etapaFiltro, etapaProyeccion),
+                    CancionEntidad.class
+            ).into(new ArrayList<>());
+
+        } catch (Exception ex) {
+            throw new PersistenciaException("Error al buscar canciones por filtros: " + ex.getMessage());
+        }
+    }
+    
 }

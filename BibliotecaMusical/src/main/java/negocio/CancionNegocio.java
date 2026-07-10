@@ -182,4 +182,15 @@ public class CancionNegocio implements ICancionNegocio {
         return resultado;
     }
 
+    
+    @Override
+    public List<CancionDetallesDTO> buscarCanciones(String texto, String genero) throws NegocioException {
+        try {
+            List<CancionEntidad> entidades = cancionDAO.buscarCanciones(texto, genero);
+            return convertirListaADTO(entidades);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("No se pudieron buscar las canciones: " + ex.getMessage());
+        }
+    }
+    
 }

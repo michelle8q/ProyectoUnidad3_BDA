@@ -10,12 +10,13 @@ import org.bson.types.ObjectId;
 
 /**
  *
- * Interfaz que define las operaciones de persistencia para las canciones, funciona
- * como un contrato.
+ * Interfaz que define las operaciones de persistencia para las canciones,
+ * funciona como un contrato.
  *
  * @author cinca
  */
 public interface ICancionDAO {
+
     /**
      * Guarda una cancion dentro de un album existente.
      *
@@ -25,7 +26,7 @@ public interface ICancionDAO {
      * @throws PersistenciaException si ocurre un error al guardar.
      */
     CancionEntidad guardar(ObjectId idAlbum, CancionEntidad nuevaCancion) throws PersistenciaException;
-    
+
     /**
      * Consulta todas las canciones registradas en los albumes.
      *
@@ -33,6 +34,9 @@ public interface ICancionDAO {
      * @throws PersistenciaException si ocurre un error al consultar.
      */
     List<CancionEntidad> consultarTodas() throws PersistenciaException;
-    
+
     List<CancionEntidad> buscarPorTexto(String texto) throws PersistenciaException;
+
+    List<CancionEntidad> buscarCanciones(String texto, String genero) throws PersistenciaException;
+
 }
