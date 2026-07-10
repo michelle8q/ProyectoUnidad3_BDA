@@ -198,8 +198,8 @@ public class FrmRegistrarse extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "¡Usuario registrado con éxito!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-            FrmInicio principal = new FrmInicio();
-            principal.setVisible(true);
+            FrmLogin login = new FrmLogin();
+            login.setVisible(true);
             this.dispose();
         } catch (NegocioException ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de Registro", javax.swing.JOptionPane.ERROR_MESSAGE);

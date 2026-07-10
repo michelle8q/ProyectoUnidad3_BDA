@@ -188,7 +188,6 @@ public class UsuarioNegocio implements IUsuarioNegocio {
     }
 
     /**
-<<<<<<< Updated upstream
      * metodo para validar los datos de un usuario nuevo
      *
      * @return String la ruta de la foto de perfil, en caso de no tener ningna
@@ -221,8 +220,6 @@ public class UsuarioNegocio implements IUsuarioNegocio {
     }
 
     /**
-=======
->>>>>>> Stashed changes
      * Metodo para realizar las validaciones del los generos. Valida que el
      * usuario seleccione un genero al querer agregarlo a una lista.
      */
@@ -367,24 +364,27 @@ public class UsuarioNegocio implements IUsuarioNegocio {
     }
 
     @Override
-    public UsuarioEntidad login(String correo, String contrasenaPlana) throws NegocioException {
+    public UsuarioDTO login(String correo, String contra) throws NegocioException {
         try {
-            UsuarioEntidad usuarioBD = usuarioDAO.buscarPorUsuario(correo);
+            validarLogin(correo, contra);
 
-            if (usuarioBD == null) {
-                throw new NegocioException("El usuario con ese correo no existe.");
+            // 1. Buscar al usuario SOLO por correo
+            UsuarioEntidad usuarioEntidad = usuarioDAO.buscarPorUsuario(correo.trim());
+
+            if (usuarioEntidad == null) {
+                throw new NegocioException("Correo o contraseña incorrectos.");
             }
 
-            boolean esCorrecta = BCrypt.checkpw(contrasenaPlana, usuarioBD.getContrasena());
-
-            if (!esCorrecta) {
-                throw new NegocioException("Contraseña incorrecta.");
+            // 2. Verificar que la contraseña plana coincida con el Hash guardado
+            if (!BCrypt.checkpw(contra, usuarioEntidad.getContrasena())) {
+                throw new NegocioException("Correo o contraseña incorrectos.");
             }
 
-            return usuarioBD;
+            // 3. Si todo es correcto, convertir a DTO y retornar
+            return convertirADTO(usuarioEntidad);
 
         } catch (PersistenciaException e) {
-            throw new NegocioException("Error en el sistema: " + e.getMessage());
+            throw new NegocioException("Error al iniciar sesión: " + e.getMessage());
         }
     }
 

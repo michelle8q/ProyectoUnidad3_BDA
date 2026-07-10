@@ -38,11 +38,12 @@ public interface IUsuarioNegocio {
      * @return UsuarioEntidad encontrado
      * @throws NegocioException en caso de algun error
      */
-    UsuarioEntidad login(String nombreUsuario, String contrasenaPlana) throws NegocioException;
   
 
     public void agregarFavorito(String idUsuario, FavoritoDTO favorito) throws NegocioException;
 
     public void eliminarFavorito(String idUsuario, String idElemento) throws NegocioException;
+    UsuarioDTO login(String correo, String contra) throws NegocioException;
+    
 
 }

@@ -82,18 +82,14 @@ public class CargaInicialDAO {
         return operaciones.size();
     }
 
-    // ==========================================================================
-    // 2. Coleccion: artistas -> insertMany, 1 sola consulta
-    // ==========================================================================
+   
     private int insertarArtistas() {
         List<Document> artistas = parsearArray(ARTISTAS_JSON);
         baseDeDatos.getCollection("artistas").insertMany(artistas);
         return artistas.size();
     }
 
-    // ==========================================================================
-    // 3. Coleccion: albumes -> insertMany, 1 sola consulta
-    // ==========================================================================
+    
     private int insertarAlbumes() {
         List<Document> albumes = parsearArray(ALBUMES_JSON);
 
@@ -124,9 +120,6 @@ public class CargaInicialDAO {
         return (List<Document>) envoltura.get("datos");
     }
 
-    // ==========================================================================
-    // Datos de carga inicial (mismos datos que insertar_artistas_optimizado.js)
-    // ==========================================================================
     private static final String GENEROS_JSON = """
 [
   { "_id": ObjectId("668c9c9b1f4a2c3d4e5f6001"), "nombre": "Rock Alternativo" },
@@ -322,7 +315,7 @@ public class CargaInicialDAO {
     "nombre": "Map of the Soul: Persona",
     "fechaLanzamiento": ISODate("2019-04-12"),
     "genero": { "_id": ObjectId("668c9c9b1f4a2c3d4e5f6003"), "nombre": "K-pop" },
-    "imagen": "imagenMapOfTheSoulPersona.jpg",
+    "imagen": "imagenMapOfTheSoulPersona.jpg", 
     "canciones": [
       { "nombre": "Boy With Luv", "duracion": "03:28" },
       { "nombre": "Mikrokosmos", "duracion": "03:52" },

@@ -27,6 +27,7 @@ import persistencia.UsuarioDAO;
  */
 public class FrmLogin extends javax.swing.JFrame {
 
+    
     /**
      * Creates new form FrmLogin
      */
@@ -34,6 +35,8 @@ public class FrmLogin extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
     }
+    
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -188,7 +191,7 @@ public class FrmLogin extends javax.swing.JFrame {
         IUsuarioNegocio usuarioNegocio = new UsuarioNegocio(usuarioDAO);
 
         try {
-            UsuarioDTO usuario = usuarioNegocio.buscar(correoLog, contrasenaLog);
+            UsuarioDTO usuario = usuarioNegocio.login(correoLog, contrasenaLog);
 
             if (usuario == null) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Correo o contraseña incorrectos.", "Error de Autenticación", javax.swing.JOptionPane.ERROR_MESSAGE);
