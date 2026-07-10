@@ -7,7 +7,8 @@ package dtos;
 import java.util.List;
 
 /**
- *
+ * DTO encargado de representar la informacion del usuario.
+ * 
  * @author cinca
  */
 public class UsuarioDTO {

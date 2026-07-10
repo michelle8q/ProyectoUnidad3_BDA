@@ -5,7 +5,9 @@
 package dtos;
 
 /**
- *
+ * DTO que muestra datos especificos en las pantallas respectivas de canciones o
+ * las que lo necesiten.
+ * 
  * @author luisf
  */
 public class CancionDTO {

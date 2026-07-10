@@ -5,7 +5,8 @@
 package dtos;
 
 /**
- *
+ * DTO encargado de mostrar la lista de generos en las pantallas.
+ * 
  * @author cinca
  */
 public class GeneroDTO {

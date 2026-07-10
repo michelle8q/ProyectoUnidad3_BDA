@@ -8,7 +8,10 @@ import java.util.List;
 import org.bson.types.ObjectId;
 import enums.TipoArtista;
 /**
- *
+ * Entidad de dominio que representa artista. 
+ * Para los grupos se tiene la lista de integrantes.
+ * de canciones.
+ * 
  * @author cinca luisf
  */
 public class ArtistaEntidad {

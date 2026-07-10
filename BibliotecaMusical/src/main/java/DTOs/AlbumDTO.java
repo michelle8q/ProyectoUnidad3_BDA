@@ -8,8 +8,11 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
+ * DTO que muestra datos especificos en las pantallas respectivas de albumes o
+ * las que lo necesiten.
+ * 
  * @author luisf
+ * 
  */
 public class AlbumDTO {
 

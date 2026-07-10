@@ -9,7 +9,10 @@ import java.util.List;
 import org.bson.types.ObjectId;
 
 /**
- *
+ * Entidad de dominio que representa un album de un artista. 
+ * El album contiene una lista
+ * de canciones.
+ * 
  * @author cinca
  */
 public class AlbumEntidad {

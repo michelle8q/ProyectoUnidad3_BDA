@@ -7,12 +7,11 @@ package entidades;
 import org.bson.types.ObjectId;
 
 /**
- *
- * @author cinca
- * 
  * Entidad de dominio que representa a una cancion dentro del sistema. 
  * Almacena sus datos como su nombre, genero al que pertenece, artista,
  * alnum y muestra la duracion.
+ * 
+ * @author cinca
  * 
  */
 public class CancionEntidad {

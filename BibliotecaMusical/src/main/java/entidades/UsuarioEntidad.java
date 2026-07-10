@@ -5,7 +5,8 @@ import java.util.List;
 import org.bson.types.ObjectId;
 
 /**
- *
+ * Entidad de dominio que representa al usuario.
+ * 
  * @author cinca
  */
 public class UsuarioEntidad {

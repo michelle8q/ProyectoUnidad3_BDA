@@ -7,7 +7,8 @@ package dtos;
 import java.util.Date;
 
 /**
- *
+ * DTO que muestra datos especificos de los elementos guardados en favoritos.
+ * 
  * @author cinca
  */
 public class FavoritoDTO {

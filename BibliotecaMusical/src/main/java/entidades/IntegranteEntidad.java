@@ -8,7 +8,8 @@ import enums.RolIntegrante;
 import java.util.Date;
 
 /**
- *
+ * Entidad de dominio que representa a un integrante dentro de un artista del sistema. 
+ * 
  * @author cinca luisf
  */
 public class IntegranteEntidad {
