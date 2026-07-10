@@ -96,7 +96,7 @@ public class AlbumNegocio implements IAlbumNegocio {
 
                 dto.setNombre(entidad.getNombre());
 
-                dto.setImagen(entidad.getImagen());
+                dto.setImagenAlbum(entidad.getImagen());
 
                 dto.setNombreArtista(entidad.getNombreArtista());
 
@@ -122,7 +122,7 @@ public class AlbumNegocio implements IAlbumNegocio {
                 }
 
                 dto.setNombre(entidad.getNombre());
-                dto.setImagen(entidad.getImagen());
+                dto.setImagenAlbum(entidad.getImagen());
                 dto.setNombreArtista(entidad.getNombreArtista());
 
                 return dto;
