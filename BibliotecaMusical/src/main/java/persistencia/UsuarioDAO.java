@@ -23,7 +23,16 @@ public class UsuarioDAO implements IUsuarioDAO{
 
     @Override
     public UsuarioEntidad registar(UsuarioEntidad usuario) throws PersistenciaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+          MongoDatabase bd = conexion.conexion();
+          MongoCollection<UsuarioEntidad> collection = bd.getCollection("usuarios", UsuarioEntidad.class);
+
+          collection.insertOne(usuario);
+          return usuario;
+
+        } catch (Exception ex) {
+            throw new PersistenciaException("Error al registrar el usuario: " + ex.getMessage());
+        }
     }
 
     @Override
