@@ -57,7 +57,8 @@ public class AlbumNegocio implements IAlbumNegocio {
                 dto.setNombre(entidad.getNombre());
                 dto.setNombreArtista(entidad.getNombreArtista());
                 dto.setFechaLanzamiento(entidad.getFechaLanzamiento());
-
+                dto.setImagenAlbum(entidad.getImagen());
+                
                 if (entidad.getGenero() != null) {
                     dto.setNombreGenero(entidad.getGenero().getNombre());
                 }
@@ -95,7 +96,7 @@ public class AlbumNegocio implements IAlbumNegocio {
 
                 dto.setNombre(entidad.getNombre());
 
-                dto.setImagen(entidad.getImagen());
+                dto.setImagenAlbum(entidad.getImagen());
 
                 dto.setNombreArtista(entidad.getNombreArtista());
 
@@ -121,7 +122,7 @@ public class AlbumNegocio implements IAlbumNegocio {
                 }
 
                 dto.setNombre(entidad.getNombre());
-                dto.setImagen(entidad.getImagen());
+                dto.setImagenAlbum(entidad.getImagen());
                 dto.setNombreArtista(entidad.getNombreArtista());
 
                 return dto;

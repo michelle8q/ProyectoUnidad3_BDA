@@ -19,7 +19,7 @@ public class AlbumDTO {
     private String nombreArtista;
     private Date fechaLanzamiento;
     private List<CancionDTO> canciones;
-    private String imagen;
+    private String imagenAlbum;
 
     public AlbumDTO() {
     }
@@ -31,6 +31,18 @@ public class AlbumDTO {
         this.nombreArtista = nombreArtista;
         this.fechaLanzamiento = fechaLanzamiento;
     }
+
+    public AlbumDTO(String id, String nombre, String nombreGenero, String nombreArtista, Date fechaLanzamiento, List<CancionDTO> canciones, String imagenAlbum) {
+        this.id = id;
+        this.nombre = nombre;
+        this.nombreGenero = nombreGenero;
+        this.nombreArtista = nombreArtista;
+        this.fechaLanzamiento = fechaLanzamiento;
+        this.canciones = canciones;
+        this.imagenAlbum = imagenAlbum;
+    }
+    
+    
 
     public String getId() {
         return id;
@@ -80,11 +92,13 @@ public class AlbumDTO {
         this.canciones = canciones;
     }
 
-    public String getImagen() {
-        return imagen;
+    public String getImagenAlbum() {
+        return imagenAlbum;
     }
 
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
+    public void setImagenAlbum(String imagenAlbum) {
+        this.imagenAlbum = imagenAlbum;
     }
+    
+    
 }
