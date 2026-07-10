@@ -7,7 +7,9 @@ package presentacion;
 import dtos.UsuarioDTO;
 import java.awt.Window;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import persistencia.CargaInicialDAO;
 
 /**
  *
@@ -23,7 +25,7 @@ public class PnlMenuLateral extends javax.swing.JPanel {
      */
     public PnlMenuLateral() {
         initComponents();
-        
+
     }
 
     public void setNavegador(Navegador navegador) {
@@ -184,7 +186,19 @@ public class PnlMenuLateral extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInsertActionPerformed
-        // TODO add your handling code here:
+        int respuesta = JOptionPane.showConfirmDialog(
+                ventanaActual(),
+                "¿Está seguro de insertar los datos iniciales (géneros, artistas y álbumes)?",
+                "Confirmar carga de datos",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (respuesta == JOptionPane.YES_OPTION) {
+            CargaInicialDAO cargaInicialDAO = new CargaInicialDAO();
+            cargaInicialDAO.insertarDatosIniciales();
+            JOptionPane.showMessageDialog(ventanaActual(), "Datos insertados correctamente.");
+        }
     }//GEN-LAST:event_BtnInsertActionPerformed
 
     private void BtnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCerrarSesionActionPerformed
