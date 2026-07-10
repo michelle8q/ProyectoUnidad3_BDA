@@ -22,10 +22,16 @@
         <exec.mainClass>itson.org.bibliotecamusical.BibliotecaMusical</exec.mainClass>
     </properties>
     <dependencies>
-    <dependency>
-        <groupId>org.mongodb</groupId>
-        <artifactId>mongodb-driver-sync</artifactId>
-        <version>5.0.1</version> 
-    </dependency>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <version>5.0.1</version> 
+        </dependency>
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 </project>

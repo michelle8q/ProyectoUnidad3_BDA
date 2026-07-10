@@ -1,11 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package presentacion;
 
+import entidades.UsuarioEntidad;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import negocio.NegocioException;
+import negocio.UsuarioNegocio;
+import persistencia.ConexionDAO;
+import persistencia.IConexionDAO;
+import persistencia.IUsuarioDAO;
+import persistencia.UsuarioDAO;
 
 /**
  *
@@ -35,33 +41,33 @@ public class FrmRegistrarse extends javax.swing.JFrame {
         LblCorreo = new javax.swing.JLabel();
         LblContra = new javax.swing.JLabel();
         TxTcorreo = new javax.swing.JTextField();
-        TxTContra = new javax.swing.JTextField();
         BtnRegistro = new javax.swing.JButton();
         TxTUsuario = new javax.swing.JTextField();
         LblUsuario = new javax.swing.JLabel();
         LblFoto = new javax.swing.JLabel();
-        txtURL = new javax.swing.JTextField();
+        txtImagen = new javax.swing.JTextField();
         btnElegir = new javax.swing.JButton();
         BtnInicioSecion = new javax.swing.JButton();
+        TxTContra = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         PnlFondo.setBackground(new java.awt.Color(51, 51, 51));
 
         LblTitulo.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        LblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         LblTitulo.setText("Registro");
 
         LblCorreo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        LblCorreo.setForeground(new java.awt.Color(255, 255, 255));
         LblCorreo.setText("Correo electronico");
 
         LblContra.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        LblContra.setForeground(new java.awt.Color(255, 255, 255));
         LblContra.setText("Contraseña");
 
         TxTcorreo.setBackground(new java.awt.Color(0, 0, 0));
         TxTcorreo.setForeground(new java.awt.Color(255, 255, 255));
-
-        TxTContra.setBackground(new java.awt.Color(0, 0, 0));
-        TxTContra.setForeground(new java.awt.Color(255, 255, 255));
 
         BtnRegistro.setBackground(new java.awt.Color(109, 79, 130));
         BtnRegistro.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
@@ -76,13 +82,15 @@ public class FrmRegistrarse extends javax.swing.JFrame {
         TxTUsuario.setForeground(new java.awt.Color(255, 255, 255));
 
         LblUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        LblUsuario.setForeground(new java.awt.Color(255, 255, 255));
         LblUsuario.setText("Nombre de Usuario");
 
         LblFoto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        LblFoto.setForeground(new java.awt.Color(255, 255, 255));
         LblFoto.setText("Foto de Perfil (Opcional)");
 
-        txtURL.setBackground(new java.awt.Color(0, 0, 0));
-        txtURL.setForeground(new java.awt.Color(255, 255, 255));
+        txtImagen.setBackground(new java.awt.Color(0, 0, 0));
+        txtImagen.setForeground(new java.awt.Color(255, 255, 255));
 
         btnElegir.setBackground(new java.awt.Color(109, 79, 130));
         btnElegir.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
@@ -102,6 +110,9 @@ public class FrmRegistrarse extends javax.swing.JFrame {
             }
         });
 
+        TxTContra.setBackground(new java.awt.Color(0, 0, 0));
+        TxTContra.setForeground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout PnlFondoLayout = new javax.swing.GroupLayout(PnlFondo);
         PnlFondo.setLayout(PnlFondoLayout);
         PnlFondoLayout.setHorizontalGroup(
@@ -112,17 +123,18 @@ public class FrmRegistrarse extends javax.swing.JFrame {
                         .addGap(35, 35, 35)
                         .addGroup(PnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(LblFoto)
-                            .addComponent(TxTContra, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(LblContra)
                             .addComponent(TxTcorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(PnlFondoLayout.createSequentialGroup()
-                                .addComponent(txtURL, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnElegir))
                             .addComponent(LblCorreo)
                             .addComponent(LblTitulo)
                             .addComponent(LblUsuario)
-                            .addComponent(TxTUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(TxTUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(PnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(TxTContra, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PnlFondoLayout.createSequentialGroup()
+                                    .addComponent(txtImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnElegir)))))
                     .addGroup(PnlFondoLayout.createSequentialGroup()
                         .addGap(58, 58, 58)
                         .addGroup(PnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -145,13 +157,13 @@ public class FrmRegistrarse extends javax.swing.JFrame {
                 .addComponent(TxTcorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LblContra)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxTContra, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(TxTContra, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LblFoto)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtURL, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnElegir, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BtnRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -175,26 +187,43 @@ public class FrmRegistrarse extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegistroActionPerformed
-        // TODO add your handling code here:
+        UsuarioEntidad usuario = new UsuarioEntidad(TxTUsuario.getText(), TxTcorreo.getText(), TxTContra.getText(), txtImagen.getText());
+
+        IConexionDAO conexion = new ConexionDAO();
+        IUsuarioDAO usuarioDAO = new UsuarioDAO(conexion);
+        UsuarioNegocio negocio = new UsuarioNegocio(usuarioDAO);
+
+        try {
+            UsuarioEntidad usuarioRegistrado = negocio.reguistrar(usuario);
+        } catch (NegocioException ex) {
+            Logger.getLogger(FrmRegistrarse.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        JOptionPane.showMessageDialog(this, "¡Usuario registrado con éxito!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+        FrmInicio principal = new FrmInicio();
+        principal.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BtnRegistroActionPerformed
 
     private void btnElegirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirActionPerformed
         JFileChooser fChooser = new JFileChooser();
-        
+
         int resultado = fChooser.showOpenDialog(this);
-        
-        if(resultado == JFileChooser.APPROVE_OPTION) {
-           File imagenSeleccionada = fChooser.getSelectedFile();
-           
-           txtURL.setText(imagenSeleccionada.getAbsolutePath());
+
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            File imagenSeleccionada = fChooser.getSelectedFile();
+
+            txtImagen.setText(imagenSeleccionada.getAbsolutePath());
         }
     }//GEN-LAST:event_btnElegirActionPerformed
 
     private void BtnInicioSecionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInicioSecionActionPerformed
-        // TODO add your handling code here:
+        FrmLogin login = new FrmLogin();
+        login.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BtnInicioSecionActionPerformed
 
-  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnInicioSecion;
@@ -205,10 +234,10 @@ public class FrmRegistrarse extends javax.swing.JFrame {
     private javax.swing.JLabel LblTitulo;
     private javax.swing.JLabel LblUsuario;
     private javax.swing.JPanel PnlFondo;
-    private javax.swing.JTextField TxTContra;
+    private javax.swing.JPasswordField TxTContra;
     private javax.swing.JTextField TxTUsuario;
     private javax.swing.JTextField TxTcorreo;
     private javax.swing.JButton btnElegir;
-    private javax.swing.JTextField txtURL;
+    private javax.swing.JTextField txtImagen;
     // End of variables declaration//GEN-END:variables
 }

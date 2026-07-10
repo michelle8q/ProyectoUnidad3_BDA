@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 import org.bson.types.ObjectId;
 import persistencia.IUsuarioDAO;
 import persistencia.PersistenciaException;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -31,7 +32,11 @@ public class UsuarioNegocio implements IUsuarioNegocio{
     public UsuarioEntidad reguistrar(UsuarioEntidad usuario) throws NegocioException {
         
         try {
-            validarUsuarioNuevo(usuario.getUsuario(), usuario.getCorreo(), usuario.getContrasena(), usuario.getImagen());
+            validarUsuarioNuevo(usuario);
+            
+            String contrasenaEncriptada = BCrypt.hashpw(usuario.getContrasena(), BCrypt.gensalt());
+            
+            usuario.setContrasena(contrasenaEncriptada);
             
             UsuarioEntidad usuarioGuardado= usuarioDAO.registar(usuario);
             
@@ -185,21 +190,24 @@ public class UsuarioNegocio implements IUsuarioNegocio{
     /**
      * metodo para validar los datos de un usuario nuevo
      * @return String la ruta de la foto de perfil, en caso de no tener ningna se asigna la de dafault
-     * @param usuario nombre de usuario
+     * @param entidad nombre de usuario
      * @param correo correo del usuario
      * @param contra contraseña del usuario
      * @param imagen foto de perfil
      * @exception en caso de algun error
      */
-    private String validarUsuarioNuevo(String usuario, String correo, String contra,String imagen) throws NegocioException{
+    private void validarUsuarioNuevo(UsuarioEntidad entidad) throws NegocioException{
+        String correo = entidad.getCorreo();
+        String contra = entidad.getContrasena();
         validarLogin(correo, contra);
+        
+        String usuario = entidad.getUsuario();
         if (usuario == null || usuario.trim().isEmpty()) {
             throw new NegocioException("el usuario no puede estar en blanco.");
         }
-        if (imagen == null || imagen.trim().isEmpty()) {
-            return "/imagenes/fotoPerfilDefault.jpg";
+        if (entidad.getImagen() == null || entidad.getImagen().trim().isEmpty()) {
+            entidad.setImagen("/imagenes/fotoPerfilDefault.jpg"); 
         }
-        return imagen;
     }
     
     /**

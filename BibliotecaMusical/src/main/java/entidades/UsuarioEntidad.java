@@ -20,13 +20,11 @@ public class UsuarioEntidad {
     public UsuarioEntidad() {
     }
 
-    public UsuarioEntidad(String usuario, String correo, String contrasena, String imagen, List<FavoritoEntidad> favoritos, List<GeneroEntidad> generosNoDeseados) {
+    public UsuarioEntidad(String usuario, String correo, String contrasena, String imagen) {
         this.usuario = usuario;
         this.correo = correo;
         this.contrasena = contrasena;
         this.imagen = imagen;
-        this.favoritos = favoritos;
-        this.generosNoDeseados = generosNoDeseados;
     }
     
     
