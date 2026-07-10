@@ -10,7 +10,12 @@ import org.bson.types.ObjectId;
  * @author piña
  */
 public interface IUsuarioDAO {
-    
+    /**
+     * metodo para guardar un usuario nuevo
+     * @param usuario a guardar
+     * @return UsuarioEntidad del usuario guardado
+     * @throws PersistenciaException en caso de algun error
+     */
     UsuarioEntidad registar(UsuarioEntidad usuario) throws PersistenciaException;
     
     UsuarioEntidad buscar(String correo, String contra ) throws PersistenciaException;

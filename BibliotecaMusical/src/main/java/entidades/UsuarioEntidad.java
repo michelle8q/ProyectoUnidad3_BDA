@@ -20,6 +20,17 @@ public class UsuarioEntidad {
     public UsuarioEntidad() {
     }
 
+    public UsuarioEntidad(String usuario, String correo, String contrasena, String imagen, List<FavoritoEntidad> favoritos, List<GeneroEntidad> generosNoDeseados) {
+        this.usuario = usuario;
+        this.correo = correo;
+        this.contrasena = contrasena;
+        this.imagen = imagen;
+        this.favoritos = favoritos;
+        this.generosNoDeseados = generosNoDeseados;
+    }
+    
+    
+
     public UsuarioEntidad(ObjectId id, String usuario, String correo, String contrasena, String imagen, List<FavoritoEntidad> favoritos, 
             List<GeneroEntidad> generosNoDeseados) {
         this.id = id;

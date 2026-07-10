@@ -9,6 +9,7 @@ import entidades.GeneroEntidad;
 import entidades.UsuarioEntidad;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 import org.bson.types.ObjectId;
 import persistencia.IUsuarioDAO;
 import persistencia.PersistenciaException;
@@ -28,7 +29,16 @@ public class UsuarioNegocio implements IUsuarioNegocio{
 
     @Override
     public UsuarioEntidad reguistrar(UsuarioEntidad usuario) throws NegocioException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        try {
+            validarUsuarioNuevo(usuario.getUsuario(), usuario.getCorreo(), usuario.getContrasena(), usuario.getImagen());
+            
+            UsuarioEntidad usuarioGuardado= usuarioDAO.registar(usuario);
+            
+            return usuarioGuardado;
+        } catch (PersistenciaException e) {
+            throw new NegocioException("No se pudo registrar al usuario"+e.getMessage());
+        }
     }
 
     @Override
@@ -161,9 +171,35 @@ public class UsuarioNegocio implements IUsuarioNegocio{
         if (correo == null || correo.trim().isEmpty()) {
             throw new NegocioException("Debe ingresar el correo.");
         }
+        
+        String regex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        
+        if (!Pattern.matches(regex, correo)) {
+            throw new IllegalArgumentException("El formato del correo no es válido (ejemplo@dominio.com).");
+        }
         if (contrasena == null || contrasena.trim().isEmpty()) {
             throw new NegocioException("Debe ingresar la contrasena.");
         }
+    }
+    
+    /**
+     * metodo para validar los datos de un usuario nuevo
+     * @return String la ruta de la foto de perfil, en caso de no tener ningna se asigna la de dafault
+     * @param usuario nombre de usuario
+     * @param correo correo del usuario
+     * @param contra contraseña del usuario
+     * @param imagen foto de perfil
+     * @exception en caso de algun error
+     */
+    private String validarUsuarioNuevo(String usuario, String correo, String contra,String imagen) throws NegocioException{
+        validarLogin(correo, contra);
+        if (usuario == null || usuario.trim().isEmpty()) {
+            throw new NegocioException("el usuario no puede estar en blanco.");
+        }
+        if (imagen == null || imagen.trim().isEmpty()) {
+            return "/imagenes/fotoPerfilDefault.jpg";
+        }
+        return imagen;
     }
     
     /**
