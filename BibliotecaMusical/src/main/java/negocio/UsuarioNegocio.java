@@ -367,7 +367,6 @@ public class UsuarioNegocio implements IUsuarioNegocio {
     }
 
     @Override
-<<<<<<< Updated upstream
     public UsuarioEntidad login(String correo, String contrasenaPlana) throws NegocioException {
         try {
             UsuarioEntidad usuarioBD = usuarioDAO.buscarPorUsuario(correo);
@@ -389,7 +388,6 @@ public class UsuarioNegocio implements IUsuarioNegocio {
         }
     }
 
-=======
     public void agregarFavorito(String idUsuario, FavoritoDTO favorito) throws NegocioException {
         try {
             if (idUsuario == null || favorito == null || favorito.getId() == null) {
@@ -412,5 +410,4 @@ public class UsuarioNegocio implements IUsuarioNegocio {
             throw new NegocioException("No se pudo eliminar de favoritos"+ ex.getMessage());
         }
     }
->>>>>>> Stashed changes
 }

@@ -118,7 +118,6 @@ public class UsuarioDAO implements IUsuarioDAO {
     }
 
     @Override
-<<<<<<< Updated upstream
     public UsuarioEntidad buscarPorUsuario(String correo) throws PersistenciaException {
         try {
             MongoDatabase bd = conexion.conexion();
@@ -130,7 +129,6 @@ public class UsuarioDAO implements IUsuarioDAO {
         }
     }
 
-=======
     public void agregarFavorito(String idUsuario, FavoritoDTO favorito) throws PersistenciaException {
         try {
             MongoDatabase bd = conexion.conexion();
@@ -172,5 +170,4 @@ public class UsuarioDAO implements IUsuarioDAO {
             throw new PersistenciaException("Error en BD al eliminar favorito: " + ex.getMessage());
         }
     }
->>>>>>> Stashed changes
 }
