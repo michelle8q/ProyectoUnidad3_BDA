@@ -4,16 +4,22 @@
  */
 package presentacion;
 
-import entidades.UsuarioEntidad;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import dtos.UsuarioDTO;
+import negocio.AlbumNegocio;
+import negocio.CancionNegocio;
+import negocio.IAlbumNegocio;
+import negocio.ICancionNegocio;
+import negocio.IUsuarioNegocio;
 import negocio.NegocioException;
 import negocio.UsuarioNegocio;
+import persistencia.AlbumDAO;
+import persistencia.CancionDAO;
 import persistencia.ConexionDAO;
+import persistencia.IAlbumDAO;
+import persistencia.ICancionDAO;
 import persistencia.IConexionDAO;
 import persistencia.IUsuarioDAO;
 import persistencia.UsuarioDAO;
-import presentacion.FrmRegistrarse;
 
 /**
  *
@@ -162,11 +168,7 @@ public class FrmLogin extends javax.swing.JFrame {
 
     private void BtnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEntrarActionPerformed
 
-        IConexionDAO conexion = new ConexionDAO();
-        IUsuarioDAO usuarioDAO = new UsuarioDAO(conexion);
-        UsuarioNegocio negocio = new UsuarioNegocio(usuarioDAO);
-
-        String correoLog = TxTcorreo.getText().trim(); 
+        String correoLog = TxTcorreo.getText().trim();
         String contrasenaLog = new String(TxTContra.getText());
 
         if (correoLog.isEmpty() || contrasenaLog.isEmpty()) {
@@ -174,17 +176,32 @@ public class FrmLogin extends javax.swing.JFrame {
             return;
         }
 
-        try {
-            UsuarioEntidad usuarioIniciado = negocio.login(correoLog, contrasenaLog);
+        IConexionDAO conexionDAO = new ConexionDAO();
 
-            FrmInicio inicio = new FrmInicio();
-            inicio.setVisible(true);
-            this.dispose(); 
+        ICancionDAO cancionDAO = new CancionDAO(conexionDAO);
+        ICancionNegocio cancionNegocio = new CancionNegocio(cancionDAO);
+
+        IAlbumDAO albumDAO = new AlbumDAO(conexionDAO);
+        IAlbumNegocio albumNegocio = new AlbumNegocio(albumDAO);
+
+        IUsuarioDAO usuarioDAO = new UsuarioDAO(conexionDAO);
+        IUsuarioNegocio usuarioNegocio = new UsuarioNegocio(usuarioDAO);
+
+        try {
+            UsuarioDTO usuario = usuarioNegocio.buscar(correoLog, contrasenaLog);
+
+            if (usuario == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Correo o contraseña incorrectos.", "Error de Autenticación", javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Navegador navegador = new Navegador(usuario, usuarioNegocio, cancionNegocio, albumNegocio);
+            navegador.abrirInicio(this);
 
         } catch (NegocioException ex) {
-
             javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de Autenticación", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_BtnEntrarActionPerformed
 
 

@@ -31,32 +31,10 @@ public class prueba {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        IConexionDAO conexionDAO = new ConexionDAO();
-
-        ICancionDAO cancionDAO = new CancionDAO(conexionDAO);
-        ICancionNegocio cancionNegocio = new CancionNegocio(cancionDAO);
-
-        IAlbumDAO albumDAO = new AlbumDAO(conexionDAO);
-        IAlbumNegocio albumNegocio = new AlbumNegocio(albumDAO);
-
-        IUsuarioDAO usuarioDAO = new UsuarioDAO(conexionDAO);
-        IUsuarioNegocio usuarioNegocio = new UsuarioNegocio(usuarioDAO);
-
-        try {
-            UsuarioDTO usuario = usuarioNegocio.buscar("luis@correo.com", "1234");
-
-            if (usuario == null) {
-                System.out.println("No se encontró el usuario en la base de datos.");
-                return; 
-            }
-
-            Navegador navegador = new Navegador(usuario, usuarioNegocio, cancionNegocio, albumNegocio);
-
-            navegador.abrirInicio(null);
-
-        } catch (Exception ex) {
-            System.out.println("Error al iniciar la aplicación: " + ex.getMessage());
-        }
+        java.awt.EventQueue.invokeLater(() -> {
+            FrmLogin login = new FrmLogin();
+            login.setVisible(true);
+        });
     }
 
 }
