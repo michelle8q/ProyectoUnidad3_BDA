@@ -29,6 +29,7 @@ public class FrmInicio extends javax.swing.JFrame {
     private negocio.ICancionNegocio cancionNegocio;
     private UsuarioDTO usuarioDTO;
     private Navegador navegador;
+    private negocio.IUsuarioNegocio usuarioNegocio;
 
     /**
      * Creates new form FrmInicio
@@ -47,6 +48,7 @@ public class FrmInicio extends javax.swing.JFrame {
         this.albumNegocio = new negocio.AlbumNegocio(new persistencia.AlbumDAO(conexion));
         //this.artistaNegocio = new negocio.ArtistaNegocio(new persistencia.ArtistaDAO(conexion));
         this.cancionNegocio = new negocio.CancionNegocio(new persistencia.CancionDAO(conexion));
+        this.usuarioNegocio = new negocio.UsuarioNegocio(new persistencia.UsuarioDAO(conexion));
 
         initComponents();
 
@@ -56,6 +58,18 @@ public class FrmInicio extends javax.swing.JFrame {
 
         pnlResultados.setLayout(new BoxLayout(pnlResultados, BoxLayout.Y_AXIS));
         pnlResultados.setBackground(new Color(51, 51, 51));
+    }
+
+    private boolean esFavorito(Object idCancion) {
+        if (usuarioDTO.getFavoritos() == null) {
+            return false;
+        }
+        for (dtos.FavoritoDTO fav : usuarioDTO.getFavoritos()) {
+            if (fav.getId().equals(idCancion)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -263,7 +277,13 @@ public class FrmInicio extends javax.swing.JFrame {
             if (tipo.equals("Todos") || tipo.equals("Album")) {
                 List<AlbumDTO> albumes = albumNegocio.buscarAlbumes(texto, genero, null);
                 for (AlbumDTO album : albumes) {
-                    pnlAlbum panelItem = new pnlAlbum(album);
+
+                    // --- AQUI VERIFICAMOS SI EL ÁLBUM ES FAVORITO ---
+                    boolean esFavorito = esFavorito(album.getId());
+
+                    // Asegúrate de que el constructor de pnlAlbum ahora reciba el boolean igual que pnlCancion
+                    pnlAlbum panelItem = new pnlAlbum(album, esFavorito);
+
                     panelItem.setBorder(BorderFactory.createTitledBorder(
                             BorderFactory.createLineBorder(new Color(109, 79, 130), 2),
                             "ÁLBUM",
@@ -271,6 +291,34 @@ public class FrmInicio extends javax.swing.JFrame {
                             javax.swing.border.TitledBorder.TOP,
                             new java.awt.Font("Segoe UI Black", 0, 12),
                             Color.WHITE));
+
+                    // --- AQUI AGREGAMOS LA ACCIÓN AL CLIC DE FAVORITO PARA EL ÁLBUM ---
+                    panelItem.setAccionFavorito((seleccionado) -> {
+                        try {
+                            if (seleccionado) {
+                                dtos.FavoritoDTO nuevoFav = new dtos.FavoritoDTO();
+                                nuevoFav.setId(album.getId());
+                                nuevoFav.setNombre(album.getNombre());
+                                nuevoFav.setGenero(album.getNombreGenero() != null ? album.getNombreGenero() : "N/A"); 
+                                nuevoFav.setTipo("Album"); 
+
+                                usuarioNegocio.agregarFavorito(usuarioDTO.getId(), nuevoFav);
+
+                                if (usuarioDTO.getFavoritos() != null) {
+                                    usuarioDTO.getFavoritos().add(nuevoFav);
+                                }
+                            } else {
+                                usuarioNegocio.eliminarFavorito(usuarioDTO.getId(), album.getId());
+
+                                if (usuarioDTO.getFavoritos() != null) {
+                                    usuarioDTO.getFavoritos().removeIf(f -> f.getId().equals(album.getId()));
+                                }
+                            }
+                        } catch (Exception ex) {
+                            javax.swing.JOptionPane.showMessageDialog(this, "Error al modificar favorito: " + ex.getMessage());
+                        }
+                    });
+
                     pnlResultados.add(panelItem);
                     pnlResultados.add(Box.createRigidArea(new Dimension(0, 15)));
                 }
@@ -294,7 +342,10 @@ public class FrmInicio extends javax.swing.JFrame {
             if (tipo.equals("Todos") || tipo.equals("Cancion")) {
                 List<CancionDetallesDTO> canciones = cancionNegocio.buscarCanciones(texto, genero);
                 for (CancionDetallesDTO cancion : canciones) {
-                    boolean esFavorita = false;
+                    
+                    // --- AQUI VERIFICAMOS SI ES FAVORITA ---
+                    boolean esFavorita = esFavorito(cancion.getId());
+                    
                     pnlCancion panelItem = new pnlCancion(cancion, esFavorita);
                     panelItem.setBorder(BorderFactory.createTitledBorder(
                             BorderFactory.createLineBorder(new Color(109, 79, 130), 2),
@@ -303,10 +354,38 @@ public class FrmInicio extends javax.swing.JFrame {
                             javax.swing.border.TitledBorder.TOP,
                             new java.awt.Font("Segoe UI Black", 0, 12),
                             Color.WHITE));
+                            
+                    panelItem.setAccionFavorito((seleccionado) -> {
+                        try {
+                            if (seleccionado) {
+                                dtos.FavoritoDTO nuevoFav = new dtos.FavoritoDTO();
+                                nuevoFav.setId(cancion.getId());
+                                nuevoFav.setNombre(cancion.getNombre());
+                                nuevoFav.setGenero(cancion.getGenero());
+                                nuevoFav.setTipo("Cancion");
+
+                                usuarioNegocio.agregarFavorito(usuarioDTO.getId(), nuevoFav);
+
+                                if (usuarioDTO.getFavoritos() != null) {
+                                    usuarioDTO.getFavoritos().add(nuevoFav);
+                                }
+                            } else {
+                                usuarioNegocio.eliminarFavorito(usuarioDTO.getId(), cancion.getId());
+
+                                if (usuarioDTO.getFavoritos() != null) {
+                                    usuarioDTO.getFavoritos().removeIf(f -> f.getId().equals(cancion.getId()));
+                                }
+                            }
+                        } catch (Exception ex) {
+                            javax.swing.JOptionPane.showMessageDialog(this, "Error al modificar favorito: " + ex.getMessage());
+                        }
+                    });
+
                     pnlResultados.add(panelItem);
                     pnlResultados.add(Box.createRigidArea(new Dimension(0, 15)));
                 }
             }
+
 
             pnlResultados.revalidate();
             pnlResultados.repaint();

@@ -79,4 +79,58 @@ public class AlbumNegocio implements IAlbumNegocio {
             throw new NegocioException("Error al consultar la base de datos: " + ex.getMessage());
         }
     }
+
+    @Override
+    public AlbumDTO obtenerPorId(String id) throws NegocioException {
+        try {
+            AlbumEntidad entidad = albumDAO.obtenerPorId(id);
+
+            if (entidad != null) {
+
+                AlbumDTO dto = new AlbumDTO();
+
+                if (entidad.getId() != null) {
+                    dto.setId(entidad.getId().toString());
+                }
+
+                dto.setNombre(entidad.getNombre());
+
+                dto.setImagen(entidad.getImagen());
+
+                dto.setNombreArtista(entidad.getNombreArtista());
+
+                return dto;
+            }
+
+            return null;
+        } catch (Exception ex) {
+            throw new NegocioException("Error al buscar el álbum por ID: " + ex.getMessage());
+        }
+    }
+
+    @Override
+    public AlbumDTO obtenerPorNombre(String nombre) throws NegocioException {
+        try {
+            AlbumEntidad entidad = albumDAO.obtenerPorNombre(nombre);
+
+            if (entidad != null) {
+                AlbumDTO dto = new AlbumDTO();
+
+                if (entidad.getId() != null) {
+                    dto.setId(entidad.getId().toString());
+                }
+
+                dto.setNombre(entidad.getNombre());
+                dto.setImagen(entidad.getImagen());
+                dto.setNombreArtista(entidad.getNombreArtista());
+
+                return dto;
+            }
+
+            return null;
+        } catch (Exception ex) {
+            throw new NegocioException("Error al buscar el álbum por nombre: " + ex.getMessage());
+        }
+    }
+
 }

@@ -32,13 +32,13 @@ public class Navegador {
     }
 
     public void abrirCanciones(javax.swing.JFrame actual) {
-        FrmCanciones ventana = new FrmCanciones(usuarioActual, this, cancionNegocio);
+        FrmCanciones ventana = new FrmCanciones(usuarioActual, this, cancionNegocio, usuarioNegocio);
         ventana.setVisible(true);
         actual.dispose();
     }
 
     public void abrirAlbumes(javax.swing.JFrame actual) {
-        FrmAlbumes ventana = new FrmAlbumes(usuarioActual, this);
+        FrmAlbumes ventana = new FrmAlbumes(usuarioActual, this, usuarioNegocio);
         ventana.setVisible(true);
         actual.dispose();
     }
@@ -57,7 +57,7 @@ public class Navegador {
             ventanaActual.dispose();
         }
     }
-    
+
     public void abrirAgregarGenero(JFrame ventanaActual) {
         FrmAgregarGenero ventana = new FrmAgregarGenero(usuarioActual, usuarioNegocio, this);
         ventana.setVisible(true);
@@ -73,7 +73,6 @@ public class Navegador {
             ventanaActual.dispose();
         }
     }
-
 
     public void abrirInicio(JFrame ventanaActual) {
         FrmInicio ventana = new FrmInicio(usuarioActual, this);

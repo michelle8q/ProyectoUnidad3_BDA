@@ -19,6 +19,7 @@ public class AlbumDTO {
     private String nombreArtista;
     private Date fechaLanzamiento;
     private List<CancionDTO> canciones;
+    private String imagen;
 
     public AlbumDTO() {
     }
@@ -77,5 +78,13 @@ public class AlbumDTO {
 
     public void setCanciones(List<CancionDTO> canciones) {
         this.canciones = canciones;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

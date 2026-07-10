@@ -4,6 +4,7 @@
  */
 package persistencia;
 
+import dtos.CancionDetallesDTO;
 import entidades.CancionEntidad;
 import java.util.List;
 import org.bson.types.ObjectId;
@@ -38,5 +39,10 @@ public interface ICancionDAO {
     List<CancionEntidad> buscarPorTexto(String texto) throws PersistenciaException;
 
     List<CancionEntidad> buscarCanciones(String texto, String genero) throws PersistenciaException;
+
+    CancionDetallesDTO obtenerPorId(String id) throws Exception;
+    
+    CancionDetallesDTO obtenerPorNombre(String nombre) throws Exception;
+
 
 }

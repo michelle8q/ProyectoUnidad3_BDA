@@ -188,6 +188,7 @@ public class UsuarioNegocio implements IUsuarioNegocio {
     }
 
     /**
+<<<<<<< Updated upstream
      * metodo para validar los datos de un usuario nuevo
      *
      * @return String la ruta de la foto de perfil, en caso de no tener ningna
@@ -220,6 +221,8 @@ public class UsuarioNegocio implements IUsuarioNegocio {
     }
 
     /**
+=======
+>>>>>>> Stashed changes
      * Metodo para realizar las validaciones del los generos. Valida que el
      * usuario seleccione un genero al querer agregarlo a una lista.
      */
@@ -364,6 +367,7 @@ public class UsuarioNegocio implements IUsuarioNegocio {
     }
 
     @Override
+<<<<<<< Updated upstream
     public UsuarioEntidad login(String correo, String contrasenaPlana) throws NegocioException {
         try {
             UsuarioEntidad usuarioBD = usuarioDAO.buscarPorUsuario(correo);
@@ -385,4 +389,28 @@ public class UsuarioNegocio implements IUsuarioNegocio {
         }
     }
 
+=======
+    public void agregarFavorito(String idUsuario, FavoritoDTO favorito) throws NegocioException {
+        try {
+            if (idUsuario == null || favorito == null || favorito.getId() == null) {
+                throw new NegocioException("Datos incompletos para agregar a favoritos.");
+            }
+            usuarioDAO.agregarFavorito(idUsuario, favorito);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("No se pudo agregar a favoritos" + ex.getMessage());
+        }
+    }
+
+    @Override
+    public void eliminarFavorito(String idUsuario, String idElemento) throws NegocioException {
+        try {
+            if (idUsuario == null || idElemento == null) {
+                throw new NegocioException("Datos incompletos para eliminar de favoritos.");
+            }
+            usuarioDAO.eliminarFavorito(idUsuario, idElemento);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("No se pudo eliminar de favoritos"+ ex.getMessage());
+        }
+    }
+>>>>>>> Stashed changes
 }

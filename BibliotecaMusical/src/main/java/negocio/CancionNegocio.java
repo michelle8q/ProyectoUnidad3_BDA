@@ -17,8 +17,10 @@ import persistencia.PersistenciaException;
  * @author cinca
  */
 public class CancionNegocio implements ICancionNegocio {
+
     /**
-     * DAO utilizado para acceder a las canciones guardadas dentro de los albumes.
+     * DAO utilizado para acceder a las canciones guardadas dentro de los
+     * albumes.
      */
     private final ICancionDAO cancionDAO;
 
@@ -37,24 +39,25 @@ public class CancionNegocio implements ICancionNegocio {
     /**
      * Guarda una cancion dentro de un album existente.
      *
-     * Antes de guardar se valida que el album exista por medio de su id y que la
-     * cancion tenga los datos basicos completos, como nombre y duracion.
+     * Antes de guardar se valida que el album exista por medio de su id y que
+     * la cancion tenga los datos basicos completos, como nombre y duracion.
      *
      * @param idAlbum id del album donde se agregara la cancion.
      * @param nuevaCancion cancion que se desea guardar.
      * @return la cancion guardada.
-     * @throws NegocioException si los datos no son validos o si ocurre un error en persistencia.
+     * @throws NegocioException si los datos no son validos o si ocurre un error
+     * en persistencia.
      */
     @Override
     public CancionDetallesDTO guardar(ObjectId idAlbum, CancionEntidad nuevaCancion) throws NegocioException {
         try {
             validarIdAlbum(idAlbum);
             validarCancion(nuevaCancion);
-            
+
             //CancionEntidad entidad = new CancionEntidad();
             nuevaCancion.setNombre(nuevaCancion.getNombre().trim());
             nuevaCancion.setDuracion(nuevaCancion.getDuracion().trim());
-            
+
             CancionEntidad guardada = cancionDAO.guardar(idAlbum, nuevaCancion);
             return convertirADTO(guardada);
 
@@ -85,12 +88,13 @@ public class CancionNegocio implements ICancionNegocio {
     /**
      * Busca canciones por nombre.
      *
-     * Se valida que el texto de busqueda no este vacio antes de mandarlo al DAO.
-     * Esto evita hacer consultas sin sentido desde la interfaz.
+     * Se valida que el texto de busqueda no este vacio antes de mandarlo al
+     * DAO. Esto evita hacer consultas sin sentido desde la interfaz.
      *
      * @param texto texto que se desea buscar.
      * @return lista de canciones que coinciden con el nombre.
-     * @throws NegocioException si el nombre no es valido o si ocurre un error al buscar.
+     * @throws NegocioException si el nombre no es valido o si ocurre un error
+     * al buscar.
      */
     @Override
     public List<CancionDetallesDTO> buscarPorTexto(String texto) throws NegocioException {
@@ -102,7 +106,6 @@ public class CancionNegocio implements ICancionNegocio {
             throw new NegocioException("No se pudieron buscar canciones por nombre: " + ex.getMessage());
         }
     }
-
 
     /**
      * Valida que el id del album no venga vacio.
@@ -148,13 +151,13 @@ public class CancionNegocio implements ICancionNegocio {
             throw new NegocioException("Debe ingresar un TExto para buscar.");
         }
     }
-    
-     /**
+
+    /**
      * Convierte una entidad de cancion a su DTO correspondiente.
      */
     private CancionDetallesDTO convertirADTO(CancionEntidad entidad) {
         CancionDetallesDTO dto = new CancionDetallesDTO();
-        
+
         if (entidad.getId() != null) {
             dto.setId(entidad.getId().toString());
         }
@@ -163,14 +166,14 @@ public class CancionNegocio implements ICancionNegocio {
         dto.setNombreAlbum(entidad.getNombreAlbum());
         dto.setImagenAlbum(entidad.getImagenAlbum());
         dto.setNombreArtista(entidad.getNombreArtista());
-        
+
         if (entidad.getGenero() != null) {
             dto.setGenero(entidad.getGenero().getNombre());
         }
-        
+
         return dto;
     }
-    
+
     /**
      * Convierte una lista de entidades de cancion a una lista de DTOs.
      */
@@ -182,7 +185,6 @@ public class CancionNegocio implements ICancionNegocio {
         return resultado;
     }
 
-    
     @Override
     public List<CancionDetallesDTO> buscarCanciones(String texto, String genero) throws NegocioException {
         try {
@@ -192,5 +194,25 @@ public class CancionNegocio implements ICancionNegocio {
             throw new NegocioException("No se pudieron buscar las canciones: " + ex.getMessage());
         }
     }
-    
+
+    @Override
+    public CancionDetallesDTO obtenerPorId(String id) throws NegocioException {
+        try {
+            return cancionDAO.obtenerPorId(id);
+
+        } catch (Exception ex) {
+            throw new NegocioException("Error al buscar la canción por ID: " + ex.getMessage());
+        }
+    }
+
+    @Override
+    public CancionDetallesDTO obtenerPorNombre(String nombre) throws NegocioException {
+        try {
+            return cancionDAO.obtenerPorNombre(nombre);
+
+        } catch (Exception ex) {
+            throw new NegocioException("Error al buscar la canción por nombre: " + ex.getMessage());
+        }
+    }
+
 }

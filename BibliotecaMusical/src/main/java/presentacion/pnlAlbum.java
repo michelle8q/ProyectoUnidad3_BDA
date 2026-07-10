@@ -5,6 +5,7 @@
 package presentacion;
 
 import dtos.AlbumDTO;
+import entidades.AlbumEntidad;
 import java.awt.Color;
 
 /**
@@ -14,11 +15,12 @@ import java.awt.Color;
 public class pnlAlbum extends javax.swing.JPanel {
 
     private AlbumDTO albumDTO;
+    private java.util.function.Consumer<Boolean> accionFavorito;
 
     /**
      * Creates new form pnlCancion
      */
-    public pnlAlbum(AlbumDTO albumDTO) {
+    public pnlAlbum(AlbumDTO albumDTO, boolean esFavorito) {
         initComponents();
 
         this.albumDTO = albumDTO;
@@ -36,10 +38,13 @@ public class pnlAlbum extends javax.swing.JPanel {
                 jLabelFecha.setText("Sin fecha");
             }
         }
+         btnFavorito.setSelected(esFavorito);
 
         this.setMaximumSize(new java.awt.Dimension(821, 184));
     }
-
+public void setAccionFavorito(java.util.function.Consumer<Boolean> accionFavorito) {
+        this.accionFavorito = accionFavorito;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -155,12 +160,16 @@ public class pnlAlbum extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFavoritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoritoActionPerformed
-        if (btnFavorito.isSelected()) {
+        boolean seleccionado = btnFavorito.isSelected();
+
+        if (seleccionado) {
             btnFavorito.setForeground(new Color(147, 112, 219));
-            // negocio.agregarFavorito(albumDTO.getId()); // Usarás el ID del DTO
         } else {
             btnFavorito.setForeground(Color.GRAY);
-            // negocio.eliminarFavorito(albumDTO.getId());
+        }
+              
+        if (accionFavorito != null) {
+            accionFavorito.accept(seleccionado);
         }
     }//GEN-LAST:event_btnFavoritoActionPerformed
 

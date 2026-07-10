@@ -5,6 +5,7 @@
 package negocio;
 
 import dtos.AlbumDTO;
+import entidades.AlbumEntidad;
 import java.util.List;
 
 /**
@@ -14,4 +15,9 @@ import java.util.List;
 public interface IAlbumNegocio {
 
     List<AlbumDTO> buscarAlbumes(String textoBusqueda, String genero, String fechaTexto) throws NegocioException;
+
+    AlbumDTO obtenerPorId(String id) throws NegocioException;
+
+    AlbumDTO obtenerPorNombre(String nombre) throws NegocioException;
+
 }

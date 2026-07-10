@@ -4,8 +4,11 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
+import dtos.FavoritoDTO;
 import entidades.GeneroEntidad;
 import entidades.UsuarioEntidad;
+import java.util.Date;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 /**
@@ -115,6 +118,7 @@ public class UsuarioDAO implements IUsuarioDAO {
     }
 
     @Override
+<<<<<<< Updated upstream
     public UsuarioEntidad buscarPorUsuario(String correo) throws PersistenciaException {
         try {
             MongoDatabase bd = conexion.conexion();
@@ -126,4 +130,47 @@ public class UsuarioDAO implements IUsuarioDAO {
         }
     }
 
+=======
+    public void agregarFavorito(String idUsuario, FavoritoDTO favorito) throws PersistenciaException {
+        try {
+            MongoDatabase bd = conexion.conexion();
+            MongoCollection<Document> coleccionUsuarios = bd.getCollection("usuarios", Document.class);
+
+            Document docFavorito = new Document("_id", new ObjectId(favorito.getId()))
+                    .append("nombre", favorito.getNombre())
+                    .append("tipo", favorito.getTipo())
+                    .append("fechaAgregacion", new Date());
+
+            if (favorito.getGenero() != null) {
+                Document docGenero = new Document();
+                docGenero.append("nombre", favorito.getGenero());
+                docFavorito.append("genero", docGenero);
+            }
+
+            coleccionUsuarios.updateOne(
+                    Filters.eq("_id", new ObjectId(idUsuario)),
+                    Updates.push("favoritos", docFavorito)
+            );
+
+        } catch (Exception ex) {
+            throw new PersistenciaException("Error en BD al agregar favorito: " + ex.getMessage());
+        }
+    }
+
+    @Override
+    public void eliminarFavorito(String idUsuario, String idElemento) throws PersistenciaException {
+        try {
+            MongoDatabase bd = conexion.conexion();
+            MongoCollection<Document> coleccionUsuarios = bd.getCollection("usuarios", Document.class);
+
+            coleccionUsuarios.updateOne(
+                    Filters.eq("_id", new ObjectId(idUsuario)),
+                    Updates.pull("favoritos", Filters.eq("_id", new ObjectId(idElemento)))
+            );
+
+        } catch (Exception ex) {
+            throw new PersistenciaException("Error en BD al eliminar favorito: " + ex.getMessage());
+        }
+    }
+>>>>>>> Stashed changes
 }
