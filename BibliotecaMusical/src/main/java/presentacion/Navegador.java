@@ -57,6 +57,23 @@ public class Navegador {
             ventanaActual.dispose();
         }
     }
+    
+    public void abrirAgregarGenero(JFrame ventanaActual) {
+        FrmAgregarGenero ventana = new FrmAgregarGenero(usuarioActual, usuarioNegocio, this);
+        ventana.setVisible(true);
+        if (ventanaActual != null) {
+            ventanaActual.dispose();
+        }
+    }
+
+    public void abrirEliminarGenero(JFrame ventanaActual) {
+        FrmEliminarGenero ventana = new FrmEliminarGenero(usuarioActual, usuarioNegocio, this);
+        ventana.setVisible(true);
+        if (ventanaActual != null) {
+            ventanaActual.dispose();
+        }
+    }
+
 
     public void abrirInicio(JFrame ventanaActual) {
         FrmInicio ventana = new FrmInicio(usuarioActual, this);
@@ -68,5 +85,17 @@ public class Navegador {
 
     public void actualizarUsuarioActual(UsuarioDTO usuarioActualizado) {
         this.usuarioActual = usuarioActualizado;
+    }
+
+    public void abrirActualizarPerfil(JFrame actual) {
+        FrmActualizarPerfil ventana = new FrmActualizarPerfil(usuarioActual, this, usuarioNegocio);
+        ventana.setVisible(true);
+        actual.dispose();
+    }
+
+    public void abrirFavoritos(JFrame actual) {
+        FrmFavoritos ventana = new FrmFavoritos(usuarioActual, this, usuarioNegocio);
+        ventana.setVisible(true);
+        actual.dispose();
     }
 }

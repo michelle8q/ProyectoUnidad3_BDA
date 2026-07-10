@@ -6,7 +6,6 @@ package presentacion;
 
 import dtos.GeneroDTO;
 import dtos.UsuarioDTO;
-import negocio.IUsuarioNegocio;
 
 /**
  *
@@ -135,15 +134,15 @@ public class FrmListaGeneros extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        
+        navegador.abrirAgregarGenero(this);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        navegador.abrirEliminarGenero(this);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        // TODO add your handling code here:
+        navegador.abrirPerfil(this);
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void cargarGeneros() {

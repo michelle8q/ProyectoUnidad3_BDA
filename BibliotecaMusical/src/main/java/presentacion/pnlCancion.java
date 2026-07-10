@@ -6,13 +6,20 @@ package presentacion;
 
 import java.awt.Color;
 import dtos.CancionDetallesDTO;
+import java.util.function.Consumer;
 
 /**
  *
  * @author cinca
  */
 public class pnlCancion extends javax.swing.JPanel {
+    
     private CancionDetallesDTO cancionDTO;
+    
+    private Consumer<Boolean> accionFavorito;
+    public void setAccionFavorito(Consumer<Boolean> accionFavorito) {
+        this.accionFavorito = accionFavorito;
+    }
     
     /**
      * Creates new form pnlCancion
@@ -20,13 +27,12 @@ public class pnlCancion extends javax.swing.JPanel {
     public pnlCancion() {
         initComponents();
         configurarEstiloInicial();
-        cargarInformacion(cancionDTO);
     }
     
-    public pnlCancion(CancionDetallesDTO cancionDTO) {
+    public pnlCancion(CancionDetallesDTO cancionDTO, boolean esFavorita) {
         initComponents();
         configurarEstiloInicial();
-        cargarInformacion(cancionDTO);
+        cargarInformacion(cancionDTO, esFavorita);
     }
 
 
@@ -138,19 +144,20 @@ public class pnlCancion extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFavoritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoritoActionPerformed
-        if (btnFavorito.isSelected()) {
+        boolean seleccionado = btnFavorito.isSelected();
+
+        if (seleccionado) {
             btnFavorito.setForeground(new Color(147, 112, 219));
-            
-        // negocio.agregarFavorito(elemento);
-        
         } else {
             btnFavorito.setForeground(Color.GRAY);
-            
-        // negocio.eliminarFavorito(elemento);
+        }
+              
+        if (accionFavorito != null) {
+            accionFavorito.accept(seleccionado);
         }
     }//GEN-LAST:event_btnFavoritoActionPerformed
     
-    public void cargarInformacion(CancionDetallesDTO cancionDTO) {
+    public void cargarInformacion(CancionDetallesDTO cancionDTO, boolean esFavorita) {
         this.cancionDTO = cancionDTO;
 
         if (cancionDTO == null) {
@@ -166,6 +173,14 @@ public class pnlCancion extends javax.swing.JPanel {
         lblArtista.setText(valorOMensaje(cancionDTO.getNombreArtista(), "Artista no disponible"));
         lblDuracion.setText(valorOMensaje(cancionDTO.getDuracion(), "Sin duracion"));
         setToolTipText(valorOMensaje(cancionDTO.getNombreAlbum(), "Album no disponible"));
+        
+        if (esFavorita) {
+            btnFavorito.setSelected(true);
+            btnFavorito.setForeground(new Color(147, 112, 219)); // Morado
+        } else {
+            btnFavorito.setSelected(false);
+            btnFavorito.setForeground(Color.GRAY); // Gris
+        }
     }
 
     private void configurarEstiloInicial() {

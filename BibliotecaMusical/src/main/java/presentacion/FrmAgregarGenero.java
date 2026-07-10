@@ -30,6 +30,7 @@ public class FrmAgregarGenero extends javax.swing.JFrame {
         initComponents();
         this.usuarioActual = usuarioActual;
         this.usuarioNegocio = usuarioNegocio;
+        this.navegador = navegador;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -144,6 +145,7 @@ public class FrmAgregarGenero extends javax.swing.JFrame {
             genero.setNombre(nombreGenero);
 
             usuarioActual = usuarioNegocio.agregarGeneroNoDeseado(usuarioActual.getId(),genero);
+            navegador.actualizarUsuarioActual(usuarioActual);
 
             JOptionPane.showMessageDialog(this, "Genero agregado correctamente.");
 

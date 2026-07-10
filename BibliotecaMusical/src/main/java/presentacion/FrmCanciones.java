@@ -14,7 +14,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import negocio.ICancionNegocio;
-import negocio.IUsuarioNegocio;
 import negocio.NegocioException;
 
 /**
@@ -34,22 +33,24 @@ public class FrmCanciones extends javax.swing.JFrame {
         
         configurarPantalla();
         cargarCanciones();
-        
-        
+
     }
     
     public FrmCanciones(UsuarioDTO usuarioActual, Navegador navegador, ICancionNegocio cancionNegocio) {
         initComponents();
+
+        this.setMinimumSize(new Dimension(1080, 650));
+        this.setLocationRelativeTo(null);
 
         this.usuarioActual = usuarioActual;
         this.navegador = navegador;
         this.cancionNegocio = cancionNegocio;
         
         pnlContenedor.removeAll();
-        pnlContenedor.setLayout(new BoxLayout(pnlContenedor, BoxLayout.Y_AXIS));
+       // pnlContenedor.setLayout(new BoxLayout(pnlContenedor, BoxLayout.Y_AXIS));
         
         pnlMenuLateral1.configurarSesion(usuarioActual, navegador);
-
+        configurarPantalla();
         cargarCanciones();
         
     }
@@ -63,13 +64,18 @@ public class FrmCanciones extends javax.swing.JFrame {
     }
     
     private void configurarPantalla() {
-    setLocationRelativeTo(null);
+   
 
     pnlBuscador1.setTitulo("Canciones");
     pnlBuscador1.addBuscarActionListener(evt -> buscarCanciones());
 
     pnlContenedor.removeAll();
     pnlContenedor.setLayout(new BoxLayout(pnlContenedor, BoxLayout.Y_AXIS));
+    pnlContenedor.setBackground(new Color(51, 51, 51));
+
+    
+
+
 }
 
     private void buscarCanciones() {
@@ -99,7 +105,8 @@ public class FrmCanciones extends javax.swing.JFrame {
             pnlContenedor.add(lblSinResultados);
         } else {
             for (CancionDetallesDTO cancion : canciones) {
-                pnlCancion panelCancion = new pnlCancion(cancion);
+                boolean esFavorita = false;
+                pnlCancion panelCancion = new pnlCancion(cancion, esFavorita);
                 panelCancion.setAlignmentX(LEFT_ALIGNMENT);
 
                 pnlContenedor.add(panelCancion);
@@ -133,9 +140,10 @@ public class FrmCanciones extends javax.swing.JFrame {
         pnlCancion = new presentacion.pnlCancion();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1087, 626));
+        setBackground(new java.awt.Color(51, 51, 51));
 
-        pnlPrincipal.setForeground(new java.awt.Color(60, 63, 65));
+        pnlPrincipal.setBackground(new java.awt.Color(51, 51, 51));
+        pnlPrincipal.setForeground(new java.awt.Color(51, 51, 51));
         pnlPrincipal.setMinimumSize(new java.awt.Dimension(1086, 617));
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -171,8 +179,8 @@ public class FrmCanciones extends javax.swing.JFrame {
                 .addComponent(pnlMenuLateral1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlBuscador1, javax.swing.GroupLayout.PREFERRED_SIZE, 826, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlBuscador1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlPrincipalLayout.setVerticalGroup(

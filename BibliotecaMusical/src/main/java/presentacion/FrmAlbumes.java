@@ -29,8 +29,9 @@ public class FrmAlbumes extends javax.swing.JFrame {
         persistencia.IConexionDAO conexion = new persistencia.ConexionDAO();
         persistencia.IAlbumDAO albumDAO = new persistencia.AlbumDAO(conexion);
         this.albumNegocio = new negocio.AlbumNegocio(albumDAO);
-        this.setLocationRelativeTo(null);
+        
         initComponents();
+        this.setLocationRelativeTo(null);
         pnlMenuLateral2.setNavegador(this.navegador);
 
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
@@ -194,7 +195,7 @@ public class FrmAlbumes extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(12, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

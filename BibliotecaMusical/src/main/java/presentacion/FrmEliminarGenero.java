@@ -142,7 +142,8 @@ public class FrmEliminarGenero extends javax.swing.JFrame {
             }
 
             usuarioActual = usuarioNegocio.eliminarGeneroNoDeseado(usuarioActual.getId(),nombreGenero);
-
+            navegador.actualizarUsuarioActual(usuarioActual);
+            
             JOptionPane.showMessageDialog(this, "Genero eliminado.");
             
             if (navegador != null) {

@@ -294,7 +294,8 @@ public class FrmInicio extends javax.swing.JFrame {
             if (tipo.equals("Todos") || tipo.equals("Cancion")) {
                 List<CancionDetallesDTO> canciones = cancionNegocio.buscarCanciones(texto, genero);
                 for (CancionDetallesDTO cancion : canciones) {
-                    pnlCancion panelItem = new pnlCancion(cancion);
+                    boolean esFavorita = false;
+                    pnlCancion panelItem = new pnlCancion(cancion, esFavorita);
                     panelItem.setBorder(BorderFactory.createTitledBorder(
                             BorderFactory.createLineBorder(new Color(109, 79, 130), 2),
                             "CANCIÓN",
