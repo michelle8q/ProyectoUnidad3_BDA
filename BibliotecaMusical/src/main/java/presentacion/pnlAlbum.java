@@ -5,7 +5,12 @@
 package presentacion;
 
 import dtos.AlbumDTO;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Image;
+import java.net.URL;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -28,10 +33,17 @@ public class pnlAlbum extends javax.swing.JPanel {
             jLabelTitulo.setText(albumDTO.getNombre());
             jLabelArtista.setText(albumDTO.getNombreArtista());
             jLabelGenero.setText(albumDTO.getNombreGenero());
+            pnlImagen.setLayout(new BorderLayout());
+            lblImagen.setHorizontalAlignment(SwingConstants.CENTER);
+            lblImagen.setVerticalAlignment(SwingConstants.CENTER);
+            pnlImagen.removeAll();
+            pnlImagen.add(lblImagen, BorderLayout.CENTER);
+            
             if (albumDTO.getFechaLanzamiento() != null) {
                 java.text.SimpleDateFormat formateador = new java.text.SimpleDateFormat("dd/MM/yyyy");
                 String fechaTexto = formateador.format(albumDTO.getFechaLanzamiento());
                 jLabelFecha.setText(fechaTexto);
+                cargarImagen(albumDTO.getImagenAlbum());
             } else {
                 jLabelFecha.setText("Sin fecha");
             }
@@ -39,6 +51,32 @@ public class pnlAlbum extends javax.swing.JPanel {
 
         this.setMaximumSize(new java.awt.Dimension(821, 184));
     }
+    
+    /**
+     * Carga la imagen de  la portada del album.
+     */
+    private void cargarImagen(String rutaImagen) {
+        if (rutaImagen == null || rutaImagen.isBlank()) {
+            lblImagen.setIcon(null);
+            lblImagen.setText("Sin imagen");
+            return;
+        }
+
+        URL url = getClass().getResource("/imagenes/" + rutaImagen);
+
+        if (url == null) {
+            lblImagen.setIcon(null);
+            lblImagen.setText("Imagen no disponible");
+            return;
+        }
+
+        ImageIcon icono = new ImageIcon(url);
+        Image imagen = icono.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+
+        lblImagen.setIcon(new ImageIcon(imagen));
+        lblImagen.setText("");
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,6 +88,7 @@ public class pnlAlbum extends javax.swing.JPanel {
     private void initComponents() {
 
         pnlImagen = new javax.swing.JPanel();
+        lblImagen = new javax.swing.JLabel();
         jLabelTitulo = new javax.swing.JLabel();
         jLabelGenero = new javax.swing.JLabel();
         jLabelArtista = new javax.swing.JLabel();
@@ -63,15 +102,23 @@ public class pnlAlbum extends javax.swing.JPanel {
         setToolTipText("");
         setPreferredSize(new java.awt.Dimension(821, 184));
 
+        lblImagen.setText("Imagen");
+
         javax.swing.GroupLayout pnlImagenLayout = new javax.swing.GroupLayout(pnlImagen);
         pnlImagen.setLayout(pnlImagenLayout);
         pnlImagenLayout.setHorizontalGroup(
             pnlImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 141, Short.MAX_VALUE)
+            .addGroup(pnlImagenLayout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addComponent(lblImagen)
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         pnlImagenLayout.setVerticalGroup(
             pnlImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 144, Short.MAX_VALUE)
+            .addGroup(pnlImagenLayout.createSequentialGroup()
+                .addGap(59, 59, 59)
+                .addComponent(lblImagen)
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         jLabelTitulo.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
@@ -118,7 +165,7 @@ public class pnlAlbum extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelGenero)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 451, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 447, Short.MAX_VALUE)
                         .addComponent(BtnSeleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31))
                     .addGroup(layout.createSequentialGroup()
@@ -176,7 +223,8 @@ public class pnlAlbum extends javax.swing.JPanel {
                     javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_BtnSeleccionarActionPerformed
-
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnSeleccionar;
@@ -185,6 +233,7 @@ public class pnlAlbum extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelFecha;
     private javax.swing.JLabel jLabelGenero;
     private javax.swing.JLabel jLabelTitulo;
+    private javax.swing.JLabel lblImagen;
     private javax.swing.JPanel pnlImagen;
     // End of variables declaration//GEN-END:variables
 }

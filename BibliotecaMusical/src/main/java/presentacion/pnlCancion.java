@@ -6,7 +6,12 @@ package presentacion;
 
 import java.awt.Color;
 import dtos.CancionDetallesDTO;
+import java.awt.BorderLayout;
+import java.awt.Image;
+import java.net.URL;
 import java.util.function.Consumer;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -46,6 +51,7 @@ public class pnlCancion extends javax.swing.JPanel {
     private void initComponents() {
 
         pnlImagen = new javax.swing.JPanel();
+        lblImagen = new javax.swing.JLabel();
         lblNombreCancion = new javax.swing.JLabel();
         lblGenero = new javax.swing.JLabel();
         lblArtista = new javax.swing.JLabel();
@@ -59,15 +65,23 @@ public class pnlCancion extends javax.swing.JPanel {
         setToolTipText("");
         setPreferredSize(new java.awt.Dimension(821, 184));
 
+        lblImagen.setText("imagen");
+
         javax.swing.GroupLayout pnlImagenLayout = new javax.swing.GroupLayout(pnlImagen);
         pnlImagen.setLayout(pnlImagenLayout);
         pnlImagenLayout.setHorizontalGroup(
             pnlImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 141, Short.MAX_VALUE)
+            .addGroup(pnlImagenLayout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(lblImagen)
+                .addContainerGap(57, Short.MAX_VALUE))
         );
         pnlImagenLayout.setVerticalGroup(
             pnlImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 144, Short.MAX_VALUE)
+            .addGroup(pnlImagenLayout.createSequentialGroup()
+                .addGap(59, 59, 59)
+                .addComponent(lblImagen)
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         lblNombreCancion.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
@@ -109,7 +123,7 @@ public class pnlCancion extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblDuracion))
                             .addComponent(lblGenero))
-                        .addContainerGap(508, Short.MAX_VALUE))
+                        .addContainerGap(505, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblArtista)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -165,6 +179,7 @@ public class pnlCancion extends javax.swing.JPanel {
             lblGenero.setText("Genero no disponible");
             lblArtista.setText("Artista no disponible");
             lblDuracion.setText("Sin duracion");
+            cargarImagen(null);
             return;
         }
 
@@ -173,6 +188,7 @@ public class pnlCancion extends javax.swing.JPanel {
         lblArtista.setText(valorOMensaje(cancionDTO.getNombreArtista(), "Artista no disponible"));
         lblDuracion.setText(valorOMensaje(cancionDTO.getDuracion(), "Sin duracion"));
         setToolTipText(valorOMensaje(cancionDTO.getNombreAlbum(), "Album no disponible"));
+        cargarImagen(cancionDTO.getImagenAlbum());
         
         if (esFavorita) {
             btnFavorito.setSelected(true);
@@ -192,7 +208,41 @@ public class pnlCancion extends javax.swing.JPanel {
         lblArtista.setForeground(Color.WHITE);
         lblArtista1.setForeground(Color.WHITE);
         lblDuracion.setForeground(Color.WHITE);
+        
+        pnlImagen.setLayout(new BorderLayout());
+        lblImagen.setHorizontalAlignment(SwingConstants.CENTER);
+        lblImagen.setVerticalAlignment(SwingConstants.CENTER);
+        pnlImagen.removeAll();
+        pnlImagen.add(lblImagen, BorderLayout.CENTER);
     }
+    
+    /**
+     * Carga la imagen de la cancion, que en realidad es la portada del album
+     * al que pertenece, ya que la cancion no tiene imagen propia.
+     */
+    private void cargarImagen(String rutaImagen) {
+        
+        if (rutaImagen == null || rutaImagen.isBlank()) {
+            lblImagen.setIcon(null);
+            lblImagen.setText("Sin imagen");
+            return;
+        }
+
+        URL url = getClass().getResource("/imagenes/" + rutaImagen);
+
+        if (url == null) {
+            lblImagen.setIcon(null);
+            lblImagen.setText("Imagen no disponible");
+            return;
+        }
+
+        ImageIcon icono = new ImageIcon(url);
+        Image imagen = icono.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+
+        lblImagen.setIcon(new ImageIcon(imagen));
+        lblImagen.setText("");
+    }
+
 
     private String valorOMensaje(String valor, String mensaje) {
         return valor == null || valor.trim().isEmpty() ? mensaje : valor.trim();
@@ -204,6 +254,7 @@ public class pnlCancion extends javax.swing.JPanel {
     private javax.swing.JLabel lblArtista1;
     private javax.swing.JLabel lblDuracion;
     private javax.swing.JLabel lblGenero;
+    private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblNombreCancion;
     private javax.swing.JPanel pnlImagen;
     // End of variables declaration//GEN-END:variables
