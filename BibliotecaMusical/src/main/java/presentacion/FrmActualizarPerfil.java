@@ -4,21 +4,43 @@
  */
 package presentacion;
 
+import dtos.UsuarioDTO;
 import java.io.File;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import negocio.IUsuarioNegocio;
+import negocio.NegocioException;
+import presentacion.Navegador;
 
 /**
  *
- * @author piña
+ * @author cinca
  */
-public class FrmRegistrarse extends javax.swing.JFrame {
+public class FrmActualizarPerfil extends javax.swing.JFrame {
+
+    private UsuarioDTO usuarioActual;
+    private Navegador navegador;
+    private IUsuarioNegocio usuarioNegocio;
+    
 
     /**
      * Creates new form FrmRegistrarse
      */
-    public FrmRegistrarse() {
+    public FrmActualizarPerfil() {
         initComponents();
         setLocationRelativeTo(null);
+    }
+
+   
+    public FrmActualizarPerfil(UsuarioDTO usuarioActual, Navegador navegador, IUsuarioNegocio usuarioNegocio) {
+        this.usuarioActual = usuarioActual;
+        this.navegador = navegador;
+        this.usuarioNegocio = usuarioNegocio;
+
+        initComponents();
+        setLocationRelativeTo(null);
+
+        cargarDatosActuales();
     }
 
     /**
@@ -36,13 +58,13 @@ public class FrmRegistrarse extends javax.swing.JFrame {
         LblContra = new javax.swing.JLabel();
         TxTcorreo = new javax.swing.JTextField();
         TxTContra = new javax.swing.JTextField();
-        BtnRegistro = new javax.swing.JButton();
-        TxTUsuario = new javax.swing.JTextField();
+        btnGuardar = new javax.swing.JButton();
+        txtUsuario = new javax.swing.JTextField();
         LblUsuario = new javax.swing.JLabel();
         LblFoto = new javax.swing.JLabel();
         txtURL = new javax.swing.JTextField();
         btnElegir = new javax.swing.JButton();
-        BtnInicioSecion = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,17 +85,17 @@ public class FrmRegistrarse extends javax.swing.JFrame {
         TxTContra.setBackground(new java.awt.Color(0, 0, 0));
         TxTContra.setForeground(new java.awt.Color(255, 255, 255));
 
-        BtnRegistro.setBackground(new java.awt.Color(109, 79, 130));
-        BtnRegistro.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
-        BtnRegistro.setText("Registrarse");
-        BtnRegistro.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.setBackground(new java.awt.Color(109, 79, 130));
+        btnGuardar.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        btnGuardar.setText("Guardar cambios");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnRegistroActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
 
-        TxTUsuario.setBackground(new java.awt.Color(0, 0, 0));
-        TxTUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        txtUsuario.setBackground(new java.awt.Color(0, 0, 0));
+        txtUsuario.setForeground(new java.awt.Color(255, 255, 255));
 
         LblUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         LblUsuario.setText("Nombre de Usuario");
@@ -93,12 +115,12 @@ public class FrmRegistrarse extends javax.swing.JFrame {
             }
         });
 
-        BtnInicioSecion.setBackground(new java.awt.Color(109, 79, 130));
-        BtnInicioSecion.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
-        BtnInicioSecion.setText("Iniciar Sesion");
-        BtnInicioSecion.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setBackground(new java.awt.Color(109, 79, 130));
+        btnCancelar.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnInicioSecionActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -122,12 +144,12 @@ public class FrmRegistrarse extends javax.swing.JFrame {
                             .addComponent(LblCorreo)
                             .addComponent(LblTitulo)
                             .addComponent(LblUsuario)
-                            .addComponent(TxTUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(PnlFondoLayout.createSequentialGroup()
                         .addGap(58, 58, 58)
                         .addGroup(PnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(BtnInicioSecion, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BtnRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(44, Short.MAX_VALUE))
         );
         PnlFondoLayout.setVerticalGroup(
@@ -138,7 +160,7 @@ public class FrmRegistrarse extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LblUsuario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxTUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
                 .addComponent(LblCorreo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -154,9 +176,9 @@ public class FrmRegistrarse extends javax.swing.JFrame {
                     .addComponent(txtURL, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnElegir, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BtnRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BtnInicioSecion, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -174,9 +196,28 @@ public class FrmRegistrarse extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BtnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegistroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnRegistroActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        try {
+            String nombreUsuario = txtUsuario.getText().trim();
+
+            if (nombreUsuario.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El nombre de usuario no puede estar vacio.", "Datos incompletos", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            usuarioActual.setUsuario(nombreUsuario);
+            usuarioActual.setImagen(txtURL.getText().trim());
+
+            UsuarioDTO actualizado = usuarioNegocio.actualizarPerfil(usuarioActual);
+            navegador.actualizarUsuarioActual(actualizado);
+
+            JOptionPane.showMessageDialog(this, "Perfil actualizado correctamente.");
+            navegador.abrirPerfil(this);
+
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnElegirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirActionPerformed
         JFileChooser fChooser = new JFileChooser();
@@ -190,15 +231,26 @@ public class FrmRegistrarse extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnElegirActionPerformed
 
-    private void BtnInicioSecionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInicioSecionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnInicioSecionActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        navegador.abrirPerfil(this);
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
-  
+    
+    /**
+     * Llena los campos con la informacion actual del usuario y el usuario solo 
+     * edite lo que quiera cambiar.
+     */
+    private void cargarDatosActuales() {
+        txtUsuario.setText(usuarioActual.getUsuario());
+        TxTcorreo.setText(usuarioActual.getCorreo());
+       // TxTcorreo.setEditable(false); 
+       // TxTContra.setEditable(false); 
+        txtURL.setText(usuarioActual.getImagen());
+    }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnInicioSecion;
-    private javax.swing.JButton BtnRegistro;
     private javax.swing.JLabel LblContra;
     private javax.swing.JLabel LblCorreo;
     private javax.swing.JLabel LblFoto;
@@ -206,9 +258,11 @@ public class FrmRegistrarse extends javax.swing.JFrame {
     private javax.swing.JLabel LblUsuario;
     private javax.swing.JPanel PnlFondo;
     private javax.swing.JTextField TxTContra;
-    private javax.swing.JTextField TxTUsuario;
     private javax.swing.JTextField TxTcorreo;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnElegir;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JTextField txtURL;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

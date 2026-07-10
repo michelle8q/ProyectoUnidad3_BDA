@@ -35,6 +35,7 @@ public class FrmCanciones extends javax.swing.JFrame {
         configurarPantalla();
         cargarCanciones();
         
+        
     }
     
     public FrmCanciones(UsuarioDTO usuarioActual, Navegador navegador, ICancionNegocio cancionNegocio) {
@@ -125,15 +126,19 @@ public class FrmCanciones extends javax.swing.JFrame {
     private void initComponents() {
 
         pnlPrincipal = new javax.swing.JPanel();
-        pnlContenedor = new javax.swing.JPanel();
-        pnlCancion = new presentacion.pnlCancion();
         pnlBuscador1 = new presentacion.PnlBuscador();
         pnlMenuLateral1 = new presentacion.PnlMenuLateral();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        pnlContenedor = new javax.swing.JPanel();
+        pnlCancion = new presentacion.pnlCancion();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1087, 626));
 
         pnlPrincipal.setForeground(new java.awt.Color(60, 63, 65));
+        pnlPrincipal.setMinimumSize(new java.awt.Dimension(1086, 617));
+
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         pnlContenedor.setBackground(new java.awt.Color(51, 51, 51));
         pnlContenedor.setForeground(new java.awt.Color(51, 51, 51));
@@ -155,6 +160,8 @@ public class FrmCanciones extends javax.swing.JFrame {
                 .addContainerGap(293, Short.MAX_VALUE))
         );
 
+        jScrollPane1.setViewportView(pnlContenedor);
+
         javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
         pnlPrincipal.setLayout(pnlPrincipalLayout);
         pnlPrincipalLayout.setHorizontalGroup(
@@ -164,8 +171,8 @@ public class FrmCanciones extends javax.swing.JFrame {
                 .addComponent(pnlMenuLateral1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlBuscador1, javax.swing.GroupLayout.PREFERRED_SIZE, 826, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnlBuscador1, javax.swing.GroupLayout.PREFERRED_SIZE, 826, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlPrincipalLayout.setVerticalGroup(
@@ -175,7 +182,7 @@ public class FrmCanciones extends javax.swing.JFrame {
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
                         .addComponent(pnlBuscador1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnlContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(pnlMenuLateral1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -197,6 +204,7 @@ public class FrmCanciones extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
     private presentacion.PnlBuscador pnlBuscador1;
     private presentacion.pnlCancion pnlCancion;
     private javax.swing.JPanel pnlContenedor;
