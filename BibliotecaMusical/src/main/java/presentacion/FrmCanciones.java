@@ -5,9 +5,11 @@
 package presentacion;
 
 import dtos.CancionDetallesDTO;
+import dtos.GeneroDTO;
 import dtos.UsuarioDTO;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -57,26 +59,21 @@ public class FrmCanciones extends javax.swing.JFrame {
     
     public void cargarCanciones() {
         try {
-            cargarCanciones(cancionNegocio.consultarTodas());
+            List<CancionDetallesDTO> canciones = filtrarGenerosNoDeseados(cancionNegocio.consultarTodas());
+            cargarCanciones(canciones);
         } catch (NegocioException ex) {
             mostrarError("No se pudieron cargar las canciones: " + ex.getMessage());
         }
     }
     
-    private void configurarPantalla() {
-   
+    private void configurarPantalla() {   
+        pnlBuscador1.setTitulo("Canciones");
+        pnlBuscador1.addBuscarActionListener(evt -> buscarCanciones());
 
-    pnlBuscador1.setTitulo("Canciones");
-    pnlBuscador1.addBuscarActionListener(evt -> buscarCanciones());
-
-    pnlContenedor.removeAll();
-    pnlContenedor.setLayout(new BoxLayout(pnlContenedor, BoxLayout.Y_AXIS));
-    pnlContenedor.setBackground(new Color(51, 51, 51));
-
-    
-
-
-}
+        pnlContenedor.removeAll();
+        pnlContenedor.setLayout(new BoxLayout(pnlContenedor, BoxLayout.Y_AXIS));
+        pnlContenedor.setBackground(new Color(51, 51, 51));
+    }
 
     private void buscarCanciones() {
         String texto = pnlBuscador1.getTextoBusqueda();
@@ -85,7 +82,9 @@ public class FrmCanciones extends javax.swing.JFrame {
             List<CancionDetallesDTO> canciones = texto.isBlank()
                     ? cancionNegocio.consultarTodas()
                     : cancionNegocio.buscarPorTexto(texto);
-
+            
+            canciones = filtrarGenerosNoDeseados(canciones);
+            
             cargarCanciones(canciones);
         } catch (NegocioException ex) {
             mostrarError("Error en la busqueda: " + ex.getMessage());
@@ -116,6 +115,30 @@ public class FrmCanciones extends javax.swing.JFrame {
 
         pnlContenedor.revalidate();
         pnlContenedor.repaint();
+    }
+    
+     private List<CancionDetallesDTO> filtrarGenerosNoDeseados(List<CancionDetallesDTO> canciones) {
+        if (usuarioActual.getGenerosNoDeseados() == null || usuarioActual.getGenerosNoDeseados().isEmpty()) {
+            return canciones;
+        }
+
+        List<CancionDetallesDTO> resultado = new ArrayList<>();
+        for (CancionDetallesDTO cancion : canciones) {
+            boolean restringido = false;
+
+            for (GeneroDTO noDeseado : usuarioActual.getGenerosNoDeseados()) {
+                if (cancion.getGenero() != null
+                        && cancion.getGenero().equalsIgnoreCase(noDeseado.getNombre())) {
+                    restringido = true;
+                    break;
+                }
+            }
+
+            if (!restringido) {
+                resultado.add(cancion);
+            }
+        }
+        return resultado;
     }
 
     private void mostrarError(String mensaje) {
