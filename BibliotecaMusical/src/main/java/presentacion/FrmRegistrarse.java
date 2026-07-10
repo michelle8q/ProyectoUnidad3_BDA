@@ -195,15 +195,17 @@ public class FrmRegistrarse extends javax.swing.JFrame {
 
         try {
             UsuarioEntidad usuarioRegistrado = negocio.reguistrar(usuario);
+
+            JOptionPane.showMessageDialog(this, "¡Usuario registrado con éxito!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            FrmInicio principal = new FrmInicio();
+            principal.setVisible(true);
+            this.dispose();
         } catch (NegocioException ex) {
-            Logger.getLogger(FrmRegistrarse.class.getName()).log(Level.SEVERE, null, ex);
+            javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de Registro", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
 
-        JOptionPane.showMessageDialog(this, "¡Usuario registrado con éxito!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-        FrmInicio principal = new FrmInicio();
-        principal.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_BtnRegistroActionPerformed
 
     private void btnElegirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirActionPerformed

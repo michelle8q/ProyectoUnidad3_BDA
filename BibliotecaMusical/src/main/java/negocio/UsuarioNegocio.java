@@ -8,6 +8,8 @@ import entidades.GeneroEntidad;
 import entidades.UsuarioEntidad;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import org.bson.types.ObjectId;
 import persistencia.IUsuarioDAO;
@@ -204,6 +206,13 @@ public class UsuarioNegocio implements IUsuarioNegocio {
         String usuario = entidad.getUsuario();
         if (usuario == null || usuario.trim().isEmpty()) {
             throw new NegocioException("el usuario no puede estar en blanco.");
+        }
+        try {
+            if (usuarioDAO.buscarPorUsuario(correo) != null){
+                throw new NegocioException("Ya existe un usuario con ese correo");
+            }
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("Error al validar correo"+ex.getMessage());
         }
         if (entidad.getImagen() == null || entidad.getImagen().trim().isEmpty()) {
             entidad.setImagen("/imagenes/fotoPerfilDefault.jpg");
