@@ -28,5 +28,14 @@ public interface IUsuarioNegocio {
     UsuarioDTO agregarGeneroNoDeseado(String idUsuario, GeneroDTO genero) throws NegocioException;
 
     UsuarioDTO eliminarGeneroNoDeseado(String idUsuario, String nombreGenero) throws NegocioException;
+    
+    /**
+     * metodo para iniciar sesion
+     * @param nombreUsuario usuario a validar
+     * @param contrasenaPlana contraseña a validar
+     * @return UsuarioEntidad encontrado
+     * @throws NegocioException en caso de algun error
+     */
+    UsuarioEntidad login(String nombreUsuario, String contrasenaPlana) throws NegocioException;
   
 }

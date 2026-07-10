@@ -1,4 +1,3 @@
-
 package persistencia;
 
 import com.mongodb.client.MongoCollection;
@@ -13,22 +12,22 @@ import org.bson.types.ObjectId;
  *
  * @author piña
  */
-public class UsuarioDAO implements IUsuarioDAO{
-    
+public class UsuarioDAO implements IUsuarioDAO {
+
     private IConexionDAO conexion;
-    
-    public UsuarioDAO(IConexionDAO conexion){
+
+    public UsuarioDAO(IConexionDAO conexion) {
         this.conexion = conexion;
     }
 
     @Override
     public UsuarioEntidad registar(UsuarioEntidad usuario) throws PersistenciaException {
         try {
-          MongoDatabase bd = conexion.conexion();
-          MongoCollection<UsuarioEntidad> collection = bd.getCollection("usuarios", UsuarioEntidad.class);
+            MongoDatabase bd = conexion.conexion();
+            MongoCollection<UsuarioEntidad> collection = bd.getCollection("usuarios", UsuarioEntidad.class);
 
-          collection.insertOne(usuario);
-          return usuario;
+            collection.insertOne(usuario);
+            return usuario;
 
         } catch (Exception ex) {
             throw new PersistenciaException("Error al registrar el usuario: " + ex.getMessage());
@@ -36,20 +35,20 @@ public class UsuarioDAO implements IUsuarioDAO{
     }
 
     @Override
-    public UsuarioEntidad buscar(String correo, String contra ) throws PersistenciaException {
+    public UsuarioEntidad buscar(String correo, String contra) throws PersistenciaException {
         try {
             MongoDatabase bd = conexion.conexion();
             MongoCollection<UsuarioEntidad> usuarios = bd.getCollection("usuarios", UsuarioEntidad.class);
 
             return usuarios.find(
                     Filters.and(Filters.eq("correo", correo),
-                                Filters.eq("contrasena", contra))).first();
-            
+                            Filters.eq("contrasena", contra))).first();
+
         } catch (Exception ex) {
             throw new PersistenciaException("Error al buscar usuario: " + ex.getMessage());
         }
     }
-    
+
     @Override
     public UsuarioEntidad buscarPorId(ObjectId idUsuario) throws PersistenciaException {
         try {
@@ -62,7 +61,7 @@ public class UsuarioDAO implements IUsuarioDAO{
             throw new PersistenciaException("Error al buscar usuario: " + ex.getMessage());
         }
     }
-    
+
     @Override
     public UsuarioEntidad actualizarPerfil(ObjectId idUsuario, String usuario, String imagen) throws PersistenciaException {
         try {
@@ -72,8 +71,8 @@ public class UsuarioDAO implements IUsuarioDAO{
             usuarios.updateOne(
                     Filters.eq("_id", idUsuario),
                     Updates.combine(
-                            Updates.set("usuario", usuario), Updates.set("imagen", imagen))); 
-            
+                            Updates.set("usuario", usuario), Updates.set("imagen", imagen)));
+
             return buscarPorId(idUsuario);
 
         } catch (Exception ex) {
@@ -114,6 +113,17 @@ public class UsuarioDAO implements IUsuarioDAO{
             throw new PersistenciaException("Error al eliminar genero: " + ex.getMessage());
         }
     }
-    
-    
+
+    @Override
+    public UsuarioEntidad buscarPorUsuario(String correo) throws PersistenciaException {
+        try {
+            MongoDatabase bd = conexion.conexion();
+            MongoCollection<UsuarioEntidad> collection = bd.getCollection("usuarios", UsuarioEntidad.class);
+
+            return collection.find(com.mongodb.client.model.Filters.eq("correo", correo)).first();
+        } catch (Exception ex) {
+            throw new PersistenciaException("Error al buscar usuario: " + ex.getMessage());
+        }
+    }
+
 }

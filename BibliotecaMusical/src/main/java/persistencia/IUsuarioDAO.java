@@ -28,4 +28,13 @@ public interface IUsuarioDAO {
     
     UsuarioEntidad eliminarGeneroNoDeseado(ObjectId idUsuario, String nombreGenero) throws PersistenciaException;
     
+    /**
+     * metodo para buscar un usuario por su nombre
+     * @param correo el nombre a buscar
+     * @return UsuarioEntidad encontrada
+     * @throws PersistenciaException en caso de un error
+     */
+    UsuarioEntidad buscarPorUsuario(String correo) throws PersistenciaException;
+    
+    
 }
