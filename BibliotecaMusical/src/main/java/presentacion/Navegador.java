@@ -58,7 +58,7 @@ public class Navegador {
         }
     }
 
-    void abrirInicio(JFrame ventanaActual) {
+    public void abrirInicio(JFrame ventanaActual) {
         FrmInicio ventana = new FrmInicio(usuarioActual, this);
         ventana.setVisible(true);
         if (ventanaActual != null) {
@@ -66,4 +66,7 @@ public class Navegador {
         }
     }
 
+    public void actualizarUsuarioActual(UsuarioDTO usuarioActualizado) {
+        this.usuarioActual = usuarioActualizado;
+    }
 }

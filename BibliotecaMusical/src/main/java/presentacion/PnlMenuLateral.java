@@ -23,6 +23,7 @@ public class PnlMenuLateral extends javax.swing.JPanel {
      */
     public PnlMenuLateral() {
         initComponents();
+        
     }
 
     public void setNavegador(Navegador navegador) {
